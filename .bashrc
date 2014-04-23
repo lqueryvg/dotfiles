@@ -25,6 +25,7 @@ alias fgrep='fgrep --color=auto'     # show matches in colour
 alias ls='ls -hF --color=tty'        # classify files in colour
 
 alias vi='vim'
+alias more='less'
 
 settitle () 
 { 
@@ -32,4 +33,6 @@ settitle ()
 }
 
 set -o vi
-export PATH=$PATH:~/bin
+export PS1="$ "
+export TERM=xterm-256color
+export CDPATH=.:~/Documents:~/Downloads:~
