@@ -1,0 +1,8 @@
+[include]
+  path = ~/.gitconfig_userinfo
+[diff]
+  external = ~/dotfiles/bin/git_diff_wrapper
+[pager]
+  diff =
+[core]
+	editor = /usr/bin/vim
