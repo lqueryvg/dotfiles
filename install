@@ -31,4 +31,12 @@ then
   cp .gitconfig ~
   sed -i "s/%%GITNAME%%/$git_name/" ~/.gitconfig
   sed -i "s/%%GITEMAIL%%/$git_email/" ~/.gitconfig
+  grep %% ~/.gitconfig > /dev/null
+  if [[ $? == 0 ]]
+  then
+    echo "Please set git name and email in ~/.gitconfig"
+    echo "Press return to edit in vi. Please save & quit vi when done."
+    read dummy
+    vi ~/.gitconfig
+  fi
 fi
