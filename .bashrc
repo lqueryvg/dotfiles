@@ -36,3 +36,6 @@ set -o vi
 export PS1="$ "
 export TERM=xterm-256color
 export CDPATH=.:~/Documents:~/Downloads:~
+
+d=~/.dircolors
+test -r $d && eval "$(dircolors $d)"
