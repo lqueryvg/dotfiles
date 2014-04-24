@@ -1,3 +1,5 @@
+#!/bin/sh
+
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 
@@ -20,3 +22,13 @@ do
         echo "$file is already a link"
     fi
 done < $dir/dotfiles_list
+
+if [[ -f ~/.gitconfig ]]
+then
+  git_name=`grep "name = " ~/.gitconfig | awk '{print $NF}'`
+  git_email=`grep "email = " ~/.gitconfig | awk '{print $NF}'`
+  cp .gitconfig $olddir
+  cp .gitconfig ~
+  sed -i "s/%%GITNAME%%/$git_name/" ~/.gitconfig
+  sed -i "s/%%GITEMAIL%%/$git_email/" ~/.gitconfig
+fi

@@ -1,6 +1,6 @@
 [user]
-  name = lqueryvg
-  email = lqueryvg@gmail.com
+  name = %%GITNAME%%
+  email = %%GITEMAIL%%
 [diff]
   external = ~/dotfiles/bin/git_diff_wrapper
 [pager]
