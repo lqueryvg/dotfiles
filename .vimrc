@@ -6,7 +6,7 @@ colorscheme desert        " set colorscheme
 "set laststatus=2         " last window always has a statusline
 filetype plugin indent on " activates indenting for files
 set hlsearch              " highlight searched phrases.
-set incsearch             " But do highlight as you type your search.
+set incsearch             " highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
 set ruler                 " Always show info along bottom.
 set autoindent            " auto-indent
