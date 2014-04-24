@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 *.swp
+=======
+doc/tags
+.netrwhist
+>>>>>>> 526d390854f14bc5886ca0606b3be51f7379eacb
