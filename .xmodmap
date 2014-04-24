@@ -1,5 +1,5 @@
 ! Swap caps lock and F10
-! usage: xmodmap ~/.caps_swap
+! usage: xmodmap ~/.xmodmap
 ! lasts for duration of X session
 !
 remove Lock = Caps_Lock

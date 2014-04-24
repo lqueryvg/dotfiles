@@ -2,5 +2,5 @@
 .vimrc
 .bash_profile
 .tmux.conf
-.caps_swap
+.xmodmap
 .dircolors

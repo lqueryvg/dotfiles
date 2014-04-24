@@ -17,12 +17,15 @@ alias mv='mv -i'
 alias df='df -h'
 alias du='du -h'
 
-# alias less='less -r'               # raw control characters
-alias whence='type -a'               # like where
-alias grep='grep --color'            # show matches in colour
-alias egrep='egrep --color=auto'     # show matches in colour
-alias fgrep='fgrep --color=auto'     # show matches in colour
-alias ls='ls -hF --color=tty'        # classify files in colour
+# alias less='less -r'              # raw control characters
+alias whence='type -a'              # like where
+alias grep='grep --color'           # show matches in colour
+alias egrep='egrep --color=auto'    # show matches in colour
+alias fgrep='fgrep --color=auto'    # show matches in colour
+alias ls='ls -hF --color=always'    # classify files in colour
+alias less='less -R'                # ls pipe less is in colour
+d=~/.dircolors
+test -r $d && eval "$(dircolors $d)"
 
 alias vi='vim'
 alias more='less'
@@ -37,5 +40,3 @@ export PS1="$ "
 export TERM=xterm-256color
 export CDPATH=.:~/Documents:~/Downloads:~
 
-d=~/.dircolors
-test -r $d && eval "$(dircolors $d)"
