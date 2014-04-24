@@ -16,7 +16,7 @@ set shiftwidth=2          " indent/outdent by this many columns
 set shiftround            " always indent/outdent to the nearest tabstop
 set expandtab             " use spaces instead of tabs
 set smarttab              " use tabs at the start of a line, spaces elsewhere
-set nowrap                " don't wrap text
+"set nowrap                " don't wrap text
 set backspace=indent,eol,start  " backspace over autoindentations
 set mouse=nvch            " mouse works in all modes except insert
 
