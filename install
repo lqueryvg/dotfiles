@@ -25,18 +25,15 @@ done < $dir/dotfiles_list
 
 if [[ -f ~/.gitconfig ]]
 then
-  git_name=`grep "name = " ~/.gitconfig | awk '{print $NF}'`
-  git_email=`grep "email = " ~/.gitconfig | awk '{print $NF}'`
+  git_name=`git config --global --get user.name`
+  git_email=`git config --global --get user.email`
   cp .gitconfig $olddir
   cp .gitconfig ~
-  sed -i "s/%%GITNAME%%/$git_name/" ~/.gitconfig
-  sed -i "s/%%GITEMAIL%%/$git_email/" ~/.gitconfig
-  grep %% ~/.gitconfig > /dev/null
-  if [[ $? == 0 ]]
+  git config --global user.name $git_name
+  git config --global user.email $git_email
+  if [[ -z $git_name || -z $git_email ]]
   then
-    echo "Please set git name and email in ~/.gitconfig"
-    echo "Press return to edit in vi. Please save & quit vi when done."
-    read dummy
-    vi ~/.gitconfig
+    echo "Warning: git user or email looks blank."
+    echo "Check ~/.gitconfig"
   fi
 fi

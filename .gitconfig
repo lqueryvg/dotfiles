@@ -2,11 +2,11 @@
   name = %%GITNAME%%
   email = %%GITEMAIL%%
 [diff]
-  external = ~/dotfiles/bin/git_diff_wrapper
+#  external = ~/dotfiles/bin/git_diff_wrapper
 [pager]
   diff =
 [core]
-	editor = /usr/bin/vim
+#	editor = /usr/bin/vim
 	autocrlf = false
 	safecrlf = true
 	eol = lf
