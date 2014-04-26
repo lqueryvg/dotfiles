@@ -72,3 +72,31 @@ I.e.
 1. when tmux is available, single tmux session with minimal mouse usage
 2. when tmux is not available, multiple tty sessions and traditional copy/paste
 ```
+
+xterm code investigations
+```
+Looked in the xterm code.
+It looks like the "application" (i.e. the child process running on the pty inside the
+xterm window) is either listening to mouse events or it's not. I think
+the application tells xterm this via control char sequences.
+Anyway, the behaviour looks like it's hard coded. So in HandleInsertSelection if
+the application wants mouse events and Shift is not pressed, the event is passed through
+to the application (as control chars).
+A patch to invert the logic would be fairly straightforward.
+But: first look at rxvt - it's more recent and lightweight. And this has got me thinking.
+Perhaps a tmux toggle key would be better - to turn on/off mouse behaviour.
+The default state would be off.
+```
+
+More xterm notes
+```
+button.c SendMousePosition()
+Ctrl-click pays no heed to whether the app wants mouse events.
+
+button.c
+For each click (shifted or not)...
+HandleSelectStart()
+  do_select_start()
+    if (SendMousePosition()) return
+    else StartSelect()      # normal xterm selection
+```

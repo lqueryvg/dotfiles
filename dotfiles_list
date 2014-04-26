@@ -4,3 +4,4 @@
 .tmux.conf
 .xmodmap
 .dircolors
+.colordiffrc

@@ -4,21 +4,22 @@ set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlighting (previously syntax on).
 colorscheme desert        " set colorscheme
 "set laststatus=2         " last window always has a statusline
-filetype plugin indent on " activates indenting for files
+"filetype plugin indent on " activates indenting for files
 set hlsearch              " highlight searched phrases.
 set incsearch             " highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
 set ruler                 " Always show info along bottom.
 set autoindent            " auto-indent
-set tabstop=2             " tab spacing
-set softtabstop=4         " unify
-set shiftwidth=2          " indent/outdent by this many columns
-set shiftround            " always indent/outdent to the nearest tabstop
+set tabstop=4             " tab spacing
+set shiftwidth=4          " indent/outdent by this many columns
+set softtabstop=4         " unify?
 set expandtab             " use spaces instead of tabs
+set shiftround            " always indent/outdent to the nearest tabstop
 set smarttab              " use tabs at the start of a line, spaces elsewhere
 set backspace=indent,start  " backspace over autoindents and start of insert
 set mouse=nvch            " mouse works in all modes except insert
 
+"""""""""""""""""""""""""""""""""""""""""""
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 let g:loaded_youcompleteme = 1 
@@ -33,7 +34,14 @@ Bundle 'kien/ctrlp.vim'
 
 " */# Search forwards/back for text under vis selection
 Bundle 'nelstrom/vim-visual-star-search'
+
+" Syntax highlight for md files
+Bundle 'plasticboy/vim-markdown'
 execute pathogen#infect()
+"""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+                             \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
 
 syntax on
 filetype plugin indent on
@@ -77,3 +85,8 @@ vnoremap <Leader>s :sort<CR>
 " indent visual block without losing selection
 vnoremap < <gv
 vnoremap > >gv
+
+map <C-Down> <C-w>j
+map <C-Up> <C-w>k
+map <C-Left> <C-w>h
+map <C-Right> <C-w>l
