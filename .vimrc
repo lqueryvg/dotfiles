@@ -31,6 +31,8 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'pangloss/vim-javascript'
 Bundle 'kien/ctrlp.vim'
 
+" */# Search forwards/back for text under vis selection
+Bundle 'nelstrom/vim-visual-star-search'
 execute pathogen#infect()
 
 syntax on
