@@ -2,6 +2,6 @@
 .vimrc
 .bash_profile
 .tmux.conf
-.xmodmap
+.Xmodmap
 .dircolors
 .colordiffrc

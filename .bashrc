@@ -20,10 +20,13 @@ alias du='du -h'
 # alias less='less -r'              # raw control characters
 alias whence='type -a'              # like where
 alias grep='grep --color'           # show matches in colour
+alias cgrep='egrep --color=always'  # color even to pipe
 alias egrep='egrep --color=auto'    # show matches in colour
 alias fgrep='fgrep --color=auto'    # show matches in colour
 alias ls='ls -hF --color=always'    # classify files in colour
 alias less='less -R'                # ls pipe less is in colour
+alias mvi=~/dotfiles/bin/mvim.sh
+alias mvim=~/dotfiles/bin/mvim.sh
 d=~/.dircolors
 test -r $d && eval "$(dircolors $d)"
 
@@ -40,3 +43,10 @@ export PS1="$ "
 export TERM=xterm-256color
 export CDPATH=.:~/Documents:~/Downloads:~
 
+# do not echo "^C" when pressing ^c
+# otherwise it blats part of command making copy/paste harder
+stty -echoctl
+
+# bash completion for tmux commands
+# TODO make a make a ~/.bash_completion.d directory
+[[ -f ~/dotfiles/bin/bash_completion_tmux.sh ]] && . ~/dotfiles/bin/bash_completion_tmux.sh
