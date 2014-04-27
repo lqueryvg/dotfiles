@@ -1,5 +1,5 @@
 #
-# Opens given files in new tabs in the first tmux panel with "vim" in it's name
+# Opens given files in new vim tabs in the first tmux panel with "vim" in it's name
 # and selects that tmux pane and tmux window (thereby giving it focus).
 # Also, attempts to focus the xterm tmux is running in with wmctrl if available.
 #
