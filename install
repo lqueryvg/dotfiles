@@ -17,7 +17,7 @@ do
     if [[ ! -L $file ]]
     then
         logAndRun mv ~/$file $olddir
-        logAndRun ln -s $dir/$file ~/$file
+        logAndRun ln -sf $dir/$file ~/$file
     else
         echo "$file is already a link"
     fi

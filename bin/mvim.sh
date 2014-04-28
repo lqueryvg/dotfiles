@@ -1,8 +1,29 @@
 #
-# Opens given files in new vim tabs in the first tmux panel with "vim" in it's name
-# and selects that tmux pane and tmux window (thereby giving it focus).
-# Also, attempts to focus the xterm tmux is running in with wmctrl if available.
+# Opens given files in new vim tabs in the first tmux panel with "vim" in it's
+# name and selects that tmux pane and tmux window (thereby giving it focus).
+# Also, attempts to focus the xterm tmux is running in with wmctrl if
+# available.
 #
+# Not working on Cygwin because the title of the first vim pane is "bash" which
+# is the name of the first process started when the pane is created.  The
+# pane's title isn't seen (at least not in my config) except with the tmux
+# list-panes command which the script uses.  The only way to change the pane
+# title is via control sequences, e.g.
+#
+#   $ printf '\033]2;My Title\033\\'
+#
+# But on Cygwin (at least) this has the side effect of also changing the mintty
+# title. I wonder if this is a bug in tmux ?  Need a better way of finding the
+# first vim.
+#
+# New approach should be to find the first pane with a tty attached to a vim
+# process in ps.  Another script would be handy which lists panes along with
+# processes on the same tty.
+#
+# 1. tmux list-panes     # get pane ids and tty (forget the other info)
+#
+# 2. Find first vim process in ps on that tty
+# 
 
 files=$*
 

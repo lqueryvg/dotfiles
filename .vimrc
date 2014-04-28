@@ -1,7 +1,7 @@
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 set t_Co=256              " enable 256-color mode.
-syntax enable             " enable syntax highlighting (previously syntax on).
+syntax enable             " enable syntax highlights (prev. syntax on).
 "set laststatus=2         " last window always has a statusline
 "filetype plugin indent on " activates indenting for files
 colorscheme desert        " set colorscheme
@@ -16,8 +16,11 @@ set softtabstop=4         " unify?
 set expandtab             " use spaces instead of tabs
 set shiftround            " always indent/outdent to the nearest tabstop
 set smarttab              " use tabs at the start of a line, spaces elsewhere
-set backspace=indent,start  " backspace over autoindents and start of insert
-set mouse=nvch            " mouse works in all modes except insert
+set backspace=indent,start  " BS over autoindents and start of insert
+set mouse=nvch              " mouse works in all modes except insert
+set colorcolumn=80          " highlight column 80 to watch out for long lines
+set cursorline              " highlight column 80 to watch out for long lines
+set keywordprg=:help        " K calls :help on word under cursor
 "set textwidth=0
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -34,8 +37,10 @@ Bundle 'pangloss/vim-javascript'
 
 " fuzzy search filenames
 Bundle 'kien/ctrlp.vim'
-let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
-                             \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+
+let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
+  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
+
 let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
 let g:ctrlp_working_path_mode = 0   " don't start in current dir
 
@@ -43,10 +48,6 @@ let g:ctrlp_working_path_mode = 0   " don't start in current dir
 Bundle 'nelstrom/vim-visual-star-search'
 
 " Syntax highlight for md files
-"Bundle 'plasticboy/vim-markdown'
-"let g:vim_markdown_folding_disabled=1   "otherwise everything is initially folded
-" PROBLEM with plasticboy/vim-markdown: autoindents inside fenced block "```"
-" This works better:
 Bundle 'gabrielelana/vim-markdown'
 
 execute pathogen#infect()
@@ -68,12 +69,15 @@ autocmd! BufWritePost .vimrc source %
 command! Q q
 command! -bang Q q<bang>
 
+" Open a new tab
+command! TT tabnew
+
 " disable Q and gQ (which puts you in useless ex mode)
 nnoremap Q <Nop>
 nnoremap gQ <Nop>
 
 " disable K which trys to man the word under cursor
-nnoremap K <Nop>
+"nnoremap K <Nop>
 
 " move between windows with Ctrl then movement key
 map <c-h> <c-w>h
@@ -100,3 +104,4 @@ map <C-Down> <C-w>j
 map <C-Up> <C-w>k
 map <C-Left> <C-w>h
 map <C-Right> <C-w>l
+
