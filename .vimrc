@@ -1,5 +1,40 @@
-set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
+"=========================================================
+"modules
+set nocompatible          " be iMproved (required)
+filetype off            " required!
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let vundle manage vundle
+Bundle 'gmarik/vundle'
+Bundle 'scrooloose/nerdtree'
+Bundle 'vim-scripts/mru.vim'
+Bundle 'vim-scripts/jshint.vim'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'pangloss/vim-javascript'
+
+" fuzzy search filenames
+Bundle 'kien/ctrlp.vim'
+
+" */# Search forwards/back for text under vis selection
+Bundle 'nelstrom/vim-visual-star-search'
+
+" Syntax highlight for md files
+Bundle 'gabrielelana/vim-markdown'
+
+filetype plugin indent on " required!
+
+let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
+  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
+
+let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
+let g:ctrlp_working_path_mode = 0   " don't start in current dir
+
+let g:loaded_youcompleteme = 1      " source code completion
+let NERDTreeShowBookmarks=1
+"=========================================================
+
+" My preferences
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlights (prev. syntax on).
 "set laststatus=2         " last window always has a statusline
@@ -23,35 +58,8 @@ set cursorline              " highlight column 80 to watch out for long lines
 set keywordprg=:help        " K calls :help on word under cursor
 "set textwidth=0
 
-"""""""""""""""""""""""""""""""""""""""""""
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-let g:loaded_youcompleteme = 1      " source code completion
-Bundle 'gmarik/vundle'
-let NERDTreeShowBookmarks=1
-Bundle 'scrooloose/nerdtree'
-Bundle 'vim-scripts/mru.vim'
-Bundle 'vim-scripts/jshint.vim'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'pangloss/vim-javascript'
 
-" fuzzy search filenames
-Bundle 'kien/ctrlp.vim'
-
-let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
-  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
-
-let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
-let g:ctrlp_working_path_mode = 0   " don't start in current dir
-
-" */# Search forwards/back for text under vis selection
-Bundle 'nelstrom/vim-visual-star-search'
-
-" Syntax highlight for md files
-Bundle 'gabrielelana/vim-markdown'
-
-execute pathogen#infect()
-"""""""""""""""""""""""""""""""""""""""""""
+"execute pathogen#infect()
 
 syntax on
 filetype plugin indent on

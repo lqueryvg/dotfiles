@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 *.swp
+bundle/
 =======
 doc/tags
 .netrwhist

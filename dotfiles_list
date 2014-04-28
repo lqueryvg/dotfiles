@@ -5,3 +5,5 @@
 .Xmodmap
 .dircolors
 .colordiffrc
+XTerm
+.vim
