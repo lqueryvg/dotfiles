@@ -10,10 +10,12 @@ Bundle 'gmarik/vundle'
 Bundle 'scrooloose/nerdtree'
 Bundle 'vim-scripts/mru.vim'
 Bundle 'vim-scripts/jshint.vim'
-Bundle 'altercation/vim-colors-solarized'
+"Bundle 'altercation/vim-colors-solarized'
 Bundle 'pangloss/vim-javascript'
 
 " fuzzy search filenames
+let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
+  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
 Bundle 'kien/ctrlp.vim'
 
 " */# Search forwards/back for text under vis selection
@@ -24,22 +26,23 @@ Bundle 'gabrielelana/vim-markdown'
 
 filetype plugin indent on " required!
 
-let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
-  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
 
 let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
 let g:ctrlp_working_path_mode = 0   " don't start in current dir
 
 let g:loaded_youcompleteme = 1      " source code completion
 let NERDTreeShowBookmarks=1
+"execute pathogen#infect()
 "=========================================================
 
 " My preferences
+"syntax on
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlights (prev. syntax on).
+color skittles_dark
 "set laststatus=2         " last window always has a statusline
 "filetype plugin indent on " activates indenting for files
-colorscheme desert        " set colorscheme
+"colorscheme desert        " set colorscheme
 set hlsearch              " highlight searched phrases.
 set incsearch             " highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
@@ -56,20 +59,16 @@ set mouse=nvch              " mouse works in all modes except insert
 set colorcolumn=80          " highlight column 80 to watch out for long lines
 set cursorline              " highlight column 80 to watch out for long lines
 set keywordprg=:help        " K calls :help on word under cursor
+set wildmenu
 "set textwidth=0
 
+"filetype plugin indent on
 
-"execute pathogen#infect()
-
-syntax on
-filetype plugin indent on
-
-color skittles_dark
-set wildmenu
 
 " Automatic loading of .vimrc
 autocmd! BufWritePost .vimrc source %
 
+"=====================================================
 " Key maps
 " DO NOT put comments ON END of map lines
 
@@ -93,17 +92,6 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 
-" Rebind <Leader> key
-"let mapleader = "\\"
-
-" Cycle tabs
-
-map <Leader>h <esc>:tabprevious<CR>
-map <Leader>l <esc>:tabnext<CR>
-
-" sort
-vnoremap <Leader>s :sort<CR>
-
 " indent visual block without losing selection
 vnoremap < <gv
 vnoremap > >gv
@@ -113,3 +101,14 @@ map <C-Up> <C-w>k
 map <C-Left> <C-w>h
 map <C-Right> <C-w>l
 
+"=====================================================
+" Leader mappings
+" Rebind <Leader> key
+"let mapleader = "\\"
+
+" Cycle tabs
+map <Leader>h <esc>:tabprevious<CR>
+map <Leader>l <esc>:tabnext<CR>
+
+" sort
+vnoremap <Leader>s :sort<CR>

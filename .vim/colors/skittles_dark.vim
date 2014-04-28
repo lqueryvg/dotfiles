@@ -58,7 +58,8 @@ hi Label guifg=#E6DB74 ctermfg=186
 "gui=none
 hi Macro guifg=#C4BE89 ctermfg=180
 "gui=italic
-hi SpecialKey guifg=#222222 ctermfg=235
+"hi SpecialKey guifg=#222222 ctermfg=235
+hi SpecialKey guifg=#222222 ctermfg=226
 "gui=italic
 hi clear VertSplit
 hi link VertSplit SpecialKey
