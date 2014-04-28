@@ -1,5 +1,8 @@
 ```
+Clone to ~/dotfiles then run install.
+
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-TODO - then do some stuff
+Start vim. Run :BundleInstall.
+
 ```
