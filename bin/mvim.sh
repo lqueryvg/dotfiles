@@ -23,6 +23,7 @@
 # 1. tmux list-panes     # get pane ids and tty (forget the other info)
 #
 # 2. Find first vim process in ps on that tty
+# DONE - need to test on cygwin
 # 
 
 files=$*
@@ -39,10 +40,45 @@ get_parent_pid() {
     echo $(ps -o ppid= -p $1)
 }
 
-# Select the first pane running vim.
-format='#{session_name}:#{window_index}.#{pane_index} #{pane_current_command}'
-set -- $(tmux list-panes -a -F "$format" | grep vim)
-pane_id=$1
+get_vim_pane_id() {
+    format="#{session_name}:#{window_index}.#{pane_index} #{pane_tty}"
+    # get output like this
+    #   3:1.0 /dev/pts/10
+    #   4:1.0 /dev/pts/3
+    #   4:1.1 /dev/pts/5
+    #   4:2.0 /dev/pts/4
+
+    declare -A vim_pts_bag
+    while read pts cmd rest
+    do
+        [[ $cmd != "vim" ]] && continue
+        vim_pts_bag["$pts"]="in_the_bag"
+    done < <(ps -e -o tty,cmd)
+
+    while read id pts
+    do
+        pts=${pts#/dev/}
+        if [[ ${vim_pts_bag[$pts]} == "in_the_bag" ]]
+        then
+            #echo "$id $pts vim"
+            echo "$id"
+            return
+        fi
+    done < <(tmux list-panes -a -F "$format")
+}
+
+#echo $(get_vim_pane_id)
+## Select the first pane running vim.
+#format='#{session_name}:#{window_index}.#{pane_index} #{pane_current_command}'
+#set -- $(tmux list-panes -a -F "$format" | grep vim)
+#pane_id=$1
+
+pane_id=$(get_vim_pane_id)
+if [[ -z $pane_id ]]
+then
+    echo "ERROR: couldn't find vim pane"
+    exit 1
+fi
 tmux select-pane -t $pane_id
 
 # Send :tabedit commands to vim for each file.
