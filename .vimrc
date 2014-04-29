@@ -1,11 +1,11 @@
-"=========================================================
+"---------------------------------------------------------
 " Source modules if vundle present
 set nocompatible          " be iMproved (required)
 if filereadable(expand('~/.vim/bundle/vundle/autoload/vundle.vim'))
     source ~/.vim/startup/modules.vim
 endif
 
-"=========================================================
+"---------------------------------------------------------
 
 " My preferences
 "syntax on
@@ -35,12 +35,33 @@ set wildmenu
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 "set textwidth=0
+
+"---------------------------------------------------------
+" window split chars and status line
+" hopefully we'll be able to distinguish the active window
+set fillchars+=stl:=,stlnc:_
 set fillchars+=vert:\|
-"set fillchars+=stl:_
+set statusline=
+set statusline+=%f        " filename as type or relative to current dir
+set statusline+=\         " space
+set statusline+=%=        " go over to the right
+set statusline+=\         " space
+set statusline+=%l,%c     " line, column
+set statusline+=\         " space
+set statusline+=%p%%      " percentage thru file
+set statusline+=\         " space
+set statusline+=b%n       " buffer num "bn"
+set statusline+=%M        " modified ",+" or ",-"
+set statusline+=%R        " readonly ",RO"
+set statusline+=\         " space
+set laststatus=2          " show my statusline even if only 1 window
+"---------------------------------------------------------
 
 " make 81st column stand out (from Damien Conway)
 highlight ColorColumn ctermbg=cyan ctermfg=black
 call matchadd('ColorColumn', '\%81v', 100)
+
+" status line
 
 " Make cursorline only visible in active windows
 augroup CursorLine
@@ -54,7 +75,7 @@ augroup END
 " Automatic loading of .vimrc
 autocmd! BufWritePost .vimrc source %
 
-"=====================================================
+"-------------------------------------------------------
 " Key maps
 " DO NOT put comments ON END of map lines
 
@@ -87,7 +108,7 @@ map <C-Up> <C-w>k
 map <C-Left> <C-w>h
 map <C-Right> <C-w>l
 
-"=====================================================
+"-----------------------------------------------------
 " Leader mappings
 " Rebind <Leader> key
 "let mapleader = "\\"
