@@ -47,6 +47,12 @@ export CDPATH=.:~/Documents:~/Downloads:~
 # otherwise it blats part of command making copy/paste harder
 stty -echoctl
 
-# bash completion for tmux commands
 # TODO make a make a ~/.bash_completion.d directory
-[[ -f ~/dotfiles/bin/bash_completion_tmux.sh ]] && . ~/dotfiles/bin/bash_completion_tmux.sh
+# bash completion for tmux commands
+#source_if_exists ~/dotfiles/bin/bash_completion_tmux.sh
+#source /etc/bash_completion.d/git
+source /etc/bash_completion
+for file in ~/dotfiles/bash_completion.d/*
+do
+    source $file
+done
