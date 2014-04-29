@@ -112,7 +112,7 @@ hi Statement guifg=#C01414 ctermfg=1 gui=none
 "hi StatusLineNC guifg=#455354 ctermfg=white guibg=fg ctermbg=234
 "hi StatusLineNC guifg=#808080 ctermfg=244 guibg=#080808 ctermbg=0
 hi clear StatusLine
-hi StatusLine   guifg=#455354 ctermbg=234 guibg=fg ctermfg=white
+hi StatusLine   guifg=#455354 ctermbg=236 guibg=fg ctermfg=white
 hi clear StatusLineNC
 hi StatusLineNC guifg=#455354 ctermbg=232 guibg=fg ctermfg=241
 
@@ -151,6 +151,7 @@ hi Comment guifg=#5D8D8F ctermfg=66 gui=none
 "gui=italic
 hi CursorLine guibg=#121212 ctermbg=233 cterm=none
 hi CursorColumn guibg=#121212 ctermbg=233
+"hi ColorColumn guibg=#121212 ctermbg=94 ctermfg=0
 hi LineNr guifg=#FFFFFF ctermfg=15 guibg=#000000 ctermbg=0 gui=underline
 "hi NonText guifg=#BCBCBC ctermfg=250 guibg=#232526 ctermbg=235
 hi clear NonText

@@ -1,38 +1,10 @@
 "=========================================================
-"modules
+" Source modules if vundle present
 set nocompatible          " be iMproved (required)
-filetype off            " required!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if filereadable(expand('~/.vim/bundle/vundle/autoload/vundle.vim'))
+    source ~/.vim/startup/modules.vim
+endif
 
-" let vundle manage vundle
-Bundle 'gmarik/vundle'
-Bundle 'scrooloose/nerdtree'
-Bundle 'vim-scripts/mru.vim'
-Bundle 'vim-scripts/jshint.vim'
-"Bundle 'altercation/vim-colors-solarized'
-Bundle 'pangloss/vim-javascript'
-
-" fuzzy search filenames
-let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
-  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
-Bundle 'kien/ctrlp.vim'
-
-" */# Search forwards/back for text under vis selection
-Bundle 'nelstrom/vim-visual-star-search'
-
-" Syntax highlight for md files
-Bundle 'gabrielelana/vim-markdown'
-
-filetype plugin indent on " required!
-
-
-let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
-let g:ctrlp_working_path_mode = 0   " don't start in current dir
-
-let g:loaded_youcompleteme = 1      " source code completion
-let NERDTreeShowBookmarks=1
-"execute pathogen#infect()
 "=========================================================
 
 " My preferences
@@ -56,14 +28,28 @@ set shiftround            " always indent/outdent to the nearest tabstop
 set smarttab              " use tabs at the start of a line, spaces elsewhere
 set backspace=indent,start  " BS over autoindents and start of insert
 set mouse=nvch              " mouse works in all modes except insert
-set colorcolumn=80          " highlight column 80 to watch out for long lines
+"set colorcolumn=80          " highlight column 80 to watch out for long lines
 set cursorline              " highlight column 80 to watch out for long lines
 set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu
+" Start scrolling three lines before the horizontal window border
+set scrolloff=3
 "set textwidth=0
+set fillchars+=vert:\|
+"set fillchars+=stl:_
 
-"filetype plugin indent on
+" make 81st column stand out (from Damien Conway)
+highlight ColorColumn ctermbg=cyan ctermfg=black
+call matchadd('ColorColumn', '\%81v', 100)
 
+" Make cursorline only visible in active windows
+augroup CursorLine
+    au!
+    au VimEnter * setlocal cursorline
+    au WinEnter * setlocal cursorline
+    au BufWinEnter * setlocal cursorline
+    au WinLeave * setlocal nocursorline
+augroup END
 
 " Automatic loading of .vimrc
 autocmd! BufWritePost .vimrc source %
