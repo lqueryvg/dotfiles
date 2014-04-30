@@ -29,12 +29,21 @@ set smarttab              " use tabs at the start of a line, spaces elsewhere
 set backspace=indent,start  " BS over autoindents and start of insert
 set mouse=nvch              " mouse works in all modes except insert
 "set colorcolumn=80          " highlight column 80 to watch out for long lines
-set cursorline              " highlight column 80 to watch out for long lines
 set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 "set textwidth=0
+
+"---------------------------------------------------------
+set formatoptions=
+set formatoptions+=j   " sensibly remove comment leaders on joining lines
+set formatoptions+=q   " allow gq to format comments
+set formatoptions+=l   " long lines not broken in insert mode
+set formatoptions+=n   " recognise numbered lists when formatting
+                       "   needs autoindent set, and uses formatlistpat
+set formatoptions+=o   " add comment leader with o or O
+set formatoptions+=r   " add comment leader on <Enter> in insert mode
 
 "---------------------------------------------------------
 " window split chars and status line
@@ -63,16 +72,18 @@ call matchadd('ColorColumn', '\%81v', 100)
 
 " status line
 
+" commenting out cursorline because I can't see yellow Notes or 'TODO's
+"set cursorline
 " Make cursorline only visible in active windows
-augroup CursorLine
-    au!
-    au VimEnter * setlocal cursorline
-    au WinEnter * setlocal cursorline
-    au BufWinEnter * setlocal cursorline
-    au WinLeave * setlocal nocursorline
-augroup END
+"augroup CursorLine
+"    au!
+"    au VimEnter * setlocal cursorline
+"    au WinEnter * setlocal cursorline
+"    au BufWinEnter * setlocal cursorline
+"    au WinLeave * setlocal nocursorline
+"augroup END
 
-" Automatic loading of .vimrc
+" Auto load .vimrc if it changes
 autocmd! BufWritePost .vimrc source %
 
 "-------------------------------------------------------
@@ -94,19 +105,25 @@ nnoremap gQ <Nop>
 "nnoremap K <Nop>
 
 " move between windows with Ctrl then movement key
-map <c-h> <c-w>h
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
+noremap <c-h> <c-w>h
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+" Annoying messages until I get the new mapping
+noremap <c-w>h <esc>:echoerr '>>>>>>>> use ^h to move left split <<<<<<<<<<'<CR>
+noremap <c-w>j <esc>:echoerr '>>>>>>>> use ^j to move right split <<<<<<<<<<'<CR>
+noremap <c-w>k <esc>:echoerr '>>>>>>>> use ^k to move up split <<<<<<<<<<'<CR>
+noremap <c-w>l <esc>:echoerr '>>>>>>>> use ^l to move down split <<<<<<<<<<'<CR>
 
 " indent visual block without losing selection
 vnoremap < <gv
 vnoremap > >gv
 
-map <C-Down> <C-w>j
-map <C-Up> <C-w>k
-map <C-Left> <C-w>h
-map <C-Right> <C-w>l
+" I don't seem to be using these
+"map <C-Down> <C-w>j
+"map <C-Up> <C-w>k
+"map <C-Left> <C-w>h
+"map <C-Right> <C-w>l
 
 "-----------------------------------------------------
 " Leader mappings
@@ -116,6 +133,10 @@ map <C-Right> <C-w>l
 " Cycle tabs
 map <Leader>h <esc>:tabprevious<CR>
 map <Leader>l <esc>:tabnext<CR>
+
+" Annoying messages until I get the new mapping
+noremap gT <esc>:echoerr '>>>>>>>> use \h and \l  <<<<<<<<<<'<CR>
+noremap gt <esc>:echoerr '>>>>>>>> use \h and \l  <<<<<<<<<<'<CR>
 
 " sort
 vnoremap <Leader>s :sort<CR>
