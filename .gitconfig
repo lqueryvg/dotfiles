@@ -11,4 +11,5 @@
     safecrlf = true
     eol = lf
 [color]
-    ui = auto
+    ui = always
+    diff = always

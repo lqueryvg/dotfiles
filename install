@@ -38,6 +38,7 @@ do
     fi
 done < $dir/dotfiles_list
 
+echo "installing new .gitconfig"
 # .gitconfig is special, need to edit it with original user/email
 if [[ -f ~/.gitconfig ]]
 then
