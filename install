@@ -4,9 +4,23 @@ dir=~/dotfiles                    # dotfiles directory
 olddir=~/.dotfiles_old             # old dotfiles backup directory
 
 logAndRun() {
-    cmd=$*
+    local cmd=$*
     echo $cmd
     $cmd
+    if [[ $? != 0 ]]
+    then
+        echo "ERROR: command failed"
+        echo "please rectify and re-run"
+        exit 1
+    fi
+}
+
+rename_if_exists() {
+    local file=$1
+    if [[ -e $file ]]
+    then
+        logAndRun mv $file ${file}.bak
+    fi
 }
 
 logAndRun mkdir -p $olddir
@@ -14,15 +28,17 @@ logAndRun cd $dir
 
 while read file
 do
-    if [[ ! -L $file ]]
+    if [[ ! -L ~/$file ]]   # if not already a link
     then
+        rename_if_exists $olddir/$file
         logAndRun mv ~/$file $olddir
         logAndRun ln -sf $dir/$file ~/$file
     else
-        echo "$file is already a link"
+        echo "$file already linked"
     fi
 done < $dir/dotfiles_list
 
+# .gitconfig is special, need to edit it with original user/email
 if [[ -f ~/.gitconfig ]]
 then
   git_name=`git config --global --get user.name`
