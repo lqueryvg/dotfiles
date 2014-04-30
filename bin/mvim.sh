@@ -1,18 +1,15 @@
 #
-# Finds vim running under tmux and opens given files in tabs.
-# Also, attempts to focus the OS window (e.g. xterm) that tmux is running,
-# but this is only working for Linux xterms and if wmctrl is available.
-#
-# It finds the first vim as follows:
-#
-# - Use tmux list-panes to find ttys of all panes.
-#
-# - Find first of those ptys with a process with "vim" in it's name.
-#
 # Opens given files in new vim tabs in the first tmux panel with "vim" in it's
 # name and selects that tmux pane and tmux window (thereby giving it focus).
+#
+# Also, attempts to focus the OS window running tmux (e.g. xterm), but this
+# only works for Linux xterms; if wmctrl is available.
+#
+# It finds the first tmux vim as follows:
+#
+# 1. Use tmux list-panes to find ptys of all panes.
+# 2. Find first of those ptys with a process with "vim" in it's name.
 # 
-
 
 files=$*
 
@@ -31,13 +28,11 @@ get_parent_pid() {
     echo $2
 }
 
-ps_tty_cmd() { # just TTY and COMMAND column for every process
-    # ps -e on uname CYGWIN...
+ps_tty_cmd() { # list just TTY and COMMAND column for every process
+    # ps -e on cygwin:
     #    PID    PPID    PGID     WINPID   TTY     UID    STIME COMMAND
     #   8248    8780    8248       8064  pty4    1001 15:34:35 /usr/bin/ps
     #   6224    6976    6224       7572  pty3    1001   Apr 28 /usr/bin/bash
-    #   5112       1    5112       5112  ?       1001   Apr 28 /usr/bin/mintty
-    #   3760     992    3760      11260  pty0    1001   Apr 28 /usr/bin/tmux
     if [[ `uname` =~ CYGWIN ]]
     then
         # no ps -o on cygwin
@@ -47,15 +42,21 @@ ps_tty_cmd() { # just TTY and COMMAND column for every process
     fi
 }
 
-get_vim_pane_id() {  # print id of first tmux pane with a vim tty
-    format="#{session_name}:#{window_index}.#{pane_index} #{pane_tty}"
+get_tmux_pane_ttys() {
+    local format="#{session_name}:#{window_index}.#{pane_index} #{pane_tty}"
+    tmux list-panes -a -F "$format"
+
     # tmux gives output like this:
     #   3:1.0 /dev/pts/10
     #   4:1.0 /dev/pts/3
     #   4:1.1 /dev/pts/5
     #   4:2.0 /dev/pts/4
+}
+
+get_vim_pane_id() {  # print id of first tmux pane with a vim tty
 
     # find ptys of all processes with "vim" in command name
+    # Put them in a "bag".
     declare -A vim_pts_bag
     while read pts cmd
     do
@@ -69,17 +70,10 @@ get_vim_pane_id() {  # print id of first tmux pane with a vim tty
         pts=${pts#/dev/}
         if [[ ${vim_pts_bag[$pts]} == "in_the_bag" ]]
         then
-            echo "$id"
-            return
+            echo "$id"; return
         fi
-    done < <(tmux list-panes -a -F "$format")
+    done < <(get_tmux_pane_ttys)
 }
-
-#echo $(get_vim_pane_id)
-## Select the first pane running vim.
-#format='#{session_name}:#{window_index}.#{pane_index} #{pane_current_command}'
-#set -- $(tmux list-panes -a -F "$format" | grep vim)
-#pane_id=$1
 
 pane_id=$(get_vim_pane_id)
 if [[ -z $pane_id ]]
