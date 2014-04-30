@@ -1,30 +1,18 @@
 #
+# Finds vim running under tmux and opens given files in tabs.
+# Also, attempts to focus the OS window (e.g. xterm) that tmux is running,
+# but this is only working for Linux xterms and if wmctrl is available.
+#
+# It finds the first vim as follows:
+#
+# - Use tmux list-panes to find ttys of all panes.
+#
+# - Find first of those ptys with a process with "vim" in it's name.
+#
 # Opens given files in new vim tabs in the first tmux panel with "vim" in it's
 # name and selects that tmux pane and tmux window (thereby giving it focus).
-# Also, attempts to focus the xterm tmux is running in with wmctrl if
-# available.
-#
-# Not working on Cygwin because the title of the first vim pane is "bash" which
-# is the name of the first process started when the pane is created.  The
-# pane's title isn't seen (at least not in my config) except with the tmux
-# list-panes command which the script uses.  The only way to change the pane
-# title is via control sequences, e.g.
-#
-#   $ printf '\033]2;My Title\033\\'
-#
-# But on Cygwin (at least) this has the side effect of also changing the mintty
-# title. I wonder if this is a bug in tmux ?  Need a better way of finding the
-# first vim.
-#
-# New approach should be to find the first pane with a tty attached to a vim
-# process in ps.  Another script would be handy which lists panes along with
-# processes on the same tty.
-#
-# 1. tmux list-panes     # get pane ids and tty (forget the other info)
-#
-# 2. Find first vim process in ps on that tty
-# DONE - need to test on cygwin
 # 
+
 
 files=$*
 
@@ -37,30 +25,50 @@ realpath() {
 }
 
 get_parent_pid() {
-    echo $(ps -o ppid= -p $1)
+    local pid=$1
+    #echo $(ps -o ppid= -p $1)
+    set -- $(ps -p $pid)
+    echo $2
 }
 
-get_vim_pane_id() {
+ps_tty_cmd() { # just TTY and COMMAND column for every process
+    # ps -e on uname CYGWIN...
+    #    PID    PPID    PGID     WINPID   TTY     UID    STIME COMMAND
+    #   8248    8780    8248       8064  pty4    1001 15:34:35 /usr/bin/ps
+    #   6224    6976    6224       7572  pty3    1001   Apr 28 /usr/bin/bash
+    #   5112       1    5112       5112  ?       1001   Apr 28 /usr/bin/mintty
+    #   3760     992    3760      11260  pty0    1001   Apr 28 /usr/bin/tmux
+    if [[ `uname` =~ CYGWIN ]]
+    then
+        # no ps -o on cygwin
+        ps -e | awk '{print $5, $NF}'
+    else
+        ps -e -o tty,cmd
+    fi
+}
+
+get_vim_pane_id() {  # print id of first tmux pane with a vim tty
     format="#{session_name}:#{window_index}.#{pane_index} #{pane_tty}"
-    # get output like this
+    # tmux gives output like this:
     #   3:1.0 /dev/pts/10
     #   4:1.0 /dev/pts/3
     #   4:1.1 /dev/pts/5
     #   4:2.0 /dev/pts/4
 
+    # find ptys of all processes with "vim" in command name
     declare -A vim_pts_bag
-    while read pts cmd rest
+    while read pts cmd
     do
-        [[ $cmd != "vim" ]] && continue
+        [[ ! ($cmd =~ "vim") ]] && continue
         vim_pts_bag["$pts"]="in_the_bag"
-    done < <(ps -e -o tty,cmd)
+    done < <(ps_tty_cmd)
 
+    # print id of first tmux pane with a vim tty
     while read id pts
     do
         pts=${pts#/dev/}
         if [[ ${vim_pts_bag[$pts]} == "in_the_bag" ]]
         then
-            #echo "$id $pts vim"
             echo "$id"
             return
         fi
@@ -76,7 +84,7 @@ get_vim_pane_id() {
 pane_id=$(get_vim_pane_id)
 if [[ -z $pane_id ]]
 then
-    echo "ERROR: couldn't find vim pane"
+    echo "ERROR: couldn't find a pane with vim cmd on it's tty"
     exit 1
 fi
 tmux select-pane -t $pane_id
@@ -97,7 +105,7 @@ tmux select-window -t $win_id
 # Attempt to focus the X window (e.g. xterm).
 # The X window is not the ancestor of vim.
 # But it is the ancestor of the tmux session.
-if [[ ! -x `which wmctrl` ]]
+if [[ ! -x `which wmctrl 2>/dev/null` ]]
 then
     echo "INFO: wmctrl not available, unable to focus X window"
     exit
@@ -107,10 +115,16 @@ set -- $(tmux list-clients -F "#{client_session} #{client_tty}" |
          grep "^${session_id} ")
 pts=$2
 pts=${pts#/dev/}        # e.g. "/dev/pts/2" becomes "pts/2"
-set -- $(ps -e -o pid,tty,cmd | grep tmux | grep $pts)
-pid=$1       # pid of tmux session
-pid=$(get_parent_pid $pid)  # parent of tmux is the shell
-pid=$(get_parent_pid $pid)  # parent of shell should be the X window
+
+get_tmux_pts_pid() { # return pid of tmux session on given pts
+    local pts=$1
+    set -- $(ps -e -o pid,tty,cmd | grep tmux | grep $pts)
+    return $1
+}
+
+pid=$(get_tmux_pts_pid $pts)    # pid of tmux session on that pts
+pid=$(get_parent_pid $pid)      # parent of tmux is the shell
+pid=$(get_parent_pid $pid)      # parent of shell should be the X window
 set -- $(wmctrl -lp | grep $pid)
 win_id=$1
 wmctrl -i -a $win_id
