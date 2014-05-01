@@ -6,7 +6,7 @@
 
 # Uncomment to turn on programmable completion enhancements.
 # Any completions you add in ~/.bash_completion are sourced last.
-#[[ -f /etc/bash_completion ]] && . /etc/bash_completion
+[[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
 # Interactive operation...
 alias rm='rm -i'
@@ -51,8 +51,8 @@ stty -echoctl
 # bash completion for tmux commands
 #source_if_exists ~/dotfiles/bin/bash_completion_tmux.sh
 #source /etc/bash_completion.d/git
-source /etc/bash_completion
-for file in ~/dotfiles/bash_completion.d/*
+bcdir=~/dotfiles/bash_completion.d
+[[ -d $bcdir ]] && for file in $bcdir/*
 do
     source $file
 done
