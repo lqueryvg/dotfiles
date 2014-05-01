@@ -97,7 +97,8 @@ command! -bang Q q<bang>
 " Open a new tab
 command! TT tabnew
 
-" disable Q and gQ (which puts you in useless ex mode)
+" disable Q and gQ (which puts you in fancy ex mode)
+" can still access it through q:
 nnoremap Q <Nop>
 nnoremap gQ <Nop>
 
@@ -135,8 +136,8 @@ map <Leader>h <esc>:tabprevious<CR>
 map <Leader>l <esc>:tabnext<CR>
 
 " Annoying messages until I get the new mapping
-noremap gT <esc>:echoerr '>>>>>>>> use \h and \l  <<<<<<<<<<'<CR>
-noremap gt <esc>:echoerr '>>>>>>>> use \h and \l  <<<<<<<<<<'<CR>
+noremap gT <esc>:echoerr '>>>>>>>> use \h to move to left tab  <<<<<<<<<<'<CR>
+noremap gt <esc>:echoerr '>>>>>>>> use \l to move to right tab <<<<<<<<<<'<CR>
 
 " sort
 vnoremap <Leader>s :sort<CR>
