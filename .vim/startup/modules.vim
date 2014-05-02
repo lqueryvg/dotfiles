@@ -15,6 +15,17 @@ Bundle 'pangloss/vim-javascript'
 " fuzzy search filenames
 let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
   \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 Bundle 'kien/ctrlp.vim'
 
 " */# Search forwards/back for text under vis selection
