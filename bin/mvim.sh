@@ -98,11 +98,11 @@ tmux select-window -t $win_id
 # The X window is not the ancestor of vim.
 # But it is the ancestor of the tmux session.
 #
-([[ `uname` =~ CYGWIN ]] && 
-    echo "INFO: unable to focus window on CYGWIN"; exit 0)
+[[ `uname` =~ CYGWIN ]] && 
+    { echo "INFO: unable to focus window on CYGWIN"; exit 0; }
 
-([[ ! -x `which wmctrl 2>/dev/null` ]] && \
-    echo "INFO: wmctrl not available, unable to focus X window"; exit 0)
+[[ ! -x `which wmctrl 2>/dev/null` ]] &&
+    { echo "INFO: wmctrl not available, unable to focus X window"; exit 0; }
 
 session_id=${win_id%:*}     # e.g. "0:1" becomes "0"
 set -- $(tmux list-clients -F "#{client_session} #{client_tty}" |
