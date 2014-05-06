@@ -1,4 +1,15 @@
 "---------------------------------------------------------
+let g:jellybeans_background_color_256 = "black"
+" fixed font looks awful in italics, so turn it off for jellybeans
+let g:jellybeans_overrides = {
+\ 'Comment': { 'attr': ''},
+\ 'StatusLine': { 'attr': ''},
+\ 'StatusLineNC': { 'attr': ''},
+\ 'Folded': { 'attr': ''},
+\ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
+\ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
+\}
+
 " Source modules if vundle present
 set nocompatible          " be iMproved (required)
 if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
@@ -14,16 +25,6 @@ syntax enable             " enable syntax highlights (prev. syntax on).
 "set laststatus=2         " last window always has a statusline
 "filetype plugin indent on " activates indenting for files
 "colorscheme desert        " set colorscheme
-
-" fixed font looks awful in italics, so turn it off for jellybeans
-let g:jellybeans_overrides = {
-\ 'Comment': { 'attr': ''},
-\ 'StatusLine': { 'attr': ''},
-\ 'StatusLineNC': { 'attr': ''},
-\ 'Folded': { 'attr': ''},
-\ 'TabLine': { 'attr': ''},
-\ 'TabLineSel': { 'attr': ''},
-\}
 
 colorscheme jellybeans
 
@@ -49,6 +50,7 @@ set mouse=nvch              " mouse works in all modes except insert
 set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 3 lines above or below cursor
+set hidden             " can now switch buffers without being forced to save
 "set textwidth=0
 
 "---------------------------------------------------------
@@ -63,7 +65,7 @@ endif
 
 "---------------------------------------------------------
 set formatoptions=
-silent! set formatoptions+=j   " sensibly remove comment leaders on joining lines
+silent! set formatoptions+=j   " sensibly remove comment chars on joining lines
 set formatoptions+=q   " allow gq to format comments
 set formatoptions+=l   " long lines not broken in insert mode
 set formatoptions+=n   " recognise numbered lists when formatting
@@ -133,10 +135,10 @@ noremap <c-j> <c-w>j
 noremap <c-k> <c-w>k
 noremap <c-l> <c-w>l
 " Annoying messages until I get the new mapping
-noremap <c-w>h <esc>:echoerr '>>>>>>>> use ^h to move left split <<<<<<<<<<'<CR>
-noremap <c-w>j <esc>:echoerr '>>>>>>>> use ^j to move right split <<<<<<<<<<'<CR>
-noremap <c-w>k <esc>:echoerr '>>>>>>>> use ^k to move up split <<<<<<<<<<'<CR>
-noremap <c-w>l <esc>:echoerr '>>>>>>>> use ^l to move down split <<<<<<<<<<'<CR>
+noremap <c-w>h <esc>:echoerr '>>>>>> use ^h to move left split <<<<<<<<<<'<CR>
+noremap <c-w>j <esc>:echoerr '>>>>>> use ^j to move right split <<<<<<<<<<'<CR>
+noremap <c-w>k <esc>:echoerr '>>>>>> use ^k to move up split <<<<<<<<<<'<CR>
+noremap <c-w>l <esc>:echoerr '>>>>>> use ^l to move down split <<<<<<<<<<'<CR>
 
 " indent visual block without losing selection
 vnoremap < <gv
