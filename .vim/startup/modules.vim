@@ -1,4 +1,4 @@
-
+"------------------------------------------------------------------------------
 "modules
 filetype off            " required!
 "set rtp+=~/.vim/bundle/vundle/Vundle.vim
@@ -16,8 +16,10 @@ Plugin 'nanotech/jellybeans.vim'
 
 " fuzzy search filenames
 Plugin 'kien/ctrlp.vim'
+
 "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
 "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
+
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
