@@ -6,15 +6,22 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 endif
 
 "---------------------------------------------------------
-
-" My preferences
+" Colors
 "syntax on
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlights (prev. syntax on).
-color skittles_dark
+"color skittles_dark
 "set laststatus=2         " last window always has a statusline
 "filetype plugin indent on " activates indenting for files
 "colorscheme desert        " set colorscheme
+colorscheme jellybeans
+
+" make 81st column stand out (from Damien Conway)
+highlight ColorColumn ctermbg=cyan ctermfg=black
+call matchadd('ColorColumn', '\%81v', 100)
+
+"---------------------------------------------------------
+" Misc
 set hlsearch              " highlight searched phrases.
 set incsearch             " highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
@@ -29,9 +36,8 @@ set smarttab              " use tabs at the start of a line, spaces elsewhere
 set backspace=indent,start  " BS over autoindents and start of insert
 set mouse=nvch              " mouse works in all modes except insert
 set keywordprg=:help        " K calls :help on word under cursor
-set wildmenu
-" Start scrolling three lines before the horizontal window border
-set scrolloff=3
+set wildmenu                " tab show menu on command line
+set scrolloff=3             " scroll to keep 3 lines above or below cursor
 "set textwidth=0
 
 "---------------------------------------------------------
@@ -74,10 +80,6 @@ set statusline+=%R        " readonly ",RO"
 set statusline+=\         " space
 set laststatus=2          " show my statusline even if only 1 window
 "---------------------------------------------------------
-
-" make 81st column stand out (from Damien Conway)
-highlight ColorColumn ctermbg=cyan ctermfg=black
-call matchadd('ColorColumn', '\%81v', 100)
 
 " status line
 
