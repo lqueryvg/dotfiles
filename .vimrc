@@ -1,7 +1,7 @@
 "---------------------------------------------------------
 " Source modules if vundle present
 set nocompatible          " be iMproved (required)
-if filereadable(expand('~/.vim/bundle/vundle/autoload/vundle.vim'))
+if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     source ~/.vim/startup/modules.vim
 endif
 
@@ -28,7 +28,6 @@ set shiftround            " always indent/outdent to the nearest tabstop
 set smarttab              " use tabs at the start of a line, spaces elsewhere
 set backspace=indent,start  " BS over autoindents and start of insert
 set mouse=nvch              " mouse works in all modes except insert
-"set colorcolumn=80          " highlight column 80 to watch out for long lines
 set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu
 " Start scrolling three lines before the horizontal window border

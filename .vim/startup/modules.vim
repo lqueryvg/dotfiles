@@ -1,19 +1,21 @@
 
 "modules
 filetype off            " required!
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+"set rtp+=~/.vim/bundle/vundle/Vundle.vim
+set rtp+=~/.vim/bundle//Vundle.vim
+call vundle#begin()
 
 " let vundle manage vundle
-Bundle 'gmarik/vundle'
-Bundle 'scrooloose/nerdtree'
-Bundle 'vim-scripts/mru.vim'
-Bundle 'vim-scripts/jshint.vim'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-scripts/mru.vim'
+Plugin 'vim-scripts/jshint.vim'
 "Bundle 'altercation/vim-colors-solarized'
-Bundle 'pangloss/vim-javascript'
+Plugin 'pangloss/vim-javascript'
+Plugin 'nanotech/jellybeans.vim'
 
 " fuzzy search filenames
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
 "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
 " The Silver Searcher
@@ -33,11 +35,12 @@ let g:ctrlp_working_path_mode = 0
 set wildignore+=*.jpg
 
 " */# Search forwards/back for text under vis selection
-Bundle 'nelstrom/vim-visual-star-search'
+Plugin 'nelstrom/vim-visual-star-search'
 
 " Syntax highlight for md files
-Bundle 'gabrielelana/vim-markdown'
+Plugin 'gabrielelana/vim-markdown'
 
+call vundle#end()
 filetype plugin indent on " required!
 
 
