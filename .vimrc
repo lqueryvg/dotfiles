@@ -36,8 +36,17 @@ set scrolloff=3
 "set textwidth=0
 
 "---------------------------------------------------------
+" GUI options
+if has("gui_running")
+    set guioptions+=a
+    set guioptions-=T
+    set guioptions-=r
+    set guifont=fixed:h9:cANSI
+endif
+
+"---------------------------------------------------------
 set formatoptions=
-set formatoptions+=j   " sensibly remove comment leaders on joining lines
+silent! set formatoptions+=j   " sensibly remove comment leaders on joining lines
 set formatoptions+=q   " allow gq to format comments
 set formatoptions+=l   " long lines not broken in insert mode
 set formatoptions+=n   " recognise numbered lists when formatting
