@@ -7,13 +7,24 @@ endif
 
 "---------------------------------------------------------
 " Colors
-"syntax on
+
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlights (prev. syntax on).
 "color skittles_dark
 "set laststatus=2         " last window always has a statusline
 "filetype plugin indent on " activates indenting for files
 "colorscheme desert        " set colorscheme
+
+" fixed font looks awful in italics, so turn it off for jellybeans
+let g:jellybeans_overrides = {
+\ 'Comment': { 'attr': ''},
+\ 'StatusLine': { 'attr': ''},
+\ 'StatusLineNC': { 'attr': ''},
+\ 'Folded': { 'attr': ''},
+\ 'TabLine': { 'attr': ''},
+\ 'TabLineSel': { 'attr': ''},
+\}
+
 colorscheme jellybeans
 
 " make 81st column stand out (from Damien Conway)
