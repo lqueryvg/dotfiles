@@ -41,6 +41,7 @@ if has("gui_running")
     set guioptions+=a
     set guioptions-=T
     set guioptions-=r
+    set guioptions-=L
     set guifont=fixed:h9:cANSI
 endif
 
@@ -128,12 +129,6 @@ noremap <c-w>l <esc>:echoerr '>>>>>>>> use ^l to move down split <<<<<<<<<<'<CR>
 " indent visual block without losing selection
 vnoremap < <gv
 vnoremap > >gv
-
-" I don't seem to be using these
-"map <C-Down> <C-w>j
-"map <C-Up> <C-w>k
-"map <C-Left> <C-w>h
-"map <C-Right> <C-w>l
 
 "-----------------------------------------------------
 " Leader mappings
