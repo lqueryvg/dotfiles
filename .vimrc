@@ -49,11 +49,13 @@ set expandtab             " use spaces instead of tabs
 set shiftround            " always indent/outdent to the nearest tabstop
 set smarttab              " use tabs at the start of a line, spaces elsewhere
 set backspace=indent,start  " BS over autoindents and start of insert
-set mouse=nvch              " mouse works in all modes except insert
 set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 3 lines above or below cursor
 set hidden             " can now switch buffers without being forced to save
+if (has('mouse'))
+    set mouse=nvch              " mouse works in all modes except insert
+endif
 "set textwidth=0
 
 "---------------------------------------------------------
