@@ -29,8 +29,10 @@ syntax enable             " enable syntax highlights (prev. syntax on).
 colorscheme jellybeans
 
 " make 81st column stand out (from Damien Conway)
-highlight ColorColumn ctermbg=cyan ctermfg=black
-call matchadd('ColorColumn', '\%81v', 100)
+if (exists("*matchadd"))
+    highlight ColorColumn ctermbg=cyan ctermfg=black
+    call matchadd('ColorColumn', '\%81v', 100)
+endif
 
 "---------------------------------------------------------
 " Misc
