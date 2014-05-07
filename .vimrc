@@ -61,10 +61,10 @@ endif
 "---------------------------------------------------------
 " GUI options
 if has("gui_running")
-    set guioptions+=a
-    set guioptions-=T
-    set guioptions-=r
-    set guioptions-=L
+    set guioptions+=a       " autoselect to system clipboard *
+    set guioptions-=T       " remove toolbar
+    set guioptions-=r       " remove R scrollbar
+    set guioptions-=L       " remove L scrollbar
     set guifont=fixed:h9:cANSI
 endif
 
