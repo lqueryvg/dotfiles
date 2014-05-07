@@ -1,4 +1,6 @@
 "---------------------------------------------------------
+set nocompatible          " be iMproved (required)
+
 let g:jellybeans_background_color_256 = "black"
 " fixed font looks awful in italics, so turn it off for jellybeans
 let g:jellybeans_overrides = {
@@ -11,7 +13,6 @@ let g:jellybeans_overrides = {
 \}
 
 " Source modules if vundle present
-set nocompatible          " be iMproved (required)
 if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     source ~/.vim/startup/modules.vim
 endif
