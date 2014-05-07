@@ -1,22 +1,59 @@
 "---------------------------------------------------------
 set nocompatible          " be iMproved (required)
 
-let g:jellybeans_background_color_256 = "black"
-" fixed font looks awful in italics, so turn it off for jellybeans
-let g:jellybeans_overrides = {
-\ 'Comment': { 'attr': ''},
-\ 'StatusLine':   { '256ctermbg': '237', '256ctermfg': 'white', 'attr': ''},
-\ 'StatusLineNC': { '256ctermbg': '234', '256ctermfg': '241',   'attr': ''},
-\ 'WildMenu':     { '256ctermbg': '233', '256ctermfg': '81'},
-\ 'Folded': { 'attr': ''},
-\ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
-\ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
-\}
+"------------------------------------------------------------------------------
+"modules
 
 " Source modules if vundle present
 if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
-    source ~/.vim/startup/modules.vim
+    filetype off            " required!
+    set rtp+=~/.vim/bundle/Vundle.vim
+
+    call vundle#begin()
+
+    Plugin 'gmarik/Vundle.vim'          " let vundle manage itself
+
+    Plugin 'scrooloose/nerdtree'        " File browser
+    let NERDTreeShowBookmarks=1
+
+    Plugin 'vim-scripts/mru.vim'        " Javascript stuff
+    Plugin 'nanotech/jellybeans.vim'    " nice colour scheme
+    Plugin 'gabrielelana/vim-markdown'  " Syntax highlight for md files
+    Plugin 'tommcdo/vim-exchange'       " exchange things, cx{motion} on first then second
+    Plugin 'hdima/python-syntax'        " python syntax
+
+    " Javascript stuff
+    Plugin 'vim-scripts/jshint.vim'
+    Plugin 'pangloss/vim-javascript'    
+
+    " */# Search forwards/back for text under vis selection
+    Plugin 'nelstrom/vim-visual-star-search'
+
+    Plugin 'kien/ctrlp.vim'             " fuzzy search filenames
+    let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
+    let g:ctrlp_working_path_mode = 0   " don't start in current dir
+    "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
+    "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
+
+    call vundle#end()
+    filetype plugin indent on " required!
+
+endif   " modules
+
+"---------------------------------------------------------
+" The Silver Searcher
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore="*.jpg"'
+    let g:ctrlp_user_command += ' --ignore="*.zip" -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    "let g:ctrlp_use_caching = 0
 endif
+set wildignore+=*.jpg
 
 "---------------------------------------------------------
 " Colors
@@ -28,6 +65,17 @@ syntax enable             " enable syntax highlights (prev. syntax on).
 "filetype plugin indent on " activates indenting for files
 "colorscheme desert        " set colorscheme
 
+let g:jellybeans_background_color_256 = "black"
+" fixed font looks awful in italics, so turn it off for jellybeans
+let g:jellybeans_overrides = {
+    \ 'Comment': { 'attr': ''},
+    \ 'StatusLine':   { '256ctermbg': '237', '256ctermfg': 'white', 'attr': ''},
+    \ 'StatusLineNC': { '256ctermbg': '234', '256ctermfg': '241',   'attr': ''},
+    \ 'WildMenu':     { '256ctermbg': '233', '256ctermfg': '81'},
+    \ 'Folded': { 'attr': ''},
+    \ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
+    \ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
+    \}
 colorscheme jellybeans
 
 " make 81st column stand out (from Damien Conway)
