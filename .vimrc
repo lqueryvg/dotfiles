@@ -5,8 +5,9 @@ let g:jellybeans_background_color_256 = "black"
 " fixed font looks awful in italics, so turn it off for jellybeans
 let g:jellybeans_overrides = {
 \ 'Comment': { 'attr': ''},
-\ 'StatusLine': { 'attr': ''},
-\ 'StatusLineNC': { 'attr': ''},
+\ 'StatusLine':   { '256ctermbg': '237', '256ctermfg': 'white', 'attr': ''},
+\ 'StatusLineNC': { '256ctermbg': '234', '256ctermfg': '241',   'attr': ''},
+\ 'WildMenu':     { '256ctermbg': '233', '256ctermfg': '81'},
 \ 'Folded': { 'attr': ''},
 \ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
 \ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
