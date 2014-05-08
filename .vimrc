@@ -1,8 +1,6 @@
-"---------------------------------------------------------
 set nocompatible          " be iMproved (required)
-
+" Modules {{{
 "------------------------------------------------------------------------------
-"modules
 
 " Source modules if vundle present
 if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
@@ -19,7 +17,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'vim-scripts/mru.vim'        " Javascript stuff
     Plugin 'nanotech/jellybeans.vim'    " nice colour scheme
     Plugin 'gabrielelana/vim-markdown'  " Syntax highlight for md files
-    Plugin 'tommcdo/vim-exchange'       " exchange things, cx{motion} on first then second
+    Plugin 'tommcdo/vim-exchange'       " exchange 2 things, cx{motion}
     Plugin 'hdima/python-syntax'        " python syntax
 
     " Javascript stuff
@@ -35,13 +33,18 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
     "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
 
+    Plugin 'sjl/gundo.vim'             " visualize undo tree
+    Plugin 'rking/ag.vim'             " Silver Searcher from within vim
+    Plugin 'msanders/snipmate.vim'    " snippets
+
     call vundle#end()
     filetype plugin indent on " required!
 
 endif   " modules
 
+"}}}
+" Ag - The Silver Searcher {{{
 "---------------------------------------------------------
-" The Silver Searcher
 if executable('ag')
     " Use ag over grep
     set grepprg=ag\ --nogroup\ --nocolor
@@ -55,8 +58,9 @@ if executable('ag')
 endif
 set wildignore+=*.jpg
 
+" }}}
+" Colors {{{
 "---------------------------------------------------------
-" Colors
 
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlights (prev. syntax on).
@@ -84,12 +88,9 @@ if (exists("*matchadd"))
     call matchadd('ColorColumn', '\%81v', 100)
 endif
 
+"}}}
+" Tabs and indents {{{
 "---------------------------------------------------------
-" Misc
-set hlsearch              " highlight searched phrases.
-set incsearch             " highlight as you type your search.
-set ignorecase            " Make searches case-insensitive.
-set ruler                 " Always show info along bottom.
 set autoindent            " auto-indent
 set tabstop=4             " tab spacing
 set shiftwidth=4          " indent/outdent by this many columns
@@ -97,6 +98,14 @@ set softtabstop=4         " unify?
 set expandtab             " use spaces instead of tabs
 set shiftround            " always indent/outdent to the nearest tabstop
 set smarttab              " use tabs at the start of a line, spaces elsewhere
+
+" }}}
+" Misc {{{
+"---------------------------------------------------------
+set hlsearch              " highlight searched phrases.
+set incsearch             " highlight as you type your search.
+set ignorecase            " Make searches case-insensitive.
+set ruler                 " Always show info along bottom.
 set backspace=indent,start  " BS over autoindents and start of insert
 set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu                " tab show menu on command line
@@ -105,10 +114,13 @@ set hidden             " can now switch buffers without being forced to save
 if (has('mouse'))
     set mouse=nvch              " mouse works in all modes except insert
 endif
+set modelines=1             " comment at end of file gives vim hints
+autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
 "set textwidth=0
 
+"}}}
+" GUI options {{{
 "---------------------------------------------------------
-" GUI options
 if has("gui_running")
     set guioptions+=a       " autoselect to system clipboard *
     set guioptions-=T       " remove toolbar
@@ -117,6 +129,8 @@ if has("gui_running")
     set guifont=fixed:h9:cANSI
 endif
 
+"}}}
+" formatoptions {{{
 "---------------------------------------------------------
 set formatoptions=
 silent! set formatoptions+=j   " sensibly remove comment chars on joining lines
@@ -127,8 +141,9 @@ set formatoptions+=n   " recognise numbered lists when formatting
 set formatoptions+=o   " add comment leader with o or O
 set formatoptions+=r   " add comment leader on <Enter> in insert mode
 
+"}}}
+" window split chars and status line {{{
 "---------------------------------------------------------
-" window split chars and status line
 " hopefully we'll be able to distinguish the active window
 set fillchars+=stl:=,stlnc:_
 set fillchars+=vert:\|
@@ -146,10 +161,10 @@ set statusline+=%M        " modified ",+" or ",-"
 set statusline+=%R        " readonly ",RO"
 set statusline+=\         " space
 set laststatus=2          " show my statusline even if only 1 window
+
+"}}}
+" cursorline (disabled) {{{
 "---------------------------------------------------------
-
-" status line
-
 " commenting out cursorline because I can't see yellow Notes or 'TODO's
 "set cursorline
 " Make cursorline only visible in active windows
@@ -161,11 +176,9 @@ set laststatus=2          " show my statusline even if only 1 window
 "    au WinLeave * setlocal nocursorline
 "augroup END
 
-" Auto load .vimrc if it changes
-autocmd! BufWritePost .vimrc source %
-
+"}}}
+" Key mappings {{{
 "-------------------------------------------------------
-" Key maps
 " DO NOT put comments ON END of map lines
 
 " Map accidents to something sensible
@@ -198,8 +211,9 @@ noremap <c-w>l <esc>:echoerr '>>>>>> use ^l to move down split <<<<<<<<<<'<CR>
 vnoremap < <gv
 vnoremap > >gv
 
+"}}}
+" Leader mappings {{{
 "-----------------------------------------------------
-" Leader mappings
 " Rebind <Leader> key
 "let mapleader = "\\"
 
@@ -213,3 +227,6 @@ noremap gt <esc>:echoerr '>>>>>>>> use \l to move to right tab <<<<<<<<<<'<CR>
 
 " sort
 vnoremap <Leader>s :sort<CR>
+
+"}}}
+" vim:foldmethod=marker:foldlevel=0
