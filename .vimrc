@@ -36,6 +36,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'sjl/gundo.vim'             " visualize undo tree
     Plugin 'rking/ag.vim'             " Silver Searcher from within vim
     Plugin 'msanders/snipmate.vim'    " snippets
+    Plugin 'klen/python-mode'         " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
 
     call vundle#end()
     filetype plugin indent on " required!
@@ -91,13 +92,14 @@ endif
 "}}}
 " Tabs and indents {{{
 "---------------------------------------------------------
-set autoindent            " auto-indent
-set tabstop=4             " tab spacing
+set textwidth=79
 set shiftwidth=4          " indent/outdent by this many columns
-set softtabstop=4         " unify?
+set tabstop=4             " tab spacing
 set expandtab             " use spaces instead of tabs
+set softtabstop=4         " unify?
 set shiftround            " always indent/outdent to the nearest tabstop
-set smarttab              " use tabs at the start of a line, spaces elsewhere
+set autoindent            " auto-indent
+"set smarttab              " use tabs at the start of a line, spaces elsewhere
 
 " }}}
 " Misc {{{
@@ -116,7 +118,6 @@ if (has('mouse'))
 endif
 set modelines=1             " comment at end of file gives vim hints
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
-"set textwidth=0
 
 "}}}
 " GUI options {{{
