@@ -1,7 +1,6 @@
 #!/bin/bash
 
 testColFunc(){
-    #str="$(printf "%3d" "$1")"
     printf -v str "%3d" "$1"
     echo -ne "$str\e[48;5;${1}m   \e[0m"
 }
