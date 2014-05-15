@@ -33,11 +33,16 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
     "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
 
-    Plugin 'sjl/gundo.vim'             " visualize undo tree
-    Plugin 'rking/ag.vim'             " Silver Searcher from within vim
-    Plugin 'msanders/snipmate.vim'    " snippets
-    Plugin 'klen/python-mode'         " Vim python-mode. PyLint, Rope, Pydoc, breakpoints from box.
+    Plugin 'sjl/gundo.vim'                 " visualize undo tree
+    Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
+    Plugin 'msanders/snipmate.vim'         " snippets
+    Plugin 'klen/python-mode'              " various python tools
+    let g:pymode_python='python3'
+    let g:pymode_lint = 0
 
+    "Plugin 'scrooloose/syntastic'              " syntax checker
+    "let g:syntastic_python_python_exe = 'python3'
+    
     call vundle#end()
     filetype plugin indent on " required!
 
