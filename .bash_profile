@@ -11,3 +11,8 @@ fi
 if [ -d "${HOME}/bin" ] ; then
   PATH="${HOME}/bin:${PATH}"
 fi
+
+# Add my local software if any
+if [ -d "/home/local/bin" ] ; then
+  PATH="/home/local/bin:${PATH}"
+fi

@@ -34,7 +34,7 @@ do
         logAndRun mv ~/$file $olddir
         logAndRun ln -sf $dir/$file ~/$file
     else
-        echo "$file already linked"
+        echo "$file ok"
     fi
 done < $dir/dotfiles_list
 
