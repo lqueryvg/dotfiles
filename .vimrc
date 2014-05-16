@@ -107,22 +107,23 @@ set autoindent            " auto-indent
 "set smarttab              " use tabs at the start of a line, spaces elsewhere
 
 " }}}
-" Misc {{{
+" Options {{{
 "---------------------------------------------------------
-set hlsearch              " highlight searched phrases.
-set incsearch             " highlight as you type your search.
-set ignorecase            " Make searches case-insensitive.
-set ruler                 " Always show info along bottom.
+set hlsearch                " highlight searched phrases.
+set incsearch               " highlight as you type your search.
+set ignorecase              " Make searches case-insensitive.
+set ruler                   " Always show info along bottom.
 set backspace=indent,start  " BS over autoindents and start of insert
 set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu                " tab show menu on command line
-set scrolloff=3             " scroll to keep 3 lines above or below cursor
-set hidden             " can now switch buffers without being forced to save
+set scrolloff=3             " scroll to keep 2 lines above or below cursor
+set hidden                  " switch buffers without being forced to save
 if (has('mouse'))
-    set mouse=nvch              " mouse works in all modes except insert
+    set mouse=nvch          " mouse works in all modes except insert
 endif
 set modelines=1             " comment at end of file gives vim hints
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
+set runtimepath+=~/.vim/notes
 
 "}}}
 " GUI options {{{
@@ -148,7 +149,7 @@ set formatoptions+=o   " add comment leader with o or O
 set formatoptions+=r   " add comment leader on <Enter> in insert mode
 
 "}}}
-" window split chars and status line {{{
+" status line and fillchars {{{
 "---------------------------------------------------------
 " hopefully we'll be able to distinguish the active window
 set fillchars+=stl:=,stlnc:_
@@ -169,21 +170,7 @@ set statusline+=\         " space
 set laststatus=2          " show my statusline even if only 1 window
 
 "}}}
-" cursorline (disabled) {{{
-"---------------------------------------------------------
-" commenting out cursorline because I can't see yellow Notes or 'TODO's
-"set cursorline
-" Make cursorline only visible in active windows
-"augroup CursorLine
-"    au!
-"    au VimEnter * setlocal cursorline
-"    au WinEnter * setlocal cursorline
-"    au BufWinEnter * setlocal cursorline
-"    au WinLeave * setlocal nocursorline
-"augroup END
-
-"}}}
-" Key mappings {{{
+" Mappings {{{
 "-------------------------------------------------------
 " DO NOT put comments ON END of map lines
 
@@ -217,8 +204,7 @@ noremap <c-w>l <esc>:echoerr '>>>>>> use ^l to move down split <<<<<<<<<<'<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-"}}}
-" Leader mappings {{{
+" Leader mappings
 "-----------------------------------------------------
 " Rebind <Leader> key
 "let mapleader = "\\"
@@ -233,6 +219,25 @@ noremap gt <esc>:echoerr '>>>>>>>> use \l to move to right tab <<<<<<<<<<'<CR>
 
 " sort
 vnoremap <Leader>s :sort<CR>
+
+nnoremap <leader>d m':exec '/\%' . col(".") . 'c\S'<CR>``n
+nnoremap <leader>u m':exec '?\%' . col(".") . 'c\S'<CR>``n
+vnoremap <leader>d m':exec '/\%' . col(".") . 'c\S'<CR>``n
+vnoremap <leader>u m':exec '?\%' . col(".") . 'c\S'<CR>``n
+
+"}}}
+" cursorline (disabled) {{{
+"---------------------------------------------------------
+" commenting out cursorline because I can't see yellow Notes or 'TODO's
+"set cursorline
+" Make cursorline only visible in active windows
+"augroup CursorLine
+"    au!
+"    au VimEnter * setlocal cursorline
+"    au WinEnter * setlocal cursorline
+"    au BufWinEnter * setlocal cursorline
+"    au WinLeave * setlocal nocursorline
+"augroup END
 
 "}}}
 " vim:foldmethod=marker:foldlevel=0
