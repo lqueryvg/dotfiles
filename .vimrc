@@ -195,10 +195,10 @@ noremap <c-j> <c-w>j
 noremap <c-k> <c-w>k
 noremap <c-l> <c-w>l
 " Annoying messages until I get the new mapping
-noremap <c-w>h <c-w>h<esc>:echoerr '>>>>>> use ^h to move left split <<<<<<<<<<'<CR>
-noremap <c-w>j <c-w>j<esc>:echoerr '>>>>>> use ^j to move right split <<<<<<<<<<'<CR>
-noremap <c-w>k <c-w>k<esc>:echoerr '>>>>>> use ^k to move up split <<<<<<<<<<'<CR>
-noremap <c-w>l <c-w>l<esc>:echoerr '>>>>>> use ^l to move down split <<<<<<<<<<'<CR>
+noremap <c-w>h <c-w>h<esc>:echoerr '^h to move left split'<CR>
+noremap <c-w>j <c-w>j<esc>:echoerr '^j to move right split'<CR>
+noremap <c-w>k <c-w>k<esc>:echoerr '^k to move up split'<CR>
+noremap <c-w>l <c-w>l<esc>:echoerr '^l to move down split'<CR>
 
 " indent visual block without losing selection
 vnoremap < <gv
@@ -214,8 +214,8 @@ map <Leader>h <esc>:tabprevious<CR>
 map <Leader>l <esc>:tabnext<CR>
 
 " Annoying messages until I get the new mapping
-noremap gT gT<esc>:echoerr '>>>>>>>> use \h to move to left tab  <<<<<<<<<<'<CR>
-noremap gt gt<esc>:echoerr '>>>>>>>> use \l to move to right tab <<<<<<<<<<'<CR>
+noremap gT gT<esc>:echoerr '\h to move to left tab'<CR>
+noremap gt gt<esc>:echoerr '\l to move to right tab'<CR>
 
 " sort
 vnoremap <Leader>s :sort<CR>
