@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-# need:
-# . /opt/rh/python33/enable
-
 import argparse
 
 parser = argparse.ArgumentParser(description='Generate some questions')
