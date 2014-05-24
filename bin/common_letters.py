@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-#
-
 import argparse
 import collections
 
@@ -13,7 +11,6 @@ parser = argparse.ArgumentParser(description='''
                                  ''')
 parser.add_argument('filename', nargs=1)
 args = parser.parse_args()
-#print(args.filename)
 
 try:
     file_obj = open(*args.filename)
@@ -30,7 +27,6 @@ def commonLetters(*strings):
             result = collections.Counter(str)
     return result.elements()
 
-    #return set.intersection(*map(set,strings))
 
 strings = file_obj.read().splitlines()
 
