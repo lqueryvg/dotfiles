@@ -225,6 +225,12 @@ nnoremap <leader>u m':exec '?\%' . col(".") . 'c\S'<CR>``n
 vnoremap <leader>d m':exec '/\%' . col(".") . 'c\S'<CR>``n
 vnoremap <leader>u m':exec '?\%' . col(".") . 'c\S'<CR>``n
 
+" avoid reaching for esc in insert mode
+:inoremap jj <Esc>
+:inoremap jk <Esc>
+:inoremap kj <Esc>
+:inoremap kk <Esc>
+
 "}}}
 " cursorline (disabled) {{{
 "---------------------------------------------------------
