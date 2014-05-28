@@ -42,6 +42,8 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     "Plugin 'scrooloose/syntastic'              " syntax checker
     "let g:syntastic_python_python_exe = 'python3'
+
+    Plugin 'fholgado/minibufexpl.vim'              " :help MiniBufExpl
     
     call vundle#end()
     filetype plugin indent on " required!
@@ -82,7 +84,7 @@ let g:jellybeans_overrides = {
     \ 'StatusLine':   { '256ctermbg': '237', '256ctermfg': 'white', 'attr': ''},
     \ 'StatusLineNC': { '256ctermbg': '234', '256ctermfg': '241',   'attr': ''},
     \ 'WildMenu':     { '256ctermbg': '233', '256ctermfg': '81'},
-    \ 'Folded': { 'attr': ''},
+    \ 'Folded': { '256ctermbg': '0', '256ctermfg': '167', 'attr': ''},
     \ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
     \ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
     \}
@@ -210,20 +212,26 @@ vnoremap > >gv
 "let mapleader = "\\"
 
 " Cycle tabs
-map <Leader>h <esc>:tabprevious<CR>
-map <Leader>l <esc>:tabnext<CR>
+" Commented out because I am trying to use buffers instead of tabs.
+"map <Leader>h <esc>:tabprevious<CR>
+"map <Leader>l <esc>:tabnext<CR>
+
+" Cycle buffers
+map <Leader>h <esc>:bp<CR>
+map <Leader>l <esc>:bn<CR>
 
 " Annoying messages until I get the new mapping
-noremap gT gT<esc>:echoerr '\h to move to left tab'<CR>
-noremap gt gt<esc>:echoerr '\l to move to right tab'<CR>
+"noremap gT gT<esc>:echoerr '\h to move to left tab'<CR>
+"noremap gt gt<esc>:echoerr '\l to move to right tab'<CR>
 
 " sort
 vnoremap <Leader>s :sort<CR>
 
-nnoremap <leader>d m':exec '/\%' . col(".") . 'c\S'<CR>``n
-nnoremap <leader>u m':exec '?\%' . col(".") . 'c\S'<CR>``n
-vnoremap <leader>d m':exec '/\%' . col(".") . 'c\S'<CR>``n
-vnoremap <leader>u m':exec '?\%' . col(".") . 'c\S'<CR>``n
+" move to next non-blank in column
+nnoremap <leader>j m':exec '/\%' . col(".") . 'c\S'<CR>``n
+nnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
+vnoremap <leader>j m':exec '/\%' . col(".") . 'c\S'<CR>``n
+vnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
 
 " avoid reaching for esc in insert mode
 :inoremap jj <Esc>
