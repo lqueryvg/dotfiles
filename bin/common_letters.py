@@ -19,11 +19,13 @@ except IOError:
     exit(-1)
 
 def commonLetters(strings):
-    result = collections.Counter(strings.pop(0))
+    first = result = collections.Counter(strings.pop(0))
     for str in strings:
         # intersection
         result = result & collections.Counter(str)
+    strings.insert(0, first)    # put first element back
     return result.elements()
+
 
 strings = file_obj.read().splitlines()
 
