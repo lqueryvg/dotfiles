@@ -18,14 +18,15 @@ except IOError:
     print("failed to open file '" + args.filename[0] + "'")
     exit(-1)
 
+
 def commonLetters(strings):
-    first = result = collections.Counter(strings.pop(0))
+    first = strings.pop(0)
+    result = collections.Counter(first)
     for str in strings:
         # intersection
         result = result & collections.Counter(str)
     strings.insert(0, first)    # put first element back
     return result.elements()
-
 
 strings = file_obj.read().splitlines()
 
