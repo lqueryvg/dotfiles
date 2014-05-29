@@ -1,4 +1,5 @@
 set nocompatible          " be iMproved (required)
+" B
 " Modules {{{
 "------------------------------------------------------------------------------
 
@@ -32,13 +33,17 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     let g:ctrlp_working_path_mode = 0   " don't start in current dir
     "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
     "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
+    let g:ctrlp_reuse_window = 1        " don't split
 
     Plugin 'sjl/gundo.vim'                 " visualize undo tree
     Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
     Plugin 'msanders/snipmate.vim'         " snippets
     Plugin 'klen/python-mode'              " various python tools
     let g:pymode_python='python3'
-    let g:pymode_lint = 0
+    let g:pymode_lint = 1                  " python pep8 checking
+    let g:pymode_rope = 0                  " rope autocompletion
+    
+    Plugin 'davidhalter/jedi-vim'              " code autocompletion
 
     "Plugin 'scrooloose/syntastic'              " syntax checker
     "let g:syntastic_python_python_exe = 'python3'
@@ -124,6 +129,7 @@ if (has('mouse'))
     set mouse=nvch          " mouse works in all modes except insert
 endif
 set modelines=1             " comment at end of file gives vim hints
+"set foldlevel=99       " no folds closed when buffer opened
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
 set runtimepath+=~/.vim/notes
 
@@ -254,4 +260,4 @@ vnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
 "augroup END
 
 "}}}
-" vim:foldmethod=marker:foldlevel=0
+" vim:foldmethod=marker:foldlevel=1
