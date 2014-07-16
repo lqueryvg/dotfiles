@@ -38,12 +38,12 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'sjl/gundo.vim'                 " visualize undo tree
     Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
     Plugin 'msanders/snipmate.vim'         " snippets
-    Plugin 'klen/python-mode'              " various python tools
-    "let g:pymode_python='python2'
-    let g:pymode_lint = 1                  " python pep8 checking
+    "Plugin 'klen/python-mode'              " various python tools
+    "let g:pymode_python='python3'
+    "let g:pymode_lint = 1                  " python pep8 checking
     "let g:pymode_rope = 0                  " rope autocompletion
     
-    Plugin 'davidhalter/jedi-vim'              " code autocompletion
+    "Plugin 'davidhalter/jedi-vim'              " code autocompletion
 
     "Plugin 'scrooloose/syntastic'              " syntax checker
     "let g:syntastic_python_python_exe = 'python3'
