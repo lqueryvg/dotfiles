@@ -15,6 +15,16 @@ logAndRun() {
     fi
 }
 
+move_if_exists() {
+    local file=$1
+    local dir=$2
+    if [[ -e $file ]]
+    then
+        logAndRun mv $file $dir
+    fi
+}
+
+
 rename_if_exists() {
     local file=$1
     if [[ -e $file ]]
@@ -31,7 +41,8 @@ do
     if [[ ! -L ~/$file ]]   # if not already a link
     then
         rename_if_exists $olddir/$file
-        logAndRun mv ~/$file $olddir
+        move_if_exists  mv ~/$file $olddir
+        #logAndRun mv ~/$file $olddir
         logAndRun ln -sf $dir/$file ~/$file
     else
         echo "$file ok"
