@@ -31,6 +31,7 @@ d=~/.dircolors
 test -r $d && eval "$(dircolors $d)"
 
 alias vi='vim'
+alias view='vim -R'
 alias more='less'
 
 settitle () 

@@ -1,5 +1,10 @@
 set nocompatible          " be iMproved (required)
-" B
+
+silent! call writefile([], '')
+" In restricted mode, this fails with E145: Shell commands not allowed in rvim
+" In non-restricted mode, this fails with E482: Can't create file <empty>
+let g:isRestricted = (v:errmsg =~# '^E145:')
+
 " Modules {{{
 "------------------------------------------------------------------------------
 
@@ -94,7 +99,11 @@ let g:jellybeans_overrides = {
     \ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
     \ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
     \}
-colorscheme jellybeans
+if (g:isRestricted)
+    colorscheme murphy
+else
+    colorscheme jellybeans
+endif
 
 " make 81st column stand out (from Damien Conway)
 if (exists("*matchadd"))
