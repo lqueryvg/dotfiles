@@ -1,0 +1,8 @@
+# This is a hack, which directly patches evdev
+# to swap F10 and CAPSLOCK keys.
+# It is subject to being over-written by X updates.
+#
+sed -i.backup '
+s/^\([ \t]*<FK10>[ \t]*=[ \t]\)66*/\176/
+s/^\([ \t]*<CAPS>[ \t]*=[ \t]\)76*/\166/
+' /usr/share/X11/xkb/keycodes/evdev

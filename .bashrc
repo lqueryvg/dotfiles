@@ -27,6 +27,7 @@ alias ls='ls -hF --color=always'    # classify files in colour
 alias less='less -R'                # ls pipe less is in colour
 alias mvi=~/dotfiles/bin/mvim.sh
 alias mvim=~/dotfiles/bin/mvim.sh
+alias r='sudo su -'
 d=~/.dircolors
 test -r $d && eval "$(dircolors $d)"
 
