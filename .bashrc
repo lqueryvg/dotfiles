@@ -31,8 +31,15 @@ alias r='sudo su -'
 d=~/.dircolors
 test -r $d && eval "$(dircolors $d)"
 
-alias vi='vim'
-alias view='vim -R'
+vim="vim"
+if hash vimx 2>/dev/null
+then
+    vim=vimx
+fi
+alias vim='$vim'
+alias vi='$vim'
+alias view='$vim -R'
+
 alias more='less'
 
 settitle () 
