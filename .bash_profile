@@ -17,5 +17,10 @@ if [ -d "/home/local/bin" ] ; then
   PATH="/home/local/bin:${PATH}"
 fi
 
+# Haskell stuff
+if [ -d "${HOME}/.cabal/bin" ] ; then
+  PATH="${PATH}:${HOME}/.cabal/bin"
+fi
+
 # suppress accessibility bus error start gnome apps from shell prompt
 export NO_AT_BRIDGE=1
