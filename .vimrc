@@ -55,6 +55,8 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     "Plugin 'fholgado/minibufexpl.vim'              " :help MiniBufExpl
     Plugin 'tpope/vim-unimpaired'              " :help unimpaired
+    Plugin 'godlygeek/tabular'                  " :help tabular
+    Plugin 'rodjek/vim-puppet'                  " :Tabularize /=>
     
     call vundle#end()
     filetype plugin indent on " required!
