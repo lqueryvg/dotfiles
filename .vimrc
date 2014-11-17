@@ -250,10 +250,10 @@ vnoremap <leader>j m':exec '/\%' . col(".") . 'c\S'<CR>``n
 vnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
 
 " avoid reaching for esc in insert mode
-:inoremap jj <Esc>
-:inoremap jk <Esc>
-:inoremap kj <Esc>
-:inoremap kk <Esc>
+":inoremap jj <Esc>
+":inoremap jk <Esc>
+":inoremap kj <Esc>
+":inoremap kk <Esc>
 
 "}}}
 " cursorline (disabled) {{{
