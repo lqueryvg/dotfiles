@@ -1,7 +1,7 @@
 #!/bin/sh
 
-dir=~/dotfiles                    # dotfiles directory
-olddir=~/.dotfiles_old             # old dotfiles backup directory
+source_dir=~/dotfiles                    # dotfiles directory
+backup_dir=~/.dotfiles_old        # backup directory for old dotfiles
 
 logAndRun() {
     local cmd=$*
@@ -17,10 +17,10 @@ logAndRun() {
 
 move_if_exists() {
     local file=$1
-    local dir=$2
+    local target_dir=$2
     if [[ -e $file ]]
     then
-        logAndRun mv $file $dir
+        logAndRun mv $file $target_dir
     fi
 }
 
@@ -33,21 +33,20 @@ rename_if_exists() {
     fi
 }
 
-logAndRun mkdir -p $olddir
-logAndRun cd $dir
+logAndRun mkdir -p $backup_dir
+logAndRun cd $source_dir
 
 while read file
 do
     if [[ ! -L ~/$file ]]   # if not already a link
     then
-        rename_if_exists $olddir/$file
-        move_if_exists  mv ~/$file $olddir
-        #logAndRun mv ~/$file $olddir
-        logAndRun ln -sf $dir/$file ~/$file
+        rename_if_exists $backup_dir/$file
+        move_if_exists  mv ~/$file $backup_dir
+        logAndRun ln -sf $source_dir/$file ~/$file
     else
         echo "$file ok"
     fi
-done < $dir/dotfiles_list
+done < $source_dir/dotfiles_list
 
 echo "installing new .gitconfig"
 # .gitconfig is special, need to edit it with original user/email
@@ -55,7 +54,7 @@ if [[ -f ~/.gitconfig ]]
 then
   git_name=`git config --global --get user.name`
   git_email=`git config --global --get user.email`
-  cp .gitconfig $olddir
+  cp .gitconfig $backup_dir
   cp .gitconfig ~
   git config --global user.name $git_name
   git config --global user.email $git_email
