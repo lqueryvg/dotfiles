@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Neatly display all 256 colours with their decimal
+# codes in a color term.
 
 testColFunc(){
     printf -v str "%3d" "$1"
