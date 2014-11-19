@@ -3,3 +3,5 @@ bundle/
 doc/tags
 .netrwhist
 .ropeproject
+xmonad*
+!xmonad.hs
