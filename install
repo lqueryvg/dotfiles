@@ -48,7 +48,6 @@ do
     fi
 done < $source_dir/dotfiles_list
 
-echo "installing new .gitconfig"
 # .gitconfig is special, need to edit it with original user/email
 if [[ -f ~/.gitconfig ]]
 then
@@ -56,6 +55,7 @@ then
   git_email=`git config --global --get user.email`
   cp .gitconfig $backup_dir
   cp .gitconfig ~
+  echo "setting .gitconfig name and email"
   git config --global user.name $git_name
   git config --global user.email $git_email
   if [[ -z $git_name || -z $git_email ]]
