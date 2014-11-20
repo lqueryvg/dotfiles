@@ -104,7 +104,7 @@ let g:jellybeans_overrides = {
 if (g:isRestricted)
     colorscheme murphy
 else
-    silent colorscheme jellybeans
+    silent! colorscheme jellybeans
 endif
 
 " make 81st column stand out (from Damien Conway)
