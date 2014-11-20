@@ -1,2 +1,4 @@
+# Put machine to sleep (flashing power light and power only to memory)
+#
 sudo systemctl start systemd-suspend.service
 

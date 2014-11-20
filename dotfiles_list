@@ -7,4 +7,6 @@
 .colordiffrc
 XTerm
 .vim
+.xmobarrc
 .agignore
+.xmonad

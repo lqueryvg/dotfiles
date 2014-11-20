@@ -1,0 +1,18 @@
+Config {
+--#font = "-misc-fixed-*-*-*-*-13-*-*-*-*-*-*-*"
+    bgColor = "black"
+  , fgColor = "Coral"
+  , position = Top
+  , commands = [ Run Network "eno1" ["-L","0","-H","32","--normal",
+                 "green","--high","red"] 10
+               , Run Cpu ["-L","15","-H","50","--normal","green","--high",
+                 "red"] 10
+               , Run Memory ["-t","Mem: %"] 10
+               , Run Swap [] 10
+               , Run Date "%a %d/%m/%y %H:%M" "date" 10
+               , Run StdinReader
+               ]
+  , sepChar = "%"
+  , alignSep = "}{"
+  , template = "%StdinReader% }{ %cpu% | %memory% * %swap% | %eno1% | <fc=lightGreen>%date%</fc>"
+  }

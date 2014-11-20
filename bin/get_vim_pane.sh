@@ -1,4 +1,5 @@
-
+# work out which tmux pane vim is running in
+#
 get_vim_pane_id() {
     format="#{session_name}:#{window_index}.#{pane_index} #{pane_tty}"
     # get output like this
