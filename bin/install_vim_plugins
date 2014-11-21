@@ -1,1 +1,9 @@
+# This invokes Vundle to install/update all plugins from the command line.
+#
 vim -N -u ~/.vimrc +BundleInstall\! +qall\! -U NONE -i NONE -V1 -e -s
+
+# bodged to exit 0, because vim always seems to exit with 1 even when it plugin
+# installation works !
+#
+exit 0
+
