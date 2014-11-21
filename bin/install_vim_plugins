@@ -1,0 +1,1 @@
+vim -N -u ~/.vimrc +BundleInstall\! +qall\! -U NONE -i NONE -V1 -e -s
