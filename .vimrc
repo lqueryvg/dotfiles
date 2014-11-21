@@ -1,5 +1,7 @@
 set nocompatible          " be iMproved (required)
 
+" Set a variable to say if we are running in restricted mode (e.g. rvim).
+" This will be used later.
 silent! call writefile([], '')
 " In restricted mode, this fails with E145: Shell commands not allowed in rvim
 " In non-restricted mode, this fails with E482: Can't create file <empty>
