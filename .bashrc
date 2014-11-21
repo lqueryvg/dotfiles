@@ -48,7 +48,7 @@ settitle ()
 }
 
 set -o vi
-export PS1="$ "
+export PS1="$(hostname -s)$ "
 export TERM=xterm-256color
 export CDPATH=.:~/Documents:~/Downloads:~
 
