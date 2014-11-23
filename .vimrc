@@ -59,6 +59,11 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'tpope/vim-unimpaired'              " :help unimpaired
     Plugin 'godlygeek/tabular'                  " :help tabular
     Plugin 'rodjek/vim-puppet'                  " :Tabularize /=>
+
+    let b:undo_ftplugin = ''    " Bodge to stop error produced
+                                " by nelstrom/vim-markdown-folding
+    Plugin 'nelstrom/vim-markdown-folding'
+    Plugin 'tpope/vim-fugitive'
     
     call vundle#end()
     filetype plugin indent on " required!
