@@ -6,7 +6,7 @@ import XMonad.Hooks.DynamicLog
 -- Define default layouts used on most workspaces
 --defaultLayouts = tiled ||| simpleFloat ||| Full
 --defaultLayouts = tiled ||| ThreeCol 1 (3/100) (1/2) ||| Full
-myLayouts = ThreeCol 1 (1/100) (1/2) ||| Full
+myLayouts = ThreeCol 1 (1/100) (49/100) ||| Full
 --    where
         -- default tiling algorithm partitions the screen into two panes
 --        tiled   = Tall nmaster delta ratio
