@@ -10,3 +10,4 @@ XTerm
 .xmobarrc
 .agignore
 .xmonad
+.haskeline
