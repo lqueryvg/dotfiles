@@ -64,7 +64,11 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
                                 " by nelstrom/vim-markdown-folding
     Plugin 'nelstrom/vim-markdown-folding'
     Plugin 'tpope/vim-fugitive'
-    
+
+    Plugin 'ledger/vim-ledger'
+    Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-repeat'
+
     call vundle#end()
     filetype plugin indent on " required!
 
