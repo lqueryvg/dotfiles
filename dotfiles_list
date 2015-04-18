@@ -10,3 +10,5 @@ XTerm
 .xmobarrc
 .agignore
 .xmonad
+.ghci
+.bash_aliases
