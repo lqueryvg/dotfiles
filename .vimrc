@@ -69,6 +69,8 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-repeat'
 
+    Plugin 'koreyconway/ranger'
+
     call vundle#end()
     filetype plugin indent on " required!
 

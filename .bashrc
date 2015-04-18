@@ -8,48 +8,31 @@
 # Any completions you add in ~/.bash_completion are sourced last.
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
-# Interactive operation...
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
+[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
-# Default to human readable figures
-alias df='df -h'
-alias du='du -h'
-
-# alias less='less -r'              # raw control characters
-alias whence='type -a'              # like where
-alias grep='grep --color'           # show matches in colour
-alias cgrep='egrep --color=always'  # color even to pipe
-alias egrep='egrep --color=auto'    # show matches in colour
-alias fgrep='fgrep --color=auto'    # show matches in colour
-alias ls='ls -hF --color=always'    # classify files in colour
-alias less='less -R'                # ls pipe less is in colour
-alias mvi=~/dotfiles/bin/mvim.sh
-alias mvim=~/dotfiles/bin/mvim.sh
-alias r='sudo su -'
 d=~/.dircolors
 test -r $d && eval "$(dircolors $d)"
-
-vim="vim"
-if hash vimx 2>/dev/null
-then
-    vim=vimx
-fi
-alias vim='$vim'
-alias vi='$vim'
-alias view='$vim -R'
-
-alias more='less'
 
 settitle () 
 { 
    echo -ne "\e]2;$@\a\e]1;$@\a"; 
 }
 
+xt() {
+    [[ ! -d $1 ]] && (echo "need a dir"; return)
+    cd $1
+    nohup xterm 2>&1 2>/dev/null &
+}
+
+xv() {
+    nohup xterm -e vim $* 2>&1 2>/dev/null &
+}
+
 set -o vi
 export PS1="$(hostname -s)$ "
 export TERM=xterm-256color
+export TERMCMD=xterm
+#export TERM=xterm
 export CDPATH=.:~/Documents:~/Downloads:~
 
 # do not echo "^C" when pressing ^c

@@ -1,0 +1,4 @@
+# Power off
+#
+sudo systemctl isolate poweroff.target
+

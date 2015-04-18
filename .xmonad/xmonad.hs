@@ -2,6 +2,7 @@ import XMonad
 --import XMonad.Layout.SimpleFloat
 import XMonad.Layout.ThreeColumns
 import XMonad.Hooks.DynamicLog
+--import XMonad.Hooks.EwmhDesktops
 
 -- Define default layouts used on most workspaces
 --defaultLayouts = tiled ||| simpleFloat ||| Full
