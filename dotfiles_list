@@ -12,3 +12,4 @@ XTerm
 .xmonad
 .ghci
 .bash_aliases
+.haskeline
