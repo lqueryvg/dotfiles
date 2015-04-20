@@ -69,7 +69,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-repeat'
 
-    Plugin 'koreyconway/ranger'
+    Plugin 'koreyconway/ranger.vim'
 
     call vundle#end()
     filetype plugin indent on " required!
@@ -151,7 +151,8 @@ set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 2 lines above or below cursor
 set hidden                  " switch buffers without being forced to save
 if (has('mouse'))
-    set mouse=nvch          " mouse works in all modes except insert
+    "set mouse=nvch          " mouse works in all modes except insert
+    set mouse=               " mouse off
 endif
 set modelines=1             " comment at end of file gives vim hints
 "set foldlevel=99       " no folds closed when buffer opened
@@ -239,7 +240,7 @@ vnoremap > >gv
 
 " Leader mappings
 "-----------------------------------------------------
-" Rebind <Leader> key
+" Rebind <Lader> key
 "let mapleader = "\\"
 
 " Cycle tabs

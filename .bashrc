@@ -18,14 +18,18 @@ settitle ()
    echo -ne "\e]2;$@\a\e]1;$@\a"; 
 }
 
-xt() {
+tt() {
     [[ ! -d $1 ]] && (echo "need a dir"; return)
     cd $1
-    nohup xterm 2>&1 2>/dev/null &
+    nohup xterm 2>&1 >/dev/null &
 }
 
-xv() {
-    nohup xterm -e vim $* 2>&1 2>/dev/null &
+vt() {
+    nohup xterm -e vim $* 2>&1 >/dev/null &
+}
+
+l() {
+    nohup $@ 2>&1 >/dev/null &
 }
 
 set -o vi
