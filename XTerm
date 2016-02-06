@@ -253,12 +253,12 @@
 *VT100*scrollBar: false
 *VT100*utf8Title: true
 !*background: darkslategrey
-*background: black
-*foreground: wheat
+!*background: black
+!*foreground: wheat
 *scollLines: 2000
 *VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 !*cursorColor: yellow
-*cursorColor: magenta
+!*cursorColor: magenta
 
 !Add the - . / chars to the main char class
 *charClass: 45-47:48

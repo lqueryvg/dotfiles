@@ -24,7 +24,7 @@ tt() {
     nohup xterm 2>&1 >/dev/null &
 }
 
-vt() {
+tv() {
     nohup xterm -e vim $* 2>&1 >/dev/null &
 }
 
@@ -34,7 +34,7 @@ l() {
 
 set -o vi
 export PS1="$(hostname -s)$ "
-export TERM=xterm-256color
+#export TERM=xterm-256color
 export TERMCMD=xterm
 #export TERM=xterm
 export CDPATH=.:~/Documents:~/Downloads:~

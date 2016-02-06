@@ -20,6 +20,7 @@ alias mvi=~/dotfiles/bin/mvim.sh
 alias mvim=~/dotfiles/bin/mvim.sh
 alias r='sudo su -'
 alias rif='rifle'
+alias vm='virt-manager'
 
 vim="vim"
 if hash vimx 2>/dev/null

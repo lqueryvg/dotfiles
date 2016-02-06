@@ -70,6 +70,10 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'tpope/vim-repeat'
 
     Plugin 'koreyconway/ranger.vim'
+    set t_Co=256              " enable 256-color mode.
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'ConradIrwin/vim-bracketed-paste'
+    Plugin 'nvie/vim-flake8'
 
     call vundle#end()
     filetype plugin indent on " required!
@@ -96,7 +100,6 @@ set wildignore+=*.jpg
 " Colors {{{
 "---------------------------------------------------------
 
-set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlights (prev. syntax on).
 "color skittles_dark
 "set laststatus=2         " last window always has a statusline
@@ -118,6 +121,10 @@ if (g:isRestricted)
     colorscheme murphy
 else
     silent! colorscheme jellybeans
+    "set background=dark
+    "silent! colorscheme solarized
+    "let g:solarized_termcolors=256
+    "colorscheme solarized
 endif
 
 " make 81st column stand out (from Damien Conway)
@@ -184,7 +191,6 @@ set formatoptions+=r   " add comment leader on <Enter> in insert mode
 
 "}}}
 " status line and fillchars {{{
-"---------------------------------------------------------
 " hopefully we'll be able to distinguish the active window
 set fillchars+=stl:=,stlnc:_
 set fillchars+=vert:\|
