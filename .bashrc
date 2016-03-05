@@ -38,6 +38,7 @@ export PS1="$(hostname -s)$ "
 export TERMCMD=xterm
 #export TERM=xterm
 export CDPATH=.:~/Documents:~/Downloads:~
+export VAGRANT_DEFAULT_PROVIDER=libvirt
 
 # do not echo "^C" when pressing ^c
 # otherwise it blats part of command making copy/paste harder
