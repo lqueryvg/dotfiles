@@ -22,14 +22,17 @@ alias r='sudo su -'
 alias rif='rifle'
 alias vm='virt-manager'
 
+#vim="nvim"
 vim="vim"
-if hash vimx 2>/dev/null
-then
-    vim=vimx
-fi
+#if hash vimx 2>/dev/null
+#then
+#    vim=vimx
+#fi
 alias vim='$vim'
 alias vi='$vim'
 alias view='$vim -R'
 alias vlcdot='nohup vlc . 2>&1 > /dev/null &'
 
 alias more='less'
+alias ap="ansible-playbook"
+alias vs="vagrant ssh"
