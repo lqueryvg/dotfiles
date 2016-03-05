@@ -255,7 +255,7 @@
 !*background: darkslategrey
 !*background: black
 !*foreground: wheat
-*scollLines: 2000
+*scollLines: 15000
 *VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 !*cursorColor: yellow
 !*cursorColor: magenta
