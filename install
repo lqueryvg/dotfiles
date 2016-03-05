@@ -1,7 +1,8 @@
 #!/bin/sh
 
-source_dir=~/dotfiles                    # dotfiles directory
+source_dir=~/dotfiles             # dotfiles directory
 backup_dir=~/.dotfiles_old        # backup directory for old dotfiles
+home_links=$source_dir/home_links # list of links to create in ~
 
 logAndRun() {
     local cmd=$*
@@ -46,7 +47,7 @@ do
     else
         echo "$file ok"
     fi
-done < $source_dir/dotfiles_list
+done < $home_links
 
 # .gitconfig is special, need to edit it with original user/email
 if [[ -f ~/.gitconfig ]]
