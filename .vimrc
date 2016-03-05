@@ -75,6 +75,9 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'ConradIrwin/vim-bracketed-paste'
     Plugin 'nvie/vim-flake8'
 
+    Plugin 'chase/vim-ansible-yaml'
+    Plugin 'dkprice/vim-easygrep'
+
     call vundle#end()
     filetype plugin indent on " required!
 
