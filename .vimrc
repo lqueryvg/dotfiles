@@ -26,7 +26,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'nanotech/jellybeans.vim'    " nice colour scheme
     Plugin 'gabrielelana/vim-markdown'  " Syntax highlight for md files
     Plugin 'tommcdo/vim-exchange'       " exchange 2 things, cx{motion}
-    Plugin 'hdima/python-syntax'        " python syntax
+    "Plugin 'hdima/python-syntax'        " python syntax
 
     " Javascript stuff
     Plugin 'vim-scripts/jshint.vim'
@@ -35,7 +35,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     " */# Search forwards/back for text under vis selection
     Plugin 'nelstrom/vim-visual-star-search'
 
-    Plugin 'kien/ctrlp.vim'             " fuzzy search filenames
+    Plugin 'ctrlpvim/ctrlp.vim'             " fuzzy search filenames
     let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
     let g:ctrlp_working_path_mode = 0   " don't start in current dir
     "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
@@ -45,7 +45,13 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'sjl/gundo.vim'                 " visualize undo tree
     Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
     Plugin 'msanders/snipmate.vim'         " snippets
-    "Plugin 'klen/python-mode'              " various python tools
+    Plugin 'klen/python-mode'              " various python tools
+        " K = show doc
+        " C-Space = autocomplete
+        " leader-r = run
+        " pylint on save
+        " C-c g = goto definition
+    
     "let g:pymode_python='python3'
     "let g:pymode_lint = 1                  " python pep8 checking
     "let g:pymode_rope = 0                  " rope autocompletion
@@ -77,6 +83,15 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     Plugin 'chase/vim-ansible-yaml'
     Plugin 'dkprice/vim-easygrep'
+    Plugin 'xolox/vim-misc'
+    Plugin 'xolox/vim-easytags'
+        " :UpdateTags -R ../../..     (example)
+        " Tags are put in ~/.vimtags
+    "Plugin 'wincent/command-t'
+    Plugin 'majutsushi/tagbar'
+        " :Tagbar
+        " o = toggle fold
+        " Double-click to navigate to symbol
 
     call vundle#end()
     filetype plugin indent on " required!
@@ -161,13 +176,14 @@ set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 2 lines above or below cursor
 set hidden                  " switch buffers without being forced to save
 if (has('mouse'))
-    "set mouse=nvch          " mouse works in all modes except insert
-    set mouse=               " mouse off
+    set mouse=nvch          " mouse works in all modes except insert
+    "set mouse=              " mouse off
 endif
 set modelines=1             " comment at end of file gives vim hints
 "set foldlevel=99       " no folds closed when buffer opened
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
 set runtimepath+=~/.vim/notes
+set autochdir               " current dir = current file location
 
 "}}}
 " GUI options {{{
