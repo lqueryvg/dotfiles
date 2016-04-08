@@ -31,7 +31,7 @@
 ! authorization.
 ! -----------------------------------------------------------------------------
 
-*saveLines: 1024
+*saveLines: 10000
 
 *SimpleMenu*BackingStore: NotUseful
 *SimpleMenu*menuLabel.font: -adobe-helvetica-bold-r-normal--*-120-*-*-*-*-iso8859-*
