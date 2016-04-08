@@ -20,7 +20,8 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'gmarik/Vundle.vim'          " let vundle manage itself
 
     Plugin 'scrooloose/nerdtree'        " File browser
-    let NERDTreeShowBookmarks=1
+        let NERDTreeShowBookmarks=1
+        " u = up tree
 
     Plugin 'vim-scripts/mru.vim'        " Javascript stuff
     Plugin 'nanotech/jellybeans.vim'    " nice colour scheme
@@ -36,25 +37,40 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'nelstrom/vim-visual-star-search'
 
     Plugin 'ctrlpvim/ctrlp.vim'             " fuzzy search filenames
-    let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
-    let g:ctrlp_working_path_mode = 0   " don't start in current dir
-    "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
-    "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
-    let g:ctrlp_reuse_window = 1        " don't split
+        " C-p then start typing
+        " C-f rotate through places to search (buffers, files, mru files)
+        
+        let g:ctrlp_show_hidden = 1     " include dot files and dot dirs
+        let g:ctrlp_working_path_mode = 0   " don't start in current dir
+        "let g:ctrlp_extensions = [ 'tag', 'buffertag', 'quickfix', 'dir',
+        "  \ 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir' ]
+        let g:ctrlp_reuse_window = 1        " don't split
+        let g:ctrlp_cmd = 'call CallCtrlP()'
+
+        func! CallCtrlP()
+            " remember previous places to search
+            if exists('s:called_ctrlp')
+                CtrlPLastMode
+            else
+                let s:called_ctrlp = 1
+                CtrlPMRU
+            endif
+        endfunc
 
     Plugin 'sjl/gundo.vim'                 " visualize undo tree
     Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
     Plugin 'msanders/snipmate.vim'         " snippets
     Plugin 'klen/python-mode'              " various python tools
         " K = show doc
-        " C-Space = autocomplete
+        " C-Space = autocomplete, enter to insert
         " leader-r = run
         " pylint on save
         " C-c g = goto definition
     
+    let g:pymode_lint_ignore = "E251,E221,W0401,E402"
     "let g:pymode_python='python3'
     "let g:pymode_lint = 1                  " python pep8 checking
-    "let g:pymode_rope = 0                  " rope autocompletion
+    let g:pymode_rope = 0                  " rope autocompletion
     
     "Plugin 'davidhalter/jedi-vim'              " code autocompletion
 
@@ -71,8 +87,12 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'nelstrom/vim-markdown-folding'
     Plugin 'tpope/vim-fugitive'
 
-    Plugin 'ledger/vim-ledger'
+    "Plugin 'ledger/vim-ledger'
     Plugin 'tpope/vim-surround'
+        " csw"  quote word
+        " ds"   delete surrounding quotes
+        " cs"'  change surrounging quotes
+
     Plugin 'tpope/vim-repeat'
 
     Plugin 'koreyconway/ranger.vim'
@@ -85,6 +105,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'dkprice/vim-easygrep'
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-easytags'
+        let g:easytags_async = 1     " otherwise over 2s to quit vim !
         " :UpdateTags -R ../../..     (example)
         " Tags are put in ~/.vimtags
     "Plugin 'wincent/command-t'
@@ -144,19 +165,20 @@ else
     "let g:solarized_termcolors=256
     "colorscheme solarized
 endif
+highlight Normal ctermbg=NONE
 
 " make 81st column stand out (from Damien Conway)
-if (exists("*matchadd"))
-    highlight ColorColumn ctermbg=cyan ctermfg=black
-    call matchadd('ColorColumn', '\%81v', 100)
-endif
+"if (exists("*matchadd"))
+    "highlight ColorColumn ctermbg=cyan ctermfg=black
+    "call matchadd('ColorColumn', '\%81v', 100)
+"endif
 
 "}}}
 " Tabs and indents {{{
 "---------------------------------------------------------
 set textwidth=79
 set shiftwidth=4          " indent/outdent by this many columns
-set tabstop=4             " tab spacing
+set tabstop=4             " show tabs as this many spaces (they are still tabs!)
 set expandtab             " use spaces instead of tabs
 set softtabstop=4         " unify?
 set shiftround            " always indent/outdent to the nearest tabstop
@@ -166,6 +188,7 @@ set autoindent            " auto-indent
 " }}}
 " Options {{{
 "---------------------------------------------------------
+set autochdir               " current dir = current file location
 set hlsearch                " highlight searched phrases.
 set incsearch               " highlight as you type your search.
 set ignorecase              " Make searches case-insensitive.
@@ -176,14 +199,14 @@ set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 2 lines above or below cursor
 set hidden                  " switch buffers without being forced to save
 if (has('mouse'))
-    set mouse=nvch          " mouse works in all modes except insert
+    "set mouse=nvch          " mouse works in all modes except insert
     "set mouse=              " mouse off
+    set mouse=a             " mouse fully on
 endif
 set modelines=1             " comment at end of file gives vim hints
 "set foldlevel=99       " no folds closed when buffer opened
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
 set runtimepath+=~/.vim/notes
-set autochdir               " current dir = current file location
 
 "}}}
 " GUI options {{{
@@ -290,6 +313,8 @@ nnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
 vnoremap <leader>j m':exec '/\%' . col(".") . 'c\S'<CR>``n
 vnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
 
+" run rifle against current file
+map <Leader>r <esc>:!rifle %<CR><CR>
 " avoid reaching for esc in insert mode
 ":inoremap jj <Esc>
 ":inoremap jk <Esc>
@@ -310,5 +335,10 @@ vnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
 "    au WinLeave * setlocal nocursorline
 "augroup END
 
+"}}}
+" directories (disabled) {{{
+"---------------------------------------------------------
+"set backupdir=$HOME/vimtmp,.
+"set directory=$HOME/vimtmp,.
 "}}}
 " vim:foldmethod=marker:foldlevel=1
