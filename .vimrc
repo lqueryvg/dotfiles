@@ -59,18 +59,19 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     Plugin 'sjl/gundo.vim'                 " visualize undo tree
     Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
-    Plugin 'msanders/snipmate.vim'         " snippets
-    Plugin 'klen/python-mode'              " various python tools
+    "Plugin 'msanders/snipmate.vim'         " snippets
+    "Plugin 'klen/python-mode'              " various python tools
         " K = show doc
         " C-Space = autocomplete, enter to insert
         " leader-r = run
         " pylint on save
         " C-c g = goto definition
     
-    let g:pymode_lint_ignore = "E251,E221,W0401,E402"
+    "let g:pymode_lint_ignore = "E251,E221,W0401,E402"
     "let g:pymode_python='python3'
-    "let g:pymode_lint = 1                  " python pep8 checking
-    let g:pymode_rope = 0                  " rope autocompletion
+    "let g:pymode_lint = 0                  " slow, python pep8 checking
+    "let g:pymode_rope = 0                  " rope autocompletion, slow
+    "let g:pymode_folding = 0    " slow
     
     "Plugin 'davidhalter/jedi-vim'              " code autocompletion
 
@@ -99,13 +100,13 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     set t_Co=256              " enable 256-color mode.
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'ConradIrwin/vim-bracketed-paste'
-    Plugin 'nvie/vim-flake8'
+    "Plugin 'nvie/vim-flake8'
 
     Plugin 'chase/vim-ansible-yaml'
     Plugin 'dkprice/vim-easygrep'
-    Plugin 'xolox/vim-misc'
-    Plugin 'xolox/vim-easytags'
-        let g:easytags_async = 1     " otherwise over 2s to quit vim !
+    "Plugin 'xolox/vim-misc'
+    "Plugin 'xolox/vim-easytags'
+    "    let g:easytags_async = 1     " otherwise over 2s to quit vim !
         " :UpdateTags -R ../../..     (example)
         " Tags are put in ~/.vimtags
     "Plugin 'wincent/command-t'
@@ -113,6 +114,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
         " :Tagbar
         " o = toggle fold
         " Double-click to navigate to symbol
+    Plugin 'fatih/vim-go'
 
     call vundle#end()
     filetype plugin indent on " required!
@@ -176,11 +178,13 @@ highlight Normal ctermbg=NONE
 "}}}
 " Tabs and indents {{{
 "---------------------------------------------------------
-set textwidth=79
-set shiftwidth=4          " indent/outdent by this many columns
-set tabstop=4             " show tabs as this many spaces (they are still tabs!)
+
+"set textwidth=79
+set textwidth=0
+set shiftwidth=2          " indent/outdent by this many columns
+set tabstop=2             " show tabs as this many spaces (they are still tabs!)
 set expandtab             " use spaces instead of tabs
-set softtabstop=4         " unify?
+set softtabstop=2         " unify?
 set shiftround            " always indent/outdent to the nearest tabstop
 set autoindent            " auto-indent
 "set smarttab              " use tabs at the start of a line, spaces elsewhere
@@ -199,14 +203,16 @@ set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 2 lines above or below cursor
 set hidden                  " switch buffers without being forced to save
 if (has('mouse'))
-    "set mouse=nvch          " mouse works in all modes except insert
+    set mouse=nvch          " mouse works in all modes except insert
     "set mouse=              " mouse off
-    set mouse=a             " mouse fully on
+    "set mouse=a             " mouse fully on
 endif
 set modelines=1             " comment at end of file gives vim hints
 "set foldlevel=99       " no folds closed when buffer opened
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
 set runtimepath+=~/.vim/notes
+"let loaded_matchparen = 1   " disable matchparen because it is too slow
+
 
 "}}}
 " GUI options {{{
@@ -315,6 +321,9 @@ vnoremap <leader>k m':exec '?\%' . col(".") . 'c\S'<CR>``n
 
 " run rifle against current file
 map <Leader>r <esc>:!rifle %<CR><CR>
+map <Leader>e <esc>:w<CR><esc>:!./%<CR>
+map <Leader>a <esc>:w<CR><esc>:!ansible-playbook -i hosts %<CR>
+map <Leader>m <esc>:w<CR><esc>:!./% -man<CR>
 " avoid reaching for esc in insert mode
 ":inoremap jj <Esc>
 ":inoremap jk <Esc>

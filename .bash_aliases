@@ -10,7 +10,7 @@ alias du='du -h'
 # alias less='less -r'              # raw control characters
 alias whence='type -a'              # like where
 alias grep='grep --color'           # show matches in colour
-alias cgrep='egrep --color=always'  # color even to pipe
+#alias cgrep='egrep --color=always'  # color even to pipe
 alias egrep='egrep --color=auto'    # show matches in colour
 alias fgrep='fgrep --color=auto'    # show matches in colour
 alias ls='ls -hF --color=always'    # classify files in colour
@@ -36,6 +36,8 @@ alias vlcdot='nohup vlc . 2>&1 > /dev/null &'
 alias more='less'
 alias ap="ansible-playbook"
 alias vs="vagrant ssh"
-alias ae=". /data/software/ansible/hacking/env-setup; cd ~/ansible"
+#alias ae=". /data/software/ansible/hacking/env-setup; cd ~/ansible"
+alias ae=". /data/software/ansible/hacking/env-setup"
 alias atm="/data/software/ansible/hacking/test-module"
 alias rr=rifle
+alias help='pushd ~/technotes; vim *.md; popd'
