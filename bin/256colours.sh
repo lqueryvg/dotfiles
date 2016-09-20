@@ -5,7 +5,8 @@
 
 testColFunc(){
     printf -v str "%3d" "$1"
-    echo -ne "$str\e[48;5;${1}m   \e[0m"
+    #echo -ne "$str\e[48;5;${1}m   \e[0m"
+    printf "$str\e[48;5;${1}m   \e[0m"
 }
 
 for line in {0..35}
