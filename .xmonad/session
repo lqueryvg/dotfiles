@@ -1,5 +1,7 @@
 xrdb -cpp /usr/bin/cpp -merge ~/.Xresources
 google-chrome &
-urxvt256cd -q -f -o
-urxvt256cc +sb &
-urxvt256cc +sb &
+#urxvt256cd -q -f -o
+#urxvt256cc +sb &
+#urxvt256cc +sb &
+terminator &
+terminator &

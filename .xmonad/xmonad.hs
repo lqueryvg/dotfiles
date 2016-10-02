@@ -37,7 +37,8 @@ myLayouts = ThreeCol 1 (1/100) (49/100) |||
 
 myConfig = defaultConfig {
   layoutHook = myLayouts,
-  terminal = "urxvt256cc"
+  --terminal = "urxvt256cc"
+  terminal = "terminator"
   -- mod is Windows key
   -- modMask = mod4Mask
 }
