@@ -18,8 +18,10 @@ append_path_if_exists ${HOME}/.cabal/bin
 export NO_AT_BRIDGE=1
 
 #export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-rbenv shell 2.0.0-p598
+command_exists rbenv && {
+  eval "$(rbenv init -)"
+  rbenv shell 2.0.0-p598
+}
 
 #test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 #. /Users/jbu46/homebrew/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
