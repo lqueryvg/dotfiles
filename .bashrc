@@ -11,15 +11,21 @@ source_if_exists                    \
   ~/.bash_completion \
   ~/.my_profile.sh
 
-function _update_ps1() {
-    PS1="$(~/mygit/powerline-shell/powerline-shell.py \
-            --cwd-max-depth 2                         \
-            --mode compatible                         \
+powerline=~/mygit/powerline-shell/powerline-shell.py
+if [[ -x $powerline ]]
+then
+  function _update_ps1() {
+    PS1="$($powerline         \
+            --cwd-max-depth 2 \
+            --mode compatible \
             $? 2> /dev/null)"
-}
+  }
 
-if [ "$TERM" != "linux" ]; then
+  if [ "$TERM" != "linux" ]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+  fi
+else
+  PS1=$(whoami)"$ "
 fi
 
 d=~/homebrew/etc/bash_completion.d
