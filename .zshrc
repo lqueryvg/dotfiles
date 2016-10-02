@@ -4,10 +4,14 @@ source ~/dotfiles/my_functions.sh
 
 source_if_exists "${HOME}/.my_profile.sh"
 
-source /Users/jbu46/mygit/zsh-git-prompt/zshrc.sh
-#PROMPT='%B%m%~%b$(git_super_status) %# '
-#PROMPT='%~%b$(git_super_status)$ '
-PROMPT='$(basename $(pwd))$(git_super_status)/ '
+if [[ -f /Users/jbu46/mygit/zsh-git-prompt/zshrc.sh ]]
+then
+  source /Users/jbu46/mygit/zsh-git-prompt/zshrc.sh
+  PROMPT='$(basename $(pwd))$(git_super_status)/'
+else
+  #PROMPT='$(basename $(pwd))/ '
+  PROMPT='$(whoami)$ '
+fi
 
 #function powerline_precmd() {
 #    PS1="$(~/mygit/powerline-shell/powerline-shell.py \
