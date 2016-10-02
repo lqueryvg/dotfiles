@@ -1,4 +1,9 @@
 # Put machine to sleep (flashing power light and power only to memory)
 #
-sudo systemctl start systemd-suspend.service
-
+if [[ $(uname) == "Darwin" ]]
+then
+  sudo pmset -a hibernatemode 0
+  sudo pmset sleepnow
+else
+  sudo systemctl start systemd-suspend.service
+fi

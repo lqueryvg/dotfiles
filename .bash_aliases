@@ -14,6 +14,7 @@ alias grep='grep --color'           # show matches in colour
 alias egrep='egrep --color=auto'    # show matches in colour
 alias fgrep='fgrep --color=auto'    # show matches in colour
 alias ls='ls -hF --color=always'    # classify files in colour
+[[ $(uname) == Darwin ]] && alias ls='ls -hF -G'
 alias less='less -R'                # ls pipe less is in colour
 alias pgrep='pgrep -a'
 alias mvi=~/dotfiles/bin/mvim.sh
