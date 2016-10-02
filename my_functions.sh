@@ -6,6 +6,10 @@
 #echo my_functions.sh start
 functions_already_sourced=1
 
+command_exists() {
+  command -v $1 > /dev/null 2>&1
+}
+
 exec_if_exists() {
   [[ -x $1 ]] && exec $*
 }
