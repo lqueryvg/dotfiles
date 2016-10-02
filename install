@@ -64,4 +64,8 @@ then
     echo "Warning: git user or email looks blank."
     echo "Check ~/.gitconfig"
   fi
+  git config --global alias.alias "config --get-regexp ^alias\."
+  git config --global alias.co checkout
+  git config --global alias.br branch
+  git config --global alias.lol "log --oneline --decorate --graph"
 fi

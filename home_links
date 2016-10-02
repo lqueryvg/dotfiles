@@ -14,3 +14,6 @@ XTerm
 .bash_aliases
 .haskeline
 .Xresources
+.my_aliases
+.my_profile.sh
+.zshrc

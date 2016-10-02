@@ -1,3 +1,5 @@
+# for bash and zsh...
+
 # Interactive operation...
 alias rm='rm -i'
 alias cp='cp -i'
@@ -40,3 +42,5 @@ alias vs="vagrant ssh"
 alias ae=". /data/software/ansible/hacking/env-setup; cd ~/ansible"
 alias atm="/data/software/ansible/hacking/test-module"
 alias rr=rifle
+alias ic=i2cssh
+alias h=history

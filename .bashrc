@@ -1,44 +1,42 @@
+#echo .bashrc start
+
+source ~/dotfiles/my_functions.sh
+
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
-# Make bash append rather than overwrite the history on disk
-#shopt -s histappend
+source_if_exists                    \
+  /etc/.bash_completion             \
+  /etc/profile.d/bash_completion.sh \
+  ~/.bash_completion \
+  ~/.my_profile.sh
 
-# Uncomment to turn on programmable completion enhancements.
-# Any completions you add in ~/.bash_completion are sourced last.
-[[ -f /etc/bash_completion ]] && . /etc/bash_completion
-[[ -f /etc/profile.d/bash_completion.sh ]] && \
-    . /etc/profile.d/bash_completion.sh
+function _update_ps1() {
+    PS1="$(~/mygit/powerline-shell/powerline-shell.py \
+            --cwd-max-depth 2                         \
+            --mode compatible                         \
+            $? 2> /dev/null)"
+}
 
-[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
+if [ "$TERM" != "linux" ]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 
-d=~/.dircolors
-test -r $d && eval "$(dircolors $d)"
+d=~/homebrew/etc/bash_completion.d
+[[ -d $d ]] && {
+    for file in $d/*
+    do
+      . $file
+    done
+}
 
 settitle () 
 { 
    echo -ne "\e]2;$@\a\e]1;$@\a"; 
 }
 
-tt() {
-    [[ ! -d $1 ]] && (echo "need a dir"; return)
-    cd $1
-    nohup xterm 2>&1 >/dev/null &
-}
-
-tv() {
-    nohup xterm -e vim $* 2>&1 >/dev/null &
-}
-
-l() {
-    nohup $@ 2>&1 >/dev/null &
-}
-
 set -o vi
-export PS1="$(hostname -s)$ "
-#export TERM=xterm-256color
 export TERMCMD=xterm
-#export TERM=xterm
 export CDPATH=.:~/Documents:~/Downloads:~
 export VAGRANT_DEFAULT_PROVIDER=libvirt
 
@@ -49,9 +47,16 @@ stty -echoctl
 # TODO make a make a ~/.bash_completion.d directory
 # bash completion for tmux commands
 #source_if_exists ~/dotfiles/bin/bash_completion_tmux.sh
-#source /etc/bash_completion.d/git
 bcdir=~/dotfiles/bash_completion.d
 [[ -d $bcdir ]] && for file in $bcdir/*
 do
     source $file
 done
+stty -ixoff
+stty stop undef
+stty start undef
+
+#shopt -s histappend      # append rather than overwrite history on disk
+
+
+#echo .bashrc end
