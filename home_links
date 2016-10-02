@@ -17,3 +17,5 @@ XTerm
 .my_aliases
 .my_profile.sh
 .zshrc
+.inputrc
+.pystartup

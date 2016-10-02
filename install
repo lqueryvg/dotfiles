@@ -2,7 +2,7 @@
 
 source_dir=~/dotfiles             # dotfiles directory
 backup_dir=~/.dotfiles_old        # backup directory for old dotfiles
-home_links=$source_dir/home_links # list of links to create in ~
+home_links=$source_dir/home_links # list of things to link from dotfiles to ~
 
 logAndRun() {
     local cmd=$*

@@ -6,6 +6,7 @@ import XMonad.Hooks.DynamicLog
 --
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
+
 --import XMonad.Util.EZConfig
 --import XMonad.Util.Run
 
@@ -15,7 +16,6 @@ import XMonad.Layout.NoBorders
 -- myLayouts = ThreeCol 1 (1/100) (49/100) ||| Full
 myLayouts = ThreeCol 1 (1/100) (49/100) ||| 
    noBorders (fullscreenFull Full)
-
 
 --    where
 -- default tiling algorithm partitions the screen into two panes
@@ -37,7 +37,8 @@ myLayouts = ThreeCol 1 (1/100) (49/100) |||
 
 myConfig = defaultConfig {
   layoutHook = myLayouts,
-  terminal = "urxvt256cc +sb"
+  --terminal = "urxvt256cc"
+  terminal = "terminator"
   -- mod is Windows key
   -- modMask = mod4Mask
 }
