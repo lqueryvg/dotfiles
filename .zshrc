@@ -7,7 +7,7 @@ source_if_exists "${HOME}/.my_profile.sh"
 source /Users/jbu46/mygit/zsh-git-prompt/zshrc.sh
 #PROMPT='%B%m%~%b$(git_super_status) %# '
 #PROMPT='%~%b$(git_super_status)$ '
-PROMPT='$(basename $(pwd))$(git_super_status)$ '
+PROMPT='$(basename $(pwd))$(git_super_status)/ '
 
 #function powerline_precmd() {
 #    PS1="$(~/mygit/powerline-shell/powerline-shell.py \
