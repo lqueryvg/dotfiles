@@ -8,10 +8,8 @@
 XTerm
 .vim
 .xmobarrc
-.agignore
 .xmonad
 .ghci
-.bash_aliases
 .haskeline
 .Xresources
 .my_aliases
