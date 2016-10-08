@@ -25,7 +25,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     Plugin 'vim-scripts/mru.vim'        " Javascript stuff
     Plugin 'nanotech/jellybeans.vim'    " nice colour scheme
-    Plugin 'gabrielelana/vim-markdown'  " Syntax highlight for md files
+    "Plugin 'gabrielelana/vim-markdown'  " Syntax highlight for md files
     Plugin 'tommcdo/vim-exchange'       " exchange 2 things, cx{motion}
     "Plugin 'hdima/python-syntax'        " python syntax
 
@@ -222,7 +222,8 @@ if has("gui_running")
     set guioptions-=T       " remove toolbar
     set guioptions-=r       " remove R scrollbar
     set guioptions-=L       " remove L scrollbar
-    set guifont=fixed:h9:cANSI
+    "set guifont=fixed:h9:cANSI
+    "set guifont=Inconsolata-g\ for\ Powerline:h11
 endif
 
 "}}}
@@ -324,6 +325,7 @@ map <Leader>r <esc>:!rifle %<CR><CR>
 map <Leader>e <esc>:w<CR><esc>:!./%<CR>
 map <Leader>a <esc>:w<CR><esc>:!ansible-playbook -i hosts %<CR>
 map <Leader>m <esc>:w<CR><esc>:!./% -man<CR>
+map <Leader>g <esc>:w<CR><esc>:!grip %<CR>
 " avoid reaching for esc in insert mode
 ":inoremap jj <Esc>
 ":inoremap jk <Esc>
@@ -331,23 +333,18 @@ map <Leader>m <esc>:w<CR><esc>:!./% -man<CR>
 ":inoremap kk <Esc>
 
 "}}}
-" cursorline (disabled) {{{
-"---------------------------------------------------------
-" commenting out cursorline because I can't see yellow Notes or 'TODO's
-"set cursorline
-" Make cursorline only visible in active windows
-"augroup CursorLine
-"    au!
-"    au VimEnter * setlocal cursorline
-"    au WinEnter * setlocal cursorline
-"    au BufWinEnter * setlocal cursorline
-"    au WinLeave * setlocal nocursorline
-"augroup END
-
-"}}}
 " directories (disabled) {{{
 "---------------------------------------------------------
 "set backupdir=$HOME/vimtmp,.
 "set directory=$HOME/vimtmp,.
 "}}}
-" vim:foldmethod=marker:foldlevel=1
+
+if !has("win32") && !has("win16")
+  let os = substitute(system('uname'), "\n", "", "")
+  if os == "Darwin"
+    " OSX specic stuff
+    set clipboard=unnamed     " yank to OSX clipboard
+  endif
+endif
+
+"vim:foldmethod=marker:foldlevel=1
