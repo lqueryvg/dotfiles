@@ -1,9 +1,7 @@
 #echo .bashrc start
 
 source ~/dotfiles/my_functions.sh
-
-source_if_exists                    \
-  ~/.my_profile.sh
+source_if_exists ~/.my_profile.sh
 
 # If not running interactively, don't do any more
 [[ "$-" != *i* ]] && return
@@ -38,10 +36,7 @@ d=~/homebrew/etc/bash_completion.d
     done
 }
 
-settitle () 
-{ 
-   echo -ne "\e]2;$@\a\e]1;$@\a"; 
-}
+settitle () { echo -ne "\e]2;$@\a\e]1;$@\a"; }
 
 set -o vi
 export TERMCMD=xterm
@@ -65,6 +60,4 @@ stty stop undef
 stty start undef
 
 #shopt -s histappend      # append rather than overwrite history on disk
-
-
 #echo .bashrc end
