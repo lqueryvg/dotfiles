@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+[[ -z $(gvim --serverlist) ]] && server_was_not_running=true
+
+if [[ $server_was_not_running == "true" ]]; then
+  gvim --remote-silent $*
+else
+  #gvim --remote-send $*
+  gvim --remote $*
+  #vf
+fi
+
+if [[ $server_was_not_running == "true" ]]; then
+  sleep 0.5
+  gvim --remote-send ':bwipe! 1<CR>'
+  [[ -d $1 ]] && gvim --remote-send ":cd $1<CR>"
+fi
+
