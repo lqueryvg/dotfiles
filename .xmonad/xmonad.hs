@@ -6,6 +6,14 @@ import XMonad.Hooks.DynamicLog
 --
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Hooks.EwmhDesktops
+import System.IO
+import XMonad.Hooks.ManageDocks
+import Data.Monoid
+
+import qualified Data.Map as M
+import XMonad.Actions.CycleWS
 
 --import XMonad.Util.EZConfig
 --import XMonad.Util.Run
@@ -14,7 +22,7 @@ import XMonad.Layout.NoBorders
 --defaultLayouts = tiled ||| simpleFloat ||| Full
 --defaultLayouts = tiled ||| ThreeCol 1 (3/100) (1/2) ||| Full
 -- myLayouts = ThreeCol 1 (1/100) (49/100) ||| Full
-myLayouts = ThreeCol 1 (1/100) (49/100) ||| 
+myLayouts = avoidStruts $ ThreeCol 1 (1/100) (49/100) ||| 
    noBorders (fullscreenFull Full)
 
 --    where
@@ -34,14 +42,44 @@ myLayouts = ThreeCol 1 (1/100) (49/100) |||
 --main = do
 --  xmonad =<< xmobar defaultConfig {
 --    xmonad =<< xmobar $ defaultConfig {
+--
 
-myConfig = defaultConfig {
+
+  --xmonad $ xmobar $ myConfig xmproc
+
+--myConfig = defaultConfig {
+myLogHook dest = dynamicLogWithPP defaultPP { ppOutput = hPutStrLn dest
+                                            ,ppVisible = wrap "(" ")"
+              }     
+
+myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
+             [
+--                  ((modm,               xK_Right),  nextWS)
+--                , ((modm,               xK_Left),    prevWS)
+                  ((controlMask,               xK_Right),  nextWS)
+                , ((controlMask,               xK_Left),    prevWS)
+             ]
+
+myConfig xmproc = defaultConfig {
   layoutHook = myLayouts,
   --terminal = "urxvt256cc"
-  terminal = "terminator"
+  terminal = "terminator",
+  logHook = myLogHook xmproc,
+  manageHook = manageHook defaultConfig <+> manageDocks,
+  keys = myKeys <+> keys defaultConfig
+--  handleEventHook = mconcat
+--                          [ docksEventHook
+--                          , handleEventHook defaultConfig ]
+
+
+
   -- mod is Windows key
   -- modMask = mod4Mask
 }
 
-main = xmonad =<< xmobar myConfig
---
+main = do
+  xmproc <- spawnPipe "/home/john/.cabal/bin/xmobar /home/john/dotfiles/.xmobarrc"
+  xmonad $ ewmh $ myConfig xmproc
+
+--main = xmonad =<< xmobar myConfig
+
