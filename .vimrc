@@ -25,7 +25,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     Plugin 'vim-scripts/mru.vim'        " Javascript stuff
     Plugin 'nanotech/jellybeans.vim'    " nice colour scheme
-    Plugin 'gabrielelana/vim-markdown'  " Syntax highlight for md files
+    "Plugin 'gabrielelana/vim-markdown'  " Syntax highlight for md files
     Plugin 'tommcdo/vim-exchange'       " exchange 2 things, cx{motion}
     "Plugin 'hdima/python-syntax'        " python syntax
 
@@ -226,6 +226,7 @@ if has("gui_running")
     set guioptions-=m       " remove menubar
     set guioptions-=t       " remove tearoff items
     "set guifont=fixed:h9:cANSI
+    "set guifont=fixed:h9:cANSI
     set guifont="Terminus\ Bold \10"
     "colorscheme solarized
     "colorscheme molokai
@@ -233,6 +234,7 @@ if has("gui_running")
     set background=dark
     let g:jellybeans_background_color_256 = "black"
     colorscheme jellybeans
+    "set guifont=Inconsolata-g\ for\ Powerline:h11
 endif
 
 "}}}
@@ -334,25 +336,12 @@ map <Leader>r <esc>:!rifle %<CR><CR>
 map <Leader>e <esc>:w<CR><esc>:!./%<CR>
 map <Leader>a <esc>:w<CR><esc>:!ansible-playbook -i hosts %<CR>
 map <Leader>m <esc>:w<CR><esc>:!./% -man<CR>
+map <Leader>g <esc>:w<CR><esc>:!grip %<CR>
 " avoid reaching for esc in insert mode
 ":inoremap jj <Esc>
 ":inoremap jk <Esc>
 ":inoremap kj <Esc>
 ":inoremap kk <Esc>
-
-"}}}
-" cursorline (disabled) {{{
-"---------------------------------------------------------
-" commenting out cursorline because I can't see yellow Notes or 'TODO's
-"set cursorline
-" Make cursorline only visible in active windows
-"augroup CursorLine
-"    au!
-"    au VimEnter * setlocal cursorline
-"    au WinEnter * setlocal cursorline
-"    au BufWinEnter * setlocal cursorline
-"    au WinLeave * setlocal nocursorline
-"augroup END
 
 "}}}
 " directories (disabled) {{{
@@ -361,5 +350,12 @@ map <Leader>m <esc>:w<CR><esc>:!./% -man<CR>
 "set directory=$HOME/vimtmp,.
 "}}}
 
-" vim:foldmethod=marker:foldlevel=1
+if !has("win32") && !has("win16")
+  let os = substitute(system('uname'), "\n", "", "")
+  if os == "Darwin"
+    " OSX specic stuff
+    set clipboard=unnamed     " yank to OSX clipboard
+  endif
+endif
 
+" vim:foldmethod=marker:foldlevel=1

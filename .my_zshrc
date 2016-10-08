@@ -9,7 +9,7 @@ source_if_exists "${HOME}/.my_profile.sh"
 if [[ -f /Users/jbu46/mygit/zsh-git-prompt/zshrc.sh ]]
 then
   source /Users/jbu46/mygit/zsh-git-prompt/zshrc.sh
-  PROMPT='$(basename $(pwd))$(git_super_status)/'
+  PROMPT='$(basename $(pwd))$(git_super_status)/ '
 else
   ;
 fi
@@ -39,3 +39,4 @@ then
   bindkey "^[[2~" beep                 # Insert (make passive)
 fi
 
+alias -g pg=' | grep --color'

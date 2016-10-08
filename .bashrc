@@ -2,14 +2,16 @@
 
 source ~/dotfiles/my_functions.sh
 
-# If not running interactively, don't do anything
+source_if_exists                    \
+  ~/.my_profile.sh
+
+# If not running interactively, don't do any more
 [[ "$-" != *i* ]] && return
 
 source_if_exists                    \
   /etc/.bash_completion             \
   /etc/profile.d/bash_completion.sh \
-  ~/.bash_completion \
-  ~/.my_profile.sh
+  ~/.bash_completion
 
 powerline=~/mygit/powerline-shell/powerline-shell.py
 if [[ -x $powerline ]]
