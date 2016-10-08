@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+d=~/journal
+mkdir -p $d
+today=$(date +%Y_%m_%d_%a)
+file=$d/$today.md
+
+[[ ! -f $d/$today.md ]] && echo "# $today" > $file
+${HOME}/dotfiles/bin/callvim $file
