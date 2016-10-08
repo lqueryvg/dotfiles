@@ -1,3 +1,6 @@
+source ~/dotfiles/my_functions.sh
+source ~/.my_profile.sh
+
 xrdb -cpp /usr/bin/cpp -merge ~/.Xresources
 google-chrome &
 #urxvt256cd -q -f -o
