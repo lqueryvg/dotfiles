@@ -1,13 +1,14 @@
 set nocompatible          " be iMproved (required)
 
+" detect restricted mode {{{
 " Set a variable to say if we are running in restricted mode (e.g. rvim).
 " This will be used later.
 silent! call writefile([], '')
 " In restricted mode, this fails with E145: Shell commands not allowed in rvim
 " In non-restricted mode, this fails with E482: Can't create file <empty>
 let g:isRestricted = (v:errmsg =~# '^E145:')
-
-" Modules {{{
+"}}}
+" plugins {{{
 "------------------------------------------------------------------------------
 
 " Source modules if vundle present
@@ -238,14 +239,14 @@ if has("gui_running")
 endif
 
 "}}}
-" formatoptions {{{
+" formatoptions (automatic formatting) {{{
 "---------------------------------------------------------
 set formatoptions=
 silent! set formatoptions+=j   " sensibly remove comment chars on joining lines
 set formatoptions+=q   " allow gq to format comments
 set formatoptions+=l   " long lines not broken in insert mode
 set formatoptions+=n   " recognise numbered lists when formatting
-                       "   needs autoindent set, and uses formatlistpat
+                       " needs autoindent set, and uses formatlistpat
 set formatoptions+=o   " add comment leader with o or O
 set formatoptions+=r   " add comment leader on <Enter> in insert mode
 
@@ -270,7 +271,7 @@ set statusline+=\         " space
 set laststatus=2          " show my statusline even if only 1 window
 
 "}}}
-" Mappings {{{
+" key mappings {{{
 "-------------------------------------------------------
 " DO NOT put comments ON END of map lines
 
@@ -344,12 +345,12 @@ map <Leader>g <esc>:w<CR><esc>:!grip %<CR>
 ":inoremap kk <Esc>
 
 "}}}
-" directories (disabled) {{{
+" backup directories (disabled) {{{
 "---------------------------------------------------------
 "set backupdir=$HOME/vimtmp,.
 "set directory=$HOME/vimtmp,.
 "}}}
-
+" os specifics {{{
 if !has("win32") && !has("win16")
   let os = substitute(system('uname'), "\n", "", "")
   if os == "Darwin"
@@ -357,5 +358,6 @@ if !has("win32") && !has("win16")
     set clipboard=unnamed     " yank to OSX clipboard
   endif
 endif
+"}}}
 
 " vim:foldmethod=marker:foldlevel=1
