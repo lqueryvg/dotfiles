@@ -45,7 +45,7 @@ hi Exception guifg=#A6E22E ctermfg=148
 hi Float guifg=#AE81FF ctermfg=141
 hi FoldColumn guifg=#465457 ctermfg=239 guibg=#000000 ctermbg=0
 "hi Folded guifg=#465457 ctermfg=239 guibg=#000000 ctermbg=0
-hi Folded guifg=#465457 ctermfg=239 guibg=#000000 ctermbg=16
+hi Folded guifg=#665467 ctermfg=239 guibg=#000000 ctermbg=16
 hi Function guifg=#0C60A0 ctermfg=25
 
 hi Identifier guifg=#ffffff ctermfg=15 cterm=none
