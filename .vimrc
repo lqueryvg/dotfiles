@@ -160,14 +160,15 @@ let g:jellybeans_overrides = {
     \}
 if (g:isRestricted)
     colorscheme murphy
+    highlight Normal ctermbg=NONE
 else
     silent! colorscheme jellybeans
     "set background=dark
     "silent! colorscheme solarized
     "let g:solarized_termcolors=256
     "colorscheme solarized
+    highlight Normal ctermbg=NONE
 endif
-highlight Normal ctermbg=NONE
 
 " make 81st column stand out (from Damien Conway)
 "if (exists("*matchadd"))
@@ -222,7 +223,16 @@ if has("gui_running")
     set guioptions-=T       " remove toolbar
     set guioptions-=r       " remove R scrollbar
     set guioptions-=L       " remove L scrollbar
-    set guifont=fixed:h9:cANSI
+    set guioptions-=m       " remove menubar
+    set guioptions-=t       " remove tearoff items
+    "set guifont=fixed:h9:cANSI
+    set guifont="Terminus\ Bold \10"
+    "colorscheme solarized
+    "colorscheme molokai
+    "colorscheme skittles_dark
+    set background=dark
+    let g:jellybeans_background_color_256 = "black"
+    colorscheme jellybeans
 endif
 
 "}}}
@@ -350,4 +360,6 @@ map <Leader>m <esc>:w<CR><esc>:!./% -man<CR>
 "set backupdir=$HOME/vimtmp,.
 "set directory=$HOME/vimtmp,.
 "}}}
+
 " vim:foldmethod=marker:foldlevel=1
+
