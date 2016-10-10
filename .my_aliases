@@ -32,7 +32,6 @@ then
   vim=vimx
 fi
 alias vim='$vim'
-alias vi='$vim'
 alias view='$vim -R'
 alias vlcdot='nohup vlc . 2>&1 > /dev/null &'
 
@@ -48,3 +47,4 @@ alias h=history
 alias help='pushd ~/technotes; vim *.md; popd'
 alias vim=callvim
 alias v=callvim
+alias vi=callvim
