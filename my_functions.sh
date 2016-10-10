@@ -17,7 +17,7 @@ exec_if_exists() {
 source_if_exists() {
   for f in $*
   do
-    [[ -f $f ]] && source $f
+    [[ -f $f ]] && . $f
   done
 }
 
