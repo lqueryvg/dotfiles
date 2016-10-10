@@ -1,6 +1,6 @@
 #echo .bashrc start
 
-source ~/dotfiles/my_functions.sh
+. ~/dotfiles/my_functions.sh
 source_if_exists ~/.my_profile.sh
 
 # If not running interactively, don't do any more
