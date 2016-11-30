@@ -56,8 +56,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList
              [
 --                  ((modm,               xK_Right),  nextWS)
 --                , ((modm,               xK_Left),    prevWS)
-                  ((controlMask,               xK_Right),  nextWS)
-                , ((controlMask,               xK_Left),    prevWS)
+                  ((mod1Mask,             xK_Right),  nextWS)
+                , ((mod1Mask,             xK_Left),    prevWS)
              ]
 
 myConfig xmproc = defaultConfig {
