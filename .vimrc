@@ -227,15 +227,17 @@ if has("gui_running")
     set guioptions-=m       " remove menubar
     set guioptions-=t       " remove tearoff items
     "set guifont=fixed:h9:cANSI
-    "set guifont=fixed:h9:cANSI
-    set guifont="Terminus\ Bold \10"
+    "set guifont=Inconsolata-g\ for\ Powerline:h11
+    " TIP: to select font interactively, use:
+    "   :set guifont=* 
+    set guifont=Fixed\ Medium\ Semi-Condensed\ 10
+
     "colorscheme solarized
     "colorscheme molokai
     "colorscheme skittles_dark
     set background=dark
     let g:jellybeans_background_color_256 = "black"
     colorscheme jellybeans
-    "set guifont=Inconsolata-g\ for\ Powerline:h11
 endif
 
 "}}}
