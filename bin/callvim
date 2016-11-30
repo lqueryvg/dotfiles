@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
+args=$*
+[[ $args == "" ]] && args=$(mktemp)
+
 [[ -z $(gvim --serverlist) ]] && server_was_not_running=true
 
 if [[ $server_was_not_running == "true" ]]; then
-  gvim --remote-silent $*
+  gvim --remote-silent $args
 else
-  #gvim --remote-send $*
-  gvim --remote $*
-  #vf
+  gvim --remote $args
 fi
 
 if [[ $server_was_not_running == "true" ]]; then
