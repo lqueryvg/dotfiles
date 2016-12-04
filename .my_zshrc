@@ -40,3 +40,9 @@ then
 fi
 
 alias -g pg=' | grep --color'
+
+# I don't use vi-mode because it messes with my PageUp key.
+# But without it, I need to configure 'v' to enter full screen editor
+# when editing command line, as follows...
+bindkey -M vicmd v edit-command-line
+
