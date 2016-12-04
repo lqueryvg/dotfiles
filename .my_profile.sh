@@ -16,6 +16,9 @@ prepend_path_if_exists   \
 # Haskell stuff
 append_path_if_exists ${HOME}/.cabal/bin
 
+# The fullscreen editor to use when you press 'v' when editing command line
+export VISUAL=vim
+
 # suppress accessibility bus error start gnome apps from shell prompt
 export NO_AT_BRIDGE=1
 
