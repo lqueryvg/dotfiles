@@ -155,7 +155,7 @@ let g:jellybeans_overrides = {
     \ 'StatusLine':   { '256ctermbg': '237', '256ctermfg': 'white', 'attr': ''},
     \ 'StatusLineNC': { '256ctermbg': '234', '256ctermfg': '241',   'attr': ''},
     \ 'WildMenu':     { '256ctermbg': '233', '256ctermfg': '81'},
-    \ 'Folded': { '256ctermbg': '0', '256ctermfg': '167', 'attr': ''},
+    \ 'Folded': { '256ctermbg': '18', '256ctermfg': '167', 'attr': ''},
     \ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
     \ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
     \}
@@ -169,6 +169,7 @@ else
     "let g:solarized_termcolors=256
     "colorscheme solarized
     highlight Normal ctermbg=NONE
+    highlight NonText ctermbg=16
 endif
 
 " make 81st column stand out (from Damien Conway)
@@ -204,11 +205,11 @@ set keywordprg=:help        " K calls :help on word under cursor
 set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 2 lines above or below cursor
 set hidden                  " switch buffers without being forced to save
-if (has('mouse'))
-    set mouse=nvch          " mouse works in all modes except insert
-    "set mouse=              " mouse off
-    "set mouse=a             " mouse fully on
-endif
+"if (has('mouse'))
+"    set mouse=nvch          " mouse works in all modes except insert
+"    "set mouse=              " mouse off
+"    "set mouse=a             " mouse fully on
+"endif
 set modelines=1             " comment at end of file gives vim hints
 "set foldlevel=99       " no folds closed when buffer opened
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
