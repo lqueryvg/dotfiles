@@ -33,6 +33,8 @@ export NO_AT_BRIDGE=1
 #. /Users/jbu46/homebrew/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
 #
 
+export GOPATH=$HOME/gopath
+
 
 
 #echo .my_profile end

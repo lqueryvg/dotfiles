@@ -59,5 +59,9 @@ stty -ixoff
 stty stop undef
 stty start undef
 
+[[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
+
+
 #shopt -s histappend      # append rather than overwrite history on disk
 #echo .bashrc end
+
