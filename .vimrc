@@ -205,8 +205,8 @@ set wildmenu                " tab show menu on command line
 set scrolloff=3             " scroll to keep 2 lines above or below cursor
 set hidden                  " switch buffers without being forced to save
 if (has('mouse'))
-    set mouse=nvch          " mouse works in all modes except insert
-    "set mouse=              " mouse off
+    "set mouse=nvch          " mouse works in all modes except insert
+    set mouse=              " mouse off
     "set mouse=a             " mouse fully on
 endif
 set modelines=1             " comment at end of file gives vim hints
@@ -309,7 +309,7 @@ vnoremap > >gv
 
 " Leader mappings
 "-----------------------------------------------------
-" Rebind <Lader> key
+" Rebind <Leader> key
 "let mapleader = "\\"
 
 " Cycle tabs
