@@ -11,7 +11,8 @@ prepend_path_if_exists   \
   ${HOME}/homebrew/bin   \
   ${HOME}/.linuxbrew/bin \
   ${HOME}/.linuxbrew/sbin \
-  $HOME/.rbenv/bin
+  $HOME/.rbenv/bin \
+  $HOME/gopath/bin
 
 # Haskell stuff
 append_path_if_exists ${HOME}/.cabal/bin
