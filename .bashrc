@@ -12,13 +12,17 @@ source_if_exists                    \
   ~/.bash_completion
 
 powerline=~/mygit/powerline-shell/powerline-shell.py
-if [[ -x $powerline ]]
+if [[ -f ~/liquidprompt/liquidprompt ]]
+then
+  [[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
+elif [[ -x $powerline ]]
 then
   function _update_ps1() {
     PS1="$($powerline         \
             --cwd-max-depth 2 \
             --mode compatible \
             $? 2> /dev/null)"
+            #--mode flat \
   }
 
   if [ "$TERM" != "linux" ]; then
@@ -27,6 +31,8 @@ then
 else
   PS1=$(whoami)"$ "
 fi
+
+
 
 d=~/homebrew/etc/bash_completion.d
 [[ -d $d ]] && {
