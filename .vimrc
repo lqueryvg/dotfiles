@@ -103,7 +103,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'ConradIrwin/vim-bracketed-paste'
     "Plugin 'nvie/vim-flake8'
 
-    Plugin 'chase/vim-ansible-yaml'
+    "Plugin 'chase/vim-ansible-yaml'
     Plugin 'dkprice/vim-easygrep'
     "Plugin 'xolox/vim-misc'
     "Plugin 'xolox/vim-easytags'
@@ -170,6 +170,8 @@ else
     "colorscheme solarized
     highlight Normal ctermbg=NONE
     highlight NonText ctermbg=16
+    highlight NonText ctermbg=16
+    highlight LineNr ctermbg=None
 endif
 
 " make 81st column stand out (from Damien Conway)
@@ -350,8 +352,8 @@ map <Leader>g <esc>:w<CR><esc>:!grip %<CR>
 "}}}
 " backup directories (disabled) {{{
 "---------------------------------------------------------
-"set backupdir=$HOME/vimtmp,.
-"set directory=$HOME/vimtmp,.
+set backupdir=$HOME/.vimtmp,.
+set directory=$HOME/.vimtmp,.
 "}}}
 " os specifics {{{
 if !has("win32") && !has("win16")

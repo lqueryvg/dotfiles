@@ -11,13 +11,21 @@ command_exists() {
 }
 
 exec_if_exists() {
-  [[ -x $1 ]] && exec $*
+  if [[ -x $1 ]]
+  then
+    echo exec $*
+    exec $*
+  fi
 }
 
 source_if_exists() {
   for f in $*
   do
-    [[ -f $f ]] && . $f
+    if [[ -f $f ]]
+    then
+      echo source $f
+      . $f
+    fi
   done
 }
 

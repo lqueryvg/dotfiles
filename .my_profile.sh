@@ -36,6 +36,11 @@ export NO_AT_BRIDGE=1
 
 export GOPATH=$HOME/gopath
 
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+  eval `ssh-agent -s`
+  ssh-add
+fi
 
+source_if_exists ${HOME}/.local_profile
 
 #echo .my_profile end
