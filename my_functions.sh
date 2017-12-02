@@ -2,6 +2,7 @@
   #echo my_functions.sh already done
   return
 }
+echo my_functions.sh
 
 #echo my_functions.sh start
 functions_already_sourced=1
@@ -30,9 +31,10 @@ source_if_exists() {
 }
 
 append_path_if_exists() {
-  for d in $*
+  for d in $@
   do
-    if [[ -d $d ]] ; then
+    echo "d=$d"
+    if [[ -d "$d" ]] ; then
       PATH="${PATH}:$d"
       export PATH
     fi
@@ -42,14 +44,14 @@ append_path_if_exists() {
 prepend_path_if_exists() {
   for d in $*
   do
-    if [[ -d $d ]] ; then
+    if [[ -d "$d" ]] ; then
       PATH="$d:${PATH}"
       export PATH
     fi
   done
 }
 
-# set window title 
+# set window title
 title() {
   echo -ne "\033]0;"$1"\007"
 }
