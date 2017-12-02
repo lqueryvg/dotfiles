@@ -49,4 +49,9 @@ prepend_path_if_exists() {
   done
 }
 
+# set window title 
+title() {
+  echo -ne "\033]0;"$1"\007"
+}
+
 #echo my_functions.sh end
