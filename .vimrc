@@ -116,6 +116,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
         " o = toggle fold
         " Double-click to navigate to symbol
     Plugin 'fatih/vim-go'
+    Plugin 'vim-terraform'
 
     call vundle#end()
     filetype plugin indent on " required!
@@ -186,10 +187,10 @@ endif
 
 "set textwidth=79
 set textwidth=0
-set shiftwidth=2          " indent/outdent by this many columns
-set tabstop=2             " show tabs as this many spaces (they are still tabs!)
+set shiftwidth=4          " indent/outdent by this many columns
+set tabstop=4             " show tabs as this many spaces (they are still tabs!)
 set expandtab             " use spaces instead of tabs
-set softtabstop=2         " unify?
+set softtabstop=4         " unify?
 set shiftround            " always indent/outdent to the nearest tabstop
 set autoindent            " auto-indent
 "set smarttab              " use tabs at the start of a line, spaces elsewhere
@@ -200,7 +201,7 @@ set autoindent            " auto-indent
 set autochdir               " current dir = current file location
 set hlsearch                " highlight searched phrases.
 set incsearch               " highlight as you type your search.
-set ignorecase              " Make searches case-insensitive.
+set noignorecase            " Make searches case-sensitive.
 set ruler                   " Always show info along bottom.
 set backspace=indent,start  " BS over autoindents and start of insert
 set keywordprg=:help        " K calls :help on word under cursor
