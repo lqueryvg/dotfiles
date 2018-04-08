@@ -1,34 +1,38 @@
 # common to bash and zsh
 
 #echo .my_profile.sh start
-source_if_exists  ~/.my_aliases
+#
+
+case $- in
+  *i*)
+      # This shell is interactive
+      # editor to use when pressing 'v' in command line edit
+      export VISUAL=vim
+      source_if_exists  ~/.my_aliases
+      title $(uname -n)
+      ;;
+  *) 
+      # This is a script
+      ;;
+esac
+
 source_if_exists ${HOME}/.winerc
 
-prepend_path_if_exists   \
-  ${HOME}/bin            \
-  ${HOME}/dotfiles/bin   \
-  /home/local/bin        \
-  ${HOME}/homebrew/bin   \
-  ${HOME}/.linuxbrew/bin \
-  ${HOME}/.linuxbrew/sbin \
-  $HOME/.rbenv/bin \
+prepend_path_if_exists            \
+  ${HOME}/bin                     \
+  ${HOME}/dotfiles/bin            \
+  /home/local/bin                 \
+  /home/linuxbrew/.linuxbrew/bin  \
+  /home/linuxbrew/.linuxbrew/sbin \
+  $HOME/.rbenv/bin                \
   $HOME/gopath/bin
 
 # Haskell stuff
 append_path_if_exists ${HOME}/.cabal/bin
 
-# The fullscreen editor to use when you press 'v' when editing command line
-export VISUAL=vim
 
 # suppress accessibility bus error start gnome apps from shell prompt
 export NO_AT_BRIDGE=1
-
-#export PATH="$HOME/.rbenv/bin:$PATH"
-
-#command_exists rbenv && {
-#  eval "$(rbenv init -)"
-#  rbenv shell 2.0.0-p598
-#}
 
 #test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 #. /Users/jbu46/homebrew/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh

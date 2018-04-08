@@ -30,6 +30,18 @@ source_if_exists() {
   done
 }
 
+source_first_if_exists() {
+  for f in $*
+  do
+    if [[ -f $f ]]
+    then
+      echo source $f
+      . $f
+      return
+    fi
+  done
+}
+
 append_path_if_exists() {
   for d in $@
   do
@@ -56,4 +68,11 @@ title() {
   echo -ne "\033]0;"$1"\007"
 }
 
+venv() {
+  source_first_if_exists \
+    venv/bin/activate    \
+    ~/projects/azure/dist/venv/bin/activate
+}
+
 #echo my_functions.sh end
+

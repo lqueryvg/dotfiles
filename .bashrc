@@ -12,9 +12,9 @@ source_if_exists                    \
   ~/.bash_completion
 
 powerline=~/mygit/powerline-shell/powerline-shell.py
-if [[ -f ~/liquidprompt/liquidprompt ]]
+if [[ -f ~/.liquidprompt ]]
 then
-  [[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
+  [[ $- = *i* ]] && source ~/.liquidprompt
 elif [[ -x $powerline ]]
 then
   function _update_ps1() {
@@ -65,7 +65,7 @@ stty -ixoff
 stty stop undef
 stty start undef
 
-[[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
+#[[ $- = *i* ]] && source ~/.liquidprompt
 
 
 #shopt -s histappend      # append rather than overwrite history on disk

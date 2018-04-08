@@ -7,4 +7,4 @@ source_if_exists $HOME/.bashrc
 
 export PATH=$PATH:$HOME/bin
 
-source_if_exists ~/lib/azure-cli/az.completion'
+source_if_exists ~/lib/azure-cli/az.completion

@@ -50,5 +50,9 @@ alias help='pushd ~/technotes; vim *.md; popd'
 alias vi=vim
 alias i2cssh='RUBYOPT="-W0" i2cssh'
 alias k=kubectl
+alias pu=pushd
+alias po=popd
+#alias venv="source venv/bin/activate"
+
 
 # local stuff

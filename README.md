@@ -12,7 +12,7 @@ vim
 - ~/.zshrc
   - ~/.my_zshrc
     - ~/dotfiles/my_functions.sh
-    - ~/my_profile.sh
+    - ~/.my_profile.sh
       - ~/my_aliases.sh
       - ~/local_profile.sh
 
