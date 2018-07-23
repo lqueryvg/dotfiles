@@ -1,5 +1,8 @@
 # for bash and zsh...
 
+# only run these when interactive
+[[ $SHELL_IS_INTERACTIVE == true ]] || return
+
 # Interactive operation...
 alias rm='rm -i'
 alias cp='cp -i'
@@ -52,6 +55,7 @@ alias i2cssh='RUBYOPT="-W0" i2cssh'
 alias k=kubectl
 alias pu=pushd
 alias po=popd
+alias tn='cd ~/technotes'
 #alias venv="source venv/bin/activate"
 
 

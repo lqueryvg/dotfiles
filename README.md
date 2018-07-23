@@ -1,3 +1,5 @@
+# dotfiles
+
 ```
 cd ~
 git clone https://github.com/lqueryvg/dotfiles.git
@@ -8,7 +10,7 @@ vim
 :PluginInstall
 ```
 
-# Order of execution
+## Order of execution
 - ~/.zshrc
   - ~/.my_zshrc
     - ~/dotfiles/my_functions.sh

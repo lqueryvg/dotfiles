@@ -86,7 +86,8 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     let b:undo_ftplugin = ''    " Bodge to stop error produced
                                 " by nelstrom/vim-markdown-folding
-    Plugin 'nelstrom/vim-markdown-folding'
+    "Plugin 'nelstrom/vim-markdown-folding'
+    Plugin 'plasticboy/vim-markdown'
     Plugin 'tpope/vim-fugitive'
 
     "Plugin 'ledger/vim-ledger'
@@ -187,10 +188,10 @@ endif
 
 "set textwidth=79
 set textwidth=0
-set shiftwidth=4          " indent/outdent by this many columns
-set tabstop=4             " show tabs as this many spaces (they are still tabs!)
+set shiftwidth=2          " indent/outdent by this many columns
+set tabstop=2             " show tabs as this many spaces (they are still tabs!)
 set expandtab             " use spaces instead of tabs
-set softtabstop=4         " unify?
+set softtabstop=2         " unify?
 set shiftround            " always indent/outdent to the nearest tabstop
 set autoindent            " auto-indent
 "set smarttab              " use tabs at the start of a line, spaces elsewhere
