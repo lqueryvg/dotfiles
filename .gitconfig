@@ -1,16 +1,19 @@
-[user]
-	name = John Buxton
-	email = 
+[includeIf "gitdir:~/git/"]
+  path = ~/dotfiles/gitconfig/personal
+[includeIf "gitdir:~/projects/"]
+  path = ~/dotfiles/gitconfig/client
+
 [difftool]
   prompt = false
 [alias]
+  nuke = !sh -c 'git branch -D $1 && git push origin :$1' -
   d = difftool
   dc = diff --cc
   diffc = diff --name-status --oneline [core]
 	alias = config --get-regexp ^alias\\.
 	co = checkout
 	br = branch
-	lol = log --oneline --decorate --graph --branches
+	lol = log --oneline --decorate --graph
 	st = status
   logg = log --pretty=format:'%h %ce %cd - %s' --graph --stat
   lg0 = log --oneline

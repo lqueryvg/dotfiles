@@ -1,0 +1,12 @@
+source=$1
+jar=plantuml.jar
+dir=~/Downloads
+
+if [[ ! -f $dir/$jar ]]
+then
+  echo "$jar not found, downloading and installing it to $dir..."
+  curl -L http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -o $dir/$jar
+fi
+
+java -jar $dir/$jar $*
+open ${source%.txt}.png

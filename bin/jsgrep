@@ -1,0 +1,12 @@
+# "$@" puts quotes around every argument received
+grep -RH                      \
+  --exclude-dir node_modules \
+  --exclude-dir .serverless  \
+  --exclude-dir coverage     \
+  --exclude-dir test-results \
+  --exclude-dir .git \
+  --exclude *.csv \
+  --exclude *.csv- \
+  --exclude *.template \
+  --exclude *.zip \
+  "$@" .
