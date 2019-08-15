@@ -2,6 +2,7 @@
 # sls deploy "Profile blah does not exist" problem
 export AWS_SDK_LOAD_CONFIG=1
 
+# SSM utility functions
 function ssmget() {
   set -x
   aws ssm get-parameters --names $1   \
@@ -44,4 +45,3 @@ function ssmdescribe() {
   set -x
   aws ssm describe-parameters   --query 'Parameters[*].[Name,Description]' --output table
 }
-
