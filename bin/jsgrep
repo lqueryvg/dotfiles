@@ -2,6 +2,7 @@
 grep -RH                      \
   --exclude-dir node_modules \
   --exclude-dir .serverless  \
+  --exclude-dir .webpack  \
   --exclude-dir coverage     \
   --exclude-dir test-results \
   --exclude-dir .git \

@@ -53,7 +53,7 @@ source_first_if_exists() {
 }
 
 append_path() {
-  echo "PATH+ '$1'"
+  echo "    PATH+ '$1'"
   PATH="${PATH}:$1"
   export PATH
 }
