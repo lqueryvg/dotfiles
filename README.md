@@ -11,19 +11,20 @@ vim
 ```
 
 ## Order of execution
-- ~/.zshrc
-  - ~/.my_zshrc
-    - ~/dotfiles/my_functions.sh
-    - ~/.my_profile.sh
-      - ~/dotfiles/profile.d/*.sh
-      - ~/dotfiles/local.d/*.sh
 
-- ~/.bashrc
-  - ~/dotfiles/my_functions.sh
-  - ~/.my_profile.sh
-    - SEE ABOVE
+- `~/.zshrc` (for interactive `zsh` shells)
+  - `~/.my_zshrc`
+    - `~/dotfiles/my_functions.sh`
+    - `~/.my_profile.sh`
+      - `~/dotfiles/profile.d/*.sh`
+      - `~/dotfiles/local.d/*.sh`
 
-- ~/.bash_profile
-  - ~/dotfiles/my_functions.sh
-  - exec_if_exists $HOME/homebrew/bin/zsh
-  - source_if_exists $HOME/.bashrc
+- `~/.bash_profile` (for interactive login `bash` shells, i.e. every window)
+  - `~/dotfiles/my_functions.sh`
+  - `exec_if_exists $HOME/homebrew/bin/zsh`
+  - `source_if_exists $HOME/.bashrc`
+
+- `~/.bashrc` (for interactive non-login `bash` shells)
+  - `~/dotfiles/my_functions.sh`
+  - `~/.my_profile.sh`
+
