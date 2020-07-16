@@ -1,7 +1,7 @@
 # AWS profiles
 
 function lsp_raw() {
-  grep '\[profile' ~/.aws/config | sed -e 's@.* @@' -e 's@]@@'
+  grep '\[profile' ~/.aws/config | grep -v '^#' | sed -e 's@.* @@' -e 's@]@@'
 }
 
 function lsp() {
@@ -19,6 +19,7 @@ function lsp() {
 function awp() {
   export AWS_PROFILE=$1
   echo "AWS_PROFILE=$AWS_PROFILE"
+  aws-azure-login --no-prompt
 }
 
 [[ $SHELL_IS_ZSH != "true" ]] && return
