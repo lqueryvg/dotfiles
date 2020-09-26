@@ -26,7 +26,7 @@ move_if_exists() {
 }
 
 
-rename_if_exists() {
+backup_if_exists() {
     local file=$1
     if [[ -e $file ]]
     then
@@ -41,7 +41,7 @@ while read file
 do
     if [[ ! -L ~/$file ]]   # if not already a link
     then
-        rename_if_exists $backup_dir/$file
+        backup_if_exists $backup_dir/$file
         move_if_exists  mv ~/$file $backup_dir
         logAndRun ln -sf $source_dir/$file ~/$file
     else
@@ -69,3 +69,7 @@ then
   git config --global alias.br branch
   git config --global alias.lol "log --oneline --decorate --graph"
 fi
+
+mkdir -p ~/.aws/cli
+backup_if_exists ~/.aws/cli/alias
+ln -s $source_dir/aws.alias ~/.aws/cli/alias

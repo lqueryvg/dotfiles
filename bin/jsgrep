@@ -1,13 +1,23 @@
 # "$@" puts quotes around every argument received
-grep -RH                      \
+egrep -RHI                    \
   --exclude-dir node_modules \
   --exclude-dir .serverless  \
-  --exclude-dir .webpack  \
+  --exclude-dir .webpack     \
   --exclude-dir coverage     \
   --exclude-dir test-results \
-  --exclude-dir .git \
-  --exclude *.csv \
-  --exclude *.csv- \
-  --exclude *.template \
-  --exclude *.zip \
+  --exclude-dir .git         \
+  --exclude-dir .terraform   \
+  --exclude-dir .cache       \
+  --exclude *.csv            \
+  --exclude *.svg            \
+  --exclude *.csv-           \
+  --exclude *.template       \
+  --exclude *.zip            \
+  --exclude *.js.map         \
+  --exclude *.js.snap        \
+  --exclude *.chunk.js       \
+  --exclude *.png            \
+  --exclude *.xml            \
+  --exclude yarn.lock        \
+  --exclude commons-[a-f0-9]*.js \
   "$@" .

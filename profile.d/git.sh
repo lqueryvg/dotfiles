@@ -1,5 +1,9 @@
 disable_git_hooks() {
   hooks=$(git rev-parse --show-toplevel)/.git/hooks
+  if [[ -d ${hooks}.disabled ]]
+  then
+    mv -f ${hooks}.disabled ${hooks}.disabled.$(date "+%Y%m%d_%H%M%S")
+  fi
   if [[ -d $hooks ]]
   then
     mv -f $hooks ${hooks}.disabled

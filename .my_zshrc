@@ -39,6 +39,7 @@ export SHELL=/bin/zsh
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+setopt interactivecomments
 setopt inc_append_history
 #setopt share_history
 bindkey -v
