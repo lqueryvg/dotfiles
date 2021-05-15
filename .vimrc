@@ -219,7 +219,7 @@ if (has('mouse'))
     "set mouse=a             " mouse fully on
 endif
 set modelines=1             " comment at end of file gives vim hints
-"set foldlevel=99       " no folds closed when buffer opened
+set foldlevel=99            " no folds closed when buffer opened
 autocmd! BufWritePost .vimrc source % " Auto load .vimrc if it changes
 set runtimepath+=~/.vim/notes
 "let loaded_matchparen = 1   " disable matchparen because it is too slow
