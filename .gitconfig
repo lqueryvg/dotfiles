@@ -16,6 +16,7 @@
 	co = checkout
 	br = branch
   prm = pull --rebase=i origin master
+  prd = !sh -c 'git co development && git pull && git co - && git rebase -i development' -
 	lol = log --oneline --decorate --graph
 	st = status
   logg = log --pretty=format:'%h %ce %cd - %s' --graph --stat
@@ -28,6 +29,7 @@
   lognames = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat
   lgn = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat -- . ':doc/*html'
   gn = "!git branch -vv | grep gone"
+  gr = !sh -c 'git rev-list --all | xargs git grep $1'
 [core]
 	excludesfile = ~/.gitignore
   #editor = vim
