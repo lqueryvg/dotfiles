@@ -2,10 +2,20 @@
 
 whoami = sts get-caller-identity
 
+upolicies = iam list-policies --scope Local --query '
+    Policies[?AttachmentCount==`0`] | [].Arn
+  ' --output text
+
 vpcs = ec2 describe-vpcs --query '
     Vpcs[].[Tags[?Key==`Name`]
-    | [0].Value, CidrBlock, VpcId]
+      | [0].Value, CidrBlock, VpcId]
   '
+
+lambda-roles = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].RoleName"
+
+lambda-subnets = lambda list-functions --function-version ALL --query "Functions[?VpcConfig.SubnetIds != `null`].[FunctionName, Version, VpcConfig.SubnetIds | join(',', @)]" --output table
+
+doit = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].Arn | join(' ', @)"
 
 create-assume-role =
   !f() {

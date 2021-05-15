@@ -21,3 +21,4 @@ XTerm
 .zshrc
 .gitconfig
 .liquidpromptrc
+.terraformrc

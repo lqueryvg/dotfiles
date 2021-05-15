@@ -6,3 +6,4 @@ doc/tags
 xmonad*
 !xmonad.hs
 local.d/*
+.DS_Store

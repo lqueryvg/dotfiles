@@ -87,12 +87,6 @@
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 . ~/.my_zshrc
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/john.buxton/projects/store-collation-service/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/john.buxton/projects/store-collation-service/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/john.buxton/projects/store-collation-service/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/john.buxton/projects/store-collation-service/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/john.buxton/git/sftp-lambda/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/john.buxton/git/sftp-lambda/node_modules/tabtab/.completions/slss.zsh
+
+# added by Snowflake SnowSQL installer v1.2
+export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH

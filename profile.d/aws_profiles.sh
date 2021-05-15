@@ -16,11 +16,21 @@ function lsp() {
   done
 }
 
-function awp() {
+function awe() {
   export AWS_PROFILE=$1
   echo "AWS_PROFILE=$AWS_PROFILE"
+}
+
+function awp() {
+  if [[ $1 == "" && $AWS_PROFILE != "" ]]
+  then
+    awe $AWS_PROFILE
+  else
+    awe $1
+  fi
   aws-azure-login --no-prompt
 }
+
 
 [[ $SHELL_IS_ZSH != "true" ]] && return
 [[ $SHELL_IS_INTERACTIVE != "true" ]] && return
@@ -29,5 +39,10 @@ function _awp() {
   _arguments ':Aws profile:($(lsp_raw))'
 }
 
+function _awe() {
+  _arguments ':Aws profile:($(lsp_raw))'
+}
+
 compdef _awp awp
+compdef _awe awe
 compdump

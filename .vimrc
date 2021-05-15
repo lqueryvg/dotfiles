@@ -35,7 +35,7 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     Plugin 'pangloss/vim-javascript'    
 
     " */# Search forwards/back for text under vis selection
-    Plugin 'nelstrom/vim-visual-star-search'
+    "Plugin 'nelstrom/vim-visual-star-search'
 
     Plugin 'ctrlpvim/ctrlp.vim'             " fuzzy search filenames
         " C-p then start typing
@@ -58,8 +58,8 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
             endif
         endfunc
 
-    Plugin 'sjl/gundo.vim'                 " visualize undo tree
-    Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
+    "Plugin 'sjl/gundo.vim'                 " visualize undo tree
+    "Plugin 'rking/ag.vim'                  " Silver Searcher from within vim
     "Plugin 'msanders/snipmate.vim'         " snippets
     "Plugin 'klen/python-mode'              " various python tools
         " K = show doc
@@ -82,13 +82,13 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
     "Plugin 'fholgado/minibufexpl.vim'              " :help MiniBufExpl
     Plugin 'tpope/vim-unimpaired'              " :help unimpaired
     Plugin 'godlygeek/tabular'                  " :help tabular
-    Plugin 'rodjek/vim-puppet'                  " :Tabularize /=>
+    "Plugin 'rodjek/vim-puppet'                  " :Tabularize /=>
 
-    let b:undo_ftplugin = ''    " Bodge to stop error produced
-                                " by nelstrom/vim-markdown-folding
+    "let b:undo_ftplugin = ''    " Bodge to stop error produced
+    "                            " by nelstrom/vim-markdown-folding
     "Plugin 'nelstrom/vim-markdown-folding'
     Plugin 'plasticboy/vim-markdown'
-    Plugin 'tpope/vim-fugitive'
+    "Plugin 'tpope/vim-fugitive'
 
     "Plugin 'ledger/vim-ledger'
     Plugin 'tpope/vim-surround'
@@ -116,8 +116,10 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
         " :Tagbar
         " o = toggle fold
         " Double-click to navigate to symbol
-    Plugin 'fatih/vim-go'
+    "Plugin 'fatih/vim-go'
     Plugin 'vim-terraform'
+    Plugin 'leafgarland/typescript-vim'
+    Plugin 'mechatroner/rainbow_csv'
 
     call vundle#end()
     filetype plugin indent on " required!
@@ -161,6 +163,8 @@ let g:jellybeans_overrides = {
     \ 'TabLine': { '256ctermfg': 'Grey', '256ctermbg': 'Black', 'attr': ''},
     \ 'TabLineSel': { '256ctermbg': 'White', 'attr': ''},
     \}
+"    \ 'Visual': { '256ctermbg': 'White', 'attr': ''},
+
 if (g:isRestricted)
     colorscheme murphy
     highlight Normal ctermbg=NONE

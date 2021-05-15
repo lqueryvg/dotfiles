@@ -1,1 +1,1 @@
-code --diff $*
+code --wait --diff $*
