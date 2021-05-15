@@ -22,11 +22,15 @@ prepend_path_if_exists            \
 
 #source_if_exists ${HOME}/.local_profile
 
-for file in ~/dotfiles/profile.d/*.sh \
-            ~/dotfiles/local.d/*.sh
+for file in ~/dotfiles/public.d/*.sh \
+            ~/dotfiles/private.d/*.sh
 do
   echo -n ${file##*/}" "    # basename
   source $file
 done
+echo
+
+echo "Path addtions: $PATH_ADDITIONS"
+unset PATH_ADDITIONS
 
 echo .my_profile end

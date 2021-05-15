@@ -3,7 +3,7 @@
 
 source_if_exists                    \
   /etc/.bash_completion             \
-  /etc/profile.d/bash_completion.sh \
+  /etc/public.d/bash_completion.sh \
   ~/.bash_completion
 
 d=~/homebrew/etc/bash_completion.d

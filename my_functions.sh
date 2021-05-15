@@ -53,9 +53,11 @@ source_first_if_exists() {
 }
 
 append_path() {
-  echo "    PATH+ '$1'"
   PATH="${PATH}:$1"
+  PATH_ADDITIONS="${PATH_ADDITIONS}:$1"
+
   export PATH
+  export PATH_ADDITIONS
 }
 
 append_path_if_exists() {
@@ -102,10 +104,10 @@ title() {
 sit() {
   d=~/dotfiles
   source_first_if_exists \
-    $d/profile.d/$1 \
-    $d/profile.d/$1.sh \
-    $d/local.d/$1 \
-    $d/local.d/$1.sh
+    $d/public.d/$1 \
+    $d/public.d/$1.sh \
+    $d/private.d/$1 \
+    $d/private.d/$1.sh
 }
 
 #echo my_functions.sh end

@@ -16,8 +16,9 @@ vim
   - `~/.my_zshrc`
     - `~/dotfiles/my_functions.sh`
     - `~/.my_profile.sh`
-      - `~/dotfiles/profile.d/*.sh`
-      - `~/dotfiles/local.d/*.sh`
+      - `~/dotfiles/public.d/*.sh`
+      - `~/dotfiles/private.d/*.sh` 
+          - in `.gitignore`, put private or machine specific startup here)
 
 - `~/.bash_profile` (for interactive login `bash` shells, i.e. every window)
   - `~/dotfiles/my_functions.sh`

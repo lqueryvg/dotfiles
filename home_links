@@ -12,7 +12,6 @@ XTerm
 .ghci
 .haskeline
 .Xresources
-.my_aliases
 .my_profile.sh
 .zshrc
 .inputrc

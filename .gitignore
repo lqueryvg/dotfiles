@@ -5,5 +5,5 @@ doc/tags
 .ropeproject
 xmonad*
 !xmonad.hs
-local.d/*
+private.d/*
 .DS_Store
