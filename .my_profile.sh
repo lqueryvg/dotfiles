@@ -1,6 +1,6 @@
 # common to bash and zsh
 
-echo .my_profile.sh start
+# echo .my_profile.sh start
 
 case $- in
   *i*)
@@ -22,15 +22,20 @@ prepend_path_if_exists            \
 
 #source_if_exists ${HOME}/.local_profile
 
-for file in ~/dotfiles/public.d/*.sh \
-            ~/dotfiles/private.d/*.sh
-do
-  echo -n ${file##*/}" "    # basename
-  source $file
-done
-echo
+source_files() {
+  echo "Source: $1/*.sh"
+  for file in $1/*.sh
+  do
+    echo -n ${file##*/}" "    # basename
+    source $file
+  done
+  echo
+}
 
-echo "Path addtions: $PATH_ADDITIONS"
+source_files ~/dotfiles/public.d
+source_files ~/dotfiles/private.d
+
+echo "Path additions: $PATH_ADDITIONS"
 unset PATH_ADDITIONS
 
 echo .my_profile end

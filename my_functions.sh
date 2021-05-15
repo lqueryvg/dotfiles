@@ -3,7 +3,7 @@
   return
 }
 
-echo my_functions.sh start
+# echo my_functions.sh start
 
 functions_already_sourced=1
 
@@ -34,7 +34,7 @@ source_if_exists() {
   do
     if [[ -f $f ]]
     then
-      echo source $(basename $f)
+      echo Source: $(basename $f)
       . $f
     fi
   done
@@ -45,7 +45,7 @@ source_first_if_exists() {
   do
     if [[ -f $f ]]
     then
-      echo source $f
+      echo Source: $f
       . $f
       return
     fi

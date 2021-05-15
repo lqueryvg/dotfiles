@@ -1,6 +1,6 @@
 # Keeping my zshrc settings separate from oh-my-zsh
 
-echo .my_zshrc start
+# echo .my_zshrc start
 
 source ~/dotfiles/my_functions.sh
 
