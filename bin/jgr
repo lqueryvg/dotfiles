@@ -1,26 +1,73 @@
 # "$@" puts quotes around every argument received
 egrep -RHI                       \
-  --exclude-dir node_modules     \
-  --exclude-dir .serverless      \
-  --exclude-dir .webpack         \
-  --exclude-dir coverage         \
-  --exclude-dir test-results     \
-  --exclude-dir .git             \
-  --exclude-dir .terraform       \
-  --exclude-dir .pytest_cache    \
-  --exclude-dir .cache           \
-  --exclude-dir htmlcov          \
+  --exclude *.cast               \
+  --exclude *.chunk.js           \
+  --exclude *.css                \
   --exclude *.csv                \
-  --exclude *.svg                \
   --exclude *.csv-               \
-  --exclude *.template           \
-  --exclude *.zip                \
+  --exclude *.drawio             \
+  --exclude *.gpg                \
+  --exclude *.gpg                \
+  --exclude *.html               \
   --exclude *.js.map             \
   --exclude *.js.snap            \
-  --exclude *.chunk.js           \
+  --exclude *.min.js             \
+  --exclude *.mp4                \
+  --exclude *.node_repl_history  \
+  --exclude *.package-lock.json  \
+  --exclude *.pem                \
+  --exclude *.pgp                \
   --exclude *.png                \
-  --exclude *.xml                \
+  --exclude *.python-history     \
+  --exclude *.snap               \
+  --exclude *.sock               \
+  --exclude *.socket             \
+  --exclude *.svg                \
+  --exclude *.template           \
   --exclude *.tfstate            \
-  --exclude yarn.lock            \
+  --exclude *.xml                \
+  --exclude *.zip                \
+  --exclude .histfile            \
   --exclude commons-[a-f0-9]*.js \
+  --exclude new-relic.js         \
+  --exclude newrelic.js          \
+  --exclude yarn.lock            \
+  --exclude-dir .3T              \
+  --exclude-dir .Trash           \
+  --exclude-dir .amplify         \
+  --exclude-dir .asdf            \
+  --exclude-dir .babel.json      \
+  --exclude-dir .bash-my-aws     \
+  --exclude-dir .cache           \
+  --exclude-dir .crossftp        \
+  --exclude-dir .git             \
+  --exclude-dir .helm            \
+  --exclude-dir .local           \
+  --exclude-dir .node-gyp        \
+  --exclude-dir .npm             \
+  --exclude-dir .nvm             \
+  --exclude-dir .pyenv           \
+  --exclude-dir .pytest_cache    \
+  --exclude-dir .serverless      \
+  --exclude-dir .snowsql         \
+  --exclude-dir .ssh      \
+  --exclude-dir .terraform       \
+  --exclude-dir .terraform.d     \
+  --exclude-dir .vim             \
+  --exclude-dir .virtualenvs     \
+  --exclude-dir .vscode          \
+  --exclude-dir .webpack         \
+  --exclude-dir .yarn            \
+  --exclude-dir Applications     \
+  --exclude-dir Desktop          \
+  --exclude-dir Downloads        \
+  --exclude-dir Library          \
+  --exclude-dir aws-cli          \
+  --exclude-dir courses          \
+  --exclude-dir coverage         \
+  --exclude-dir homebrew         \
+  --exclude-dir htmlcov          \
+  --exclude-dir iterm2_logs      \
+  --exclude-dir node_modules     \
+  --exclude-dir test-results     \
   "$@" .
