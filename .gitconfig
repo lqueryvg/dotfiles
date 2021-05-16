@@ -1,7 +1,7 @@
 [include]
-  path = ~/dotfiles/gitconfig/personal
+  path = ~/dotfiles/gitconfig/public
 [includeIf "gitdir:~/projects/"]
-  path = ~/dotfiles/gitconfig/client
+  path = ~/dotfiles/gitconfig/private
 
 [difftool]
   prompt = false
