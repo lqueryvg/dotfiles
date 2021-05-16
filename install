@@ -37,13 +37,14 @@ backup_if_exists() {
 logAndRun mkdir -p $backup_dir
 logAndRun cd $source_dir
 
-while read file
+while read file sourceFile
 do
     if [[ ! -L ~/$file ]]   # if not already a link
     then
         backup_if_exists $backup_dir/$file
         move_if_exists  mv ~/$file $backup_dir
-        logAndRun ln -sf $source_dir/$file ~/$file
+        [[ -z $sourceFile ]] && sourceFile=$file
+        logAndRun ln -sf $source_dir/$sourceFile ~/$file
     else
         echo "$file ok"
     fi

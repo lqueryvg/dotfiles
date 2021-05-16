@@ -14,7 +14,7 @@ mkdir ~/.vimtmp
 ## Order of execution
 
 - `~/.zshrc` (for interactive `zsh` shells)
-  - `~/.my_zshrc`
+  - `~/dotfiles/my_zshrc.sh`
     - `~/dotfiles/my_functions.sh`
     - `~/.my_profile.sh`
       - `~/dotfiles/public.d/*.sh`

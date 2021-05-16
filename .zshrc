@@ -85,7 +85,7 @@
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-. ~/.my_zshrc
+. ~/dotfiles/my_zshrc.sh
 
 
 # added by Snowflake SnowSQL installer v1.2
