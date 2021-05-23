@@ -1,0 +1,7 @@
+Applications/
+Documents/aws_icons
+Library/
+Music/
+OneDrive*
+Pictures/
+aws-cli/
