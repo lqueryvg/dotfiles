@@ -17,6 +17,18 @@ lambda-subnets = lambda list-functions --function-version ALL --query "Functions
 
 doit = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].Arn | join(' ', @)"
 
+secrets = secretsmanager list-secrets --query "SecretList[].ARN"
+
+get_secret = 
+  !f() {
+    aws secretsmanager get-secret-value --secret-id ${1}
+  }; f
+
+put_secret = 
+  !f() {
+    aws secretsmanager put-secret-value --secret-id ${1} --secret-string ${2}
+  }; f
+
 create-assume-role =
   !f() {
     aws iam create-role --role-name "${1}" \
