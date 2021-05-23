@@ -1,2 +1,2 @@
 cd ~/technotes/
-cat *$1*
+bat *$1*
