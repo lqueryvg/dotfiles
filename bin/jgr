@@ -35,6 +35,7 @@ egrep -RHI                       \
   --exclude-dir .3T              \
   --exclude-dir .Trash           \
   --exclude-dir .amplify         \
+  --exclude-dir .idea            \
   --exclude-dir .asdf            \
   --exclude-dir .babel.json      \
   --exclude-dir .bash-my-aws     \
@@ -70,4 +71,4 @@ egrep -RHI                       \
   --exclude-dir iterm2_logs      \
   --exclude-dir node_modules     \
   --exclude-dir test-results     \
-  "$@" .
+  "$@"

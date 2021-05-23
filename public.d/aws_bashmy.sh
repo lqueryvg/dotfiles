@@ -1,3 +1,5 @@
+$(command_exists aws) || return
+
 export PATH="$PATH:$HOME/.bash-my-aws/bin"
 source ~/.bash-my-aws/aliases
 
