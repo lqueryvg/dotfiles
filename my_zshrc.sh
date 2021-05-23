@@ -4,26 +4,26 @@
 
 source ~/dotfiles/my_functions.sh
 
-powerline=~/mygit/powerline-shell/powerline-shell.py
-if [[ -f ~/homebrew/share/liquidprompt ]]
-then
-  [[ $- = *i* ]] && source ~/homebrew/share/liquidprompt
-elif [[ -x $powerline ]]
-then
-  function _update_ps1() {
-    PS1="$($powerline         \
-            --cwd-max-depth 2 \
-            --mode compatible \
-            $? 2> /dev/null)"
-            #--mode flat \
-  }
+# powerline=~/mygit/powerline-shell/powerline-shell.py
+# if [[ -f ~/homebrew/share/liquidprompt ]]
+# then
+#   [[ $- = *i* ]] && source ~/homebrew/share/liquidprompt
+# elif [[ -x $powerline ]]
+# then
+#   function _update_ps1() {
+#     PS1="$($powerline         \
+#             --cwd-max-depth 2 \
+#             --mode compatible \
+#             $? 2> /dev/null)"
+#             #--mode flat \
+#   }
 
-  if [ "$TERM" != "linux" ]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-  fi
-else
-  PS1=$(whoami)"$ "
-fi
+#   if [ "$TERM" != "linux" ]; then
+#     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+#   fi
+# else
+#   PS1=$(whoami)"$ "
+# fi
 
 if [[ -f ~/mygit/zsh-git-prompt/zshrc.sh ]]
 then
