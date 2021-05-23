@@ -17,8 +17,20 @@ else
   :
 fi
 
+is_bash() {
+  [[ $SHELL_IS_BASH == true ]]
+}
+
+is_zsh() {
+  [[ $SHELL_IS_ZSH == true ]]
+}
+
 command_exists() {
   command -v $1 > /dev/null 2>&1
+}
+
+is_interactive() {
+  [[ $SHELL_IS_INTERACTIVE == true ]]
 }
 
 exec_if_exists() {

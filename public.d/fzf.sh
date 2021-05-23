@@ -1,3 +1,6 @@
+is_zsh || return
+is_interactive || return
+
 base_fzf_command="fd . --ignore-file ~/dotfiles/fzf/ignore_dirs.txt"
 # files
 export FZF_CTRL_T_COMMAND="$base_fzf_command -t f"

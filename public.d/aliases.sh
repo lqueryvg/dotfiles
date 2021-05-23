@@ -1,7 +1,7 @@
 # for bash and zsh...
 
 # only run these when interactive
-[[ $SHELL_IS_INTERACTIVE == true ]] || return
+is_interactive || return
 
 # Interactive operation...
 alias rm='rm -i'
@@ -41,9 +41,6 @@ alias vlcdot='nohup vlc . 2>&1 > /dev/null &'
 alias more='less'
 alias ap="ansible-playbook"
 alias vs="vagrant ssh"
-#alias ae=". /data/software/ansible/hacking/env-setup; cd ~/ansible"
-alias ae=". /data/software/ansible/hacking/env-setup"
-alias atm="/data/software/ansible/hacking/test-module"
 alias rr=rifle
 alias ic=i2cssh
 alias h=history

@@ -1,10 +1,6 @@
 
-if [[ $SHELL_IS_BASH == true && $SHELL_IS_INTERACTIVE == true ]]
-then
-  :
-else
-  return
-fi
+is_bash || return
+is_interactive || return
 
 powerline=~/mygit/powerline-shell/powerline-shell.py
 if [[ -f ~/.liquidprompt ]]

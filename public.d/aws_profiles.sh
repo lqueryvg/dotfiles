@@ -31,9 +31,8 @@ function awp() {
   aws-azure-login --no-prompt
 }
 
-
-[[ $SHELL_IS_ZSH != "true" ]] && return
-[[ $SHELL_IS_INTERACTIVE != "true" ]] && return
+is_zsh || return
+is_interactive || return
 
 function _awp() {
   _arguments ':Aws profile:($(lsp_raw))'

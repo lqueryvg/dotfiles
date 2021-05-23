@@ -1,5 +1,5 @@
-[[ $SHELL_IS_BASH != "true" ]] && return
-[[ $SHELL_IS_INTERACTIVE != "true" ]] && return
+is_bash || return
+is_interactive || return
 
 source_if_exists                    \
   /etc/.bash_completion             \

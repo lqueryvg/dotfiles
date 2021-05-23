@@ -1,8 +1,6 @@
-# Only run if this is zsh
-[[ $SHELL_IS_ZSH == "true" ]] || return
-
-# Only run if interactive shell
-[[ $SHELL_IS_INTERACTIVE == true ]] || return
+is_zsh || return
+is_interactive || return
+echo hello
 
 # turn off bracketed paste mode
 # so that I can immediately execute commands that I paste
