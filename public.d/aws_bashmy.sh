@@ -1,6 +1,7 @@
 $(command_exists aws) || return
 
-export PATH="$PATH:$HOME/.bash-my-aws/bin"
+append_path_if_exists $HOME/.bash-my-aws/bin
+
 source ~/.bash-my-aws/aliases
 
 if [[ $SHELL_IS_ZSH == "true" ]]

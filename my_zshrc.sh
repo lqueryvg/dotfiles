@@ -75,7 +75,7 @@ zstyle ':completion:*' menu select
 
 source_if_exists "${HOME}/.my_profile.sh"
 
-if [[ $- == *i* ]];then
-  echo "$( basename $0 ) loaded"
-fi
+#if [[ $- == *i* ]];then
+#  echo "$( basename $0 ) loaded"
+#fi
 

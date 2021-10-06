@@ -46,7 +46,7 @@ source_if_exists() {
   do
     if [[ -f $f ]]
     then
-      echo Source: $(basename $f)
+      echo $(yellow $(basename $f))
       . $f
     fi
   done
@@ -120,6 +120,26 @@ sit() {
     $d/public.d/$1.sh \
     $d/private.d/$1 \
     $d/private.d/$1.sh
+}
+
+blue() {
+  str="$1"
+  echo "\e[0;34m${str}\e[0m"
+}
+
+red() {
+  str="$1"
+  echo "\e[0;31m${str}\e[0m"
+}
+
+yellow() {
+  str="$1"
+  echo "\e[0;33m${str}\e[0m"
+}
+
+lilac() {
+  str="$1"
+  echo "\e[0;36m${str}\e[0m"
 }
 
 #echo my_functions.sh end

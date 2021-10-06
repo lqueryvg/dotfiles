@@ -24,6 +24,8 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 
 # zsh-autosuggestions.zsh
 source_if_exists ${HOME}/git/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey "^[[C"    forward-word        # right arrow
+bindkey "^[[1;2C" autosuggest-accept  # shift right arrow
 
 # command line syntax highlighting
 zinit load zsh-users/zsh-syntax-highlighting

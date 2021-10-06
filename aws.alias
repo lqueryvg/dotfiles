@@ -1,5 +1,33 @@
 [toplevel]
 
+aliases = 
+  !f() {
+    grep "^[a-z-][a-z0-9-]* = *" ~/.aws/cli/alias | awk '{print $1}' | sort
+  }; f
+
+
+s3-tags = 
+  !f() {
+    bucket=$1
+    aws s3api get-bucket-tagging --bucket --output text $bucket
+  }; f
+
+s3-tags-add = 
+  !f() {
+    bucket=$1
+    additionalTagsFile=$2
+    currentTagsFile=$(mktemp)
+    newTagsFile=$(mktemp)
+    currentTagsFile=file1
+    newTagsFile=newtags
+    aws s3api get-bucket-tagging --bucket $bucket > $currentTagsFile
+    jq -s '.[0] * .[1]' $currentTagsFile $additionalTagsFile > $newTagsFile
+    #cat $newTagsFile
+    #echo aws s3api put-bucket-tagging --bucket $bucket --tagging $newTagsFile
+    #aws s3api put-bucket-tagging --bucket $bucket --tagging file://$newTagsFile
+    #rm $currentTagsFile $newTagsFile
+  }; f
+
 whoami = sts get-caller-identity
 
 upolicies = iam list-policies --scope Local --query '
@@ -14,6 +42,8 @@ vpcs = ec2 describe-vpcs --query '
 lambda-roles = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].RoleName"
 
 lambda-subnets = lambda list-functions --function-version ALL --query "Functions[?VpcConfig.SubnetIds != `null`].[FunctionName, Version, VpcConfig.SubnetIds | join(',', @)]" --output table
+
+lambda-handlers = lambda list-functions --query "Functions[].{FunctionName: FunctionName, Handler: Handler}" --output text
 
 doit = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].Arn | join(' ', @)"
 

@@ -1,4 +1,9 @@
 # "$@" puts quotes around every argument received
+if [[ $# == 1 ]]
+then
+  addDot=.
+fi
+
 egrep -RHI                       \
   --exclude *.cast               \
   --exclude *.chunk.js           \
@@ -71,4 +76,4 @@ egrep -RHI                       \
   --exclude-dir iterm2_logs      \
   --exclude-dir node_modules     \
   --exclude-dir test-results     \
-  "$@"
+  "$@" $addDot

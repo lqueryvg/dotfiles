@@ -3,33 +3,38 @@
 [includeIf "gitdir:~/projects/"]
   path = ~/dotfiles/gitconfig/private
 
+[credential]
+  helper = !aws --profile "ss_prod" codecommit credential-helper $@
+  UseHttpPath = true
+
 [difftool]
   prompt = false
 [alias]
-  bnuke = !sh -c 'git branch -D $1 || git push origin :$1' -
+	alias = config --get-regexp ^alias\\.
+	br = branch
+	co = checkout
+	lol = log --oneline --decorate --graph
+	st = status
   bd = !sh -c 'git branch -D $1' -
+  bnuke = !sh -c 'git branch -D $1 || git push origin :$1' -
   bvv = branch -vv
   d = difftool
   dc = diff --cc
   diffc = diff --name-status --oneline
-	alias = config --get-regexp ^alias\\.
-	co = checkout
-	br = branch
-  prm = pull --rebase=i origin master
-  prd = !sh -c 'git co development && git pull && git co - && git rebase -i development' -
-	lol = log --oneline --decorate --graph
-	st = status
-  logg = log --pretty=format:'%h %ce %cd - %s' --graph --stat
+  gn = "!git branch -vv | grep gone"
+  gr = !sh -c 'git rev-list --all | xargs git grep $1'
   lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar) %G? %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all # the best
   lg0 = log --oneline
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s %C(reset) %C(dim white)- %an%C(reset)' --all
   lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s %C(reset) %C(dim white)- %an%C(reset)' --all --show-signature
+  lgn = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat -- . ':doc/*html'
+  logg = log --pretty=format:'%h %ce %cd - %s' --graph --stat
+  lognames = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat
+  prd = !sh -c 'git co development && git pull && git co - && git rebase -i development' -
+  prm = pull --rebase=i origin master
+  rbd = rebase -i development
 #for following to work https://github.com/jwiegley/git-scripts/blob/master/git-forest needs to be installed
 #lg3 = forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse
-  lognames = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat
-  lgn = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat -- . ':doc/*html'
-  gn = "!git branch -vv | grep gone"
-  gr = !sh -c 'git rev-list --all | xargs git grep $1'
 [core]
 	excludesfile = ~/.gitignore
   #editor = vim

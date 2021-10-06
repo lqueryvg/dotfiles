@@ -366,7 +366,11 @@ if !has("win32") && !has("win16")
   let os = substitute(system('uname'), "\n", "", "")
   if os == "Darwin"
     " OSX specic stuff
-    set clipboard=unnamed     " yank to OSX clipboard
+    "
+    "set clipboard=unnamed      " yank to OSX clipboard
+
+    set clipboard=""              " prevent yank to OSX clipboard
+
   endif
 endif
 "}}}

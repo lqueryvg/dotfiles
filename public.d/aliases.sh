@@ -53,6 +53,8 @@ alias k=kubectl
 alias pu=pushd
 alias po=popd
 alias tn='cd ~/technotes'
+alias cdr='cd $(git rev-parse --show-toplevel)'
+alias cdt=cdr
 #alias venv="source venv/bin/activate"
 
 
