@@ -1,2 +1,2 @@
-. $(brew --prefix asdf)/asdf.sh
-alias adsf=asdf
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash

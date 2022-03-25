@@ -50,3 +50,5 @@
 # [difftool "sourcetree"]
 # 	cmd = vdiff \"$LOCAL\" \"$REMOTE\"
 # 	path = 
+[pull]
+	rebase = false

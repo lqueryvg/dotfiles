@@ -8,6 +8,7 @@ export EDITOR=vim
 
 # change directory without cd
 setopt auto_cd
+setopt autopushd
 
 # Basic auto/tab complete:
 autoload -U compinit
