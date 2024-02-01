@@ -3,30 +3,27 @@
 [includeIf "gitdir:~/projects/"]
   path = ~/dotfiles/gitconfig/private
 
-[credential]
-  helper = !aws --profile "ss_prod" codecommit credential-helper $@
-  UseHttpPath = true
-
 [difftool]
   prompt = false
 [alias]
 	alias = config --get-regexp ^alias\\.
+	cp = cherry-pick
 	br = branch
 	co = checkout
 	lol = log --oneline --decorate --graph
 	st = status
   bd = !sh -c 'git branch -D $1' -
   bnuke = !sh -c 'git branch -D $1 || git push origin :$1' -
+  bdiff = diff master...HEAD
   bvv = branch -vv
   d = difftool
   dc = diff --cc
   diffc = diff --name-status --oneline
   gn = "!git branch -vv | grep gone"
   gr = !sh -c 'git rev-list --all | xargs git grep $1'
-  lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar) %G? %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all # the best
+  lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar) %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches # only local branches
+  lgg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar) %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all # all branches
   lg0 = log --oneline
-  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s %C(reset) %C(dim white)- %an%C(reset)' --all
-  lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s %C(reset) %C(dim white)- %an%C(reset)' --all --show-signature
   lgn = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat -- . ':doc/*html'
   logg = log --pretty=format:'%h %ce %cd - %s' --graph --stat
   lognames = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat
@@ -51,4 +48,4 @@
 # 	cmd = vdiff \"$LOCAL\" \"$REMOTE\"
 # 	path = 
 [pull]
-	rebase = false
+  rebase = false

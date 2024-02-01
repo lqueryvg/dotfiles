@@ -5,6 +5,8 @@ aliases =
     grep "^[a-z-][a-z0-9-]* = *" ~/.aws/cli/alias | awk '{print $1}' | sort
   }; f
 
+apikeys = apigateway get-api-keys --query "items[*].[name,description]" --output text
+# doit = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].Arn | join(' ', @)"
 
 s3-tags = 
   !f() {
@@ -40,6 +42,8 @@ vpcs = ec2 describe-vpcs --query '
   '
 
 lambda-roles = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].RoleName"
+
+lambda-env = lambda list-functions --query "Functions[].{FunctionName: FunctionName, Environment: Environment.Variables}"
 
 lambda-subnets = lambda list-functions --function-version ALL --query "Functions[?VpcConfig.SubnetIds != `null`].[FunctionName, Version, VpcConfig.SubnetIds | join(',', @)]" --output table
 

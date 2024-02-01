@@ -6,6 +6,7 @@ fi
 
 egrep -RHI                       \
   --exclude *.cast               \
+  --exclude yarn-error.log       \
   --exclude *.chunk.js           \
   --exclude *.css                \
   --exclude *.csv                \
@@ -76,4 +77,7 @@ egrep -RHI                       \
   --exclude-dir iterm2_logs      \
   --exclude-dir node_modules     \
   --exclude-dir test-results     \
+  --exclude-dir layers     \
+  --exclude-dir build     \
+  --exclude-dir dist     \
   "$@" $addDot
