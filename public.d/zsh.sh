@@ -34,3 +34,11 @@ zinit load zsh-users/zsh-syntax-highlighting
 # powerlevel10k prompt
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# iterm2 title
+precmd() {
+  echo -ne "\033]0;${PWD/#$HOME/~}\007"
+}
+
+test -e /Users/john/.iterm2_shell_integration.zsh && source /Users/john/.iterm2_shell_integration.zsh || true
+
