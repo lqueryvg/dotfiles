@@ -13,22 +13,30 @@ mkdir ~/.vimtmp
 
 ## Order of execution
 
-- `~/.zshrc` (for interactive `zsh` shells)
+### zsh
+
+#### interactive shells
+
+- `~/.zshrc`
   - `~/dotfiles/my_zshrc.sh`
     - `~/dotfiles/my_functions.sh`
     - `~/.my_profile.sh`
       - `~/dotfiles/public.d/*.sh`
       - `~/dotfiles/private.d/*.sh`
-          - in `.gitignore`, put private or machine specific startup here)
 
-- `~/.bash_profile` (for interactive login `bash` shells, i.e. every window)
+### bash
+
+#### interactive shells
+
+- `~/.bash_profile`
   - `~/dotfiles/my_functions.sh`
   - `exec_if_exists $HOME/homebrew/bin/zsh`
   - `source_if_exists $HOME/.bashrc`
 
-- `~/.bashrc` (for interactive non-login `bash` shells)
+#### non-interactive shells
+
+- `~/.bashrc`
   - `~/dotfiles/my_functions.sh`
   - `~/.my_profile.sh`
-  - `~/dotfiles/public.d/*.sh`
-      - `~/dotfiles/private.d/*.sh`
-          - in `.gitignore`, put private or machine specific startup here)
+    - `~/dotfiles/public.d/*.sh`
+    - `~/dotfiles/private.d/*.sh`

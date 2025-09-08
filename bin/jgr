@@ -50,6 +50,7 @@ egrep -RHI                       \
   --exclude-dir .git             \
   --exclude-dir .helm            \
   --exclude-dir .local           \
+  --exclude-dir .next           \
   --exclude-dir .node-gyp        \
   --exclude-dir .npm             \
   --exclude-dir .nvm             \

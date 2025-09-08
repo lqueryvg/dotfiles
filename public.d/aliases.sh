@@ -47,7 +47,7 @@ alias h=history
 alias help='pushd ~/technotes; vim *.md; popd'
 #alias vim=callvim
 #alias v=callvim
-alias vi=vim
+#alias vi=nvim
 alias i2cssh='RUBYOPT="-W0" i2cssh'
 alias k=kubectl
 alias pu=pushd

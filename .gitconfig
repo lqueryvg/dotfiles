@@ -42,6 +42,9 @@
 [fetch]
   prune = true
 
+[push]
+  autoSetupRemote = true
+
 [difftool "vdiff"]
   cmd = vdiff \"$LOCAL\" \"$REMOTE\"
 # [difftool "sourcetree"]

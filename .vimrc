@@ -198,7 +198,7 @@ set expandtab             " use spaces instead of tabs
 set softtabstop=2         " unify?
 set shiftround            " always indent/outdent to the nearest tabstop
 set autoindent            " auto-indent
-"set smarttab              " use tabs at the start of a line, spaces elsewhere
+set smarttab              " use tabs at the start of a line, spaces elsewhere
 
 " }}}
 " Options {{{
