@@ -1,0 +1,288 @@
+#!/usr/bin/python3
+
+import os
+import json
+import configparser
+import datetime
+import glob
+import sys
+import subprocess
+import argparse
+import re # Added for sanitization
+
+# --- Configuration ---
+DEFAULT_PROFILE = "xxxx-name" # a profile you already have setup and can access
+AWS_CONFIG_PATH = os.path.expanduser("~/.aws/config")
+SSO_CACHE_DIR = os.path.expanduser("~/.aws/sso/cache")
+DEFAULT_REGION = "eu-west-1" # Default region for generated profiles
+DEFAULT_SSO_SESSION_NAME = "xxx-sso-name" # SSO Session name for generated profiles
+# This will look like:
+#[sso-session xxx-sso-name]
+#sso_start_url = https://a-1234567cab.awsapps.com/start
+#sso_region = eu-west-1
+#sso_registration_scopes = sso:account:access
+#
+#[profile abc-xxxrole]
+#sso_session = xxx-sso-name
+#sso_account_id = 123456789012
+#sso_role_name = xxxrole
+#region = eu-west-1
+
+# ---------------------
+
+# --- FUNCTIONS get_sso_start_url_from_config and find_valid_sso_token_in_cache GO HERE ---
+# --- (Copy them from the previous version of the script) ---
+
+def get_sso_start_url_from_config(profile_name, config_path):
+    """Parses ~/.aws/config to find sso_start_url for a given profile."""
+    config = configparser.ConfigParser()
+    if not os.path.exists(config_path):
+         print(f"Error: AWS config file not found at {config_path}", file=sys.stderr)
+         return None
+    try:
+        config.read(config_path)
+    except configparser.Error as e:
+        print(f"Error parsing AWS config file {config_path}: {e}", file=sys.stderr)
+        return None
+
+    profile_section_name = f"profile {profile_name}"
+
+    # Handle default profile naming in config file
+    if profile_name == 'default' and 'default' in config:
+        profile_section_name = 'default'
+    elif profile_section_name not in config:
+         print(f"Error: Profile section '[{profile_section_name}]' not found in {config_path}", file=sys.stderr)
+         return None
+
+    profile_data = config[profile_section_name]
+
+    # Check for direct SSO configuration
+    if 'sso_start_url' in profile_data:
+        return profile_data.get('sso_start_url')
+
+    # Check for sso-session configuration
+    if 'sso_session' in profile_data:
+        session_name = profile_data['sso_session']
+        session_section_name = f"sso-session {session_name}"
+        if session_section_name not in config:
+            print(f"Error: sso-session '[{session_section_name}]' not found for profile '{profile_name}' in {config_path}", file=sys.stderr)
+            return None
+        session_data = config[session_section_name]
+        if 'sso_start_url' in session_data:
+            return session_data.get('sso_start_url')
+        else:
+             print(f"Error: 'sso_start_url' not found in session '[{session_section_name}]'", file=sys.stderr)
+             return None
+    else:
+        print(f"Error: Profile '{profile_name}' is not configured for SSO (missing sso_start_url or sso_session)", file=sys.stderr)
+        return None
+
+
+def find_valid_sso_token_in_cache(target_start_url, cache_dir):
+    """Scans the SSO cache for a valid access token matching the start URL."""
+    if not os.path.isdir(cache_dir):
+        print(f"Error: SSO cache directory not found at {cache_dir}", file=sys.stderr)
+        return None # No cache dir
+
+    latest_expiry_dt = datetime.datetime.fromtimestamp(0, datetime.timezone.utc)
+    found_token = None
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+
+    # Iterate through all json files in the cache directory
+    for cache_file_path in glob.glob(os.path.join(cache_dir, '*.json')):
+        try:
+            with open(cache_file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            # Check essential keys for access token cache file
+            if not all(k in data for k in ('startUrl', 'accessToken', 'expiresAt')):
+                continue # Skip files without the required keys (e.g., refresh token files)
+
+            if data['startUrl'] != target_start_url:
+                continue # Belongs to a different start URL
+
+            # Parse expiry time (ISO 8601 format, handles ZULU timezone)
+            expires_at_str = data['expiresAt'].replace('Z', '+00:00')
+            expires_at_dt = datetime.datetime.fromisoformat(expires_at_str)
+
+            # Ensure expires_at_dt is timezone-aware (should be UTC)
+            if expires_at_dt.tzinfo is None:
+                 expires_at_dt = expires_at_dt.replace(tzinfo=datetime.timezone.utc)
+
+            if expires_at_dt <= now_utc:
+                # print(f"Debug: Token in {os.path.basename(cache_file_path)} expired at {expires_at_dt}", file=sys.stderr)
+                continue # Token expired
+
+            # If multiple valid tokens found, keep the one expiring latest
+            if expires_at_dt > latest_expiry_dt:
+                latest_expiry_dt = expires_at_dt
+                found_token = data['accessToken']
+                # print(f"Debug: Found candidate token in {os.path.basename(cache_file_path)}, expires {expires_at_dt}", file=sys.stderr)
+
+        except (json.JSONDecodeError, OSError, ValueError, KeyError, TypeError) as e:
+            # print(f"Warning: Skipping cache file {os.path.basename(cache_file_path)} due to error: {e}", file=sys.stderr) # Optional debug
+            continue
+
+    return found_token
+
+def sanitize_profile_name(account_name, role_name):
+    """Creates a sanitized profile name from account and role names."""
+    # Basic sanitization: replace common separators/spaces with hyphens
+    sanitized_account = re.sub(r'[\s_:/]+', '-', account_name)
+    sanitized_role = re.sub(r'[\s_:/]+', '-', role_name)
+
+    # Combine
+    profile_name_base = f"{sanitized_account}-{sanitized_role}"
+
+    # Remove characters not suitable for profile names (allow alphanumeric and hyphens)
+    profile_name = re.sub(r'[^\w\-]+', '', profile_name_base)
+
+    # Remove leading/trailing hyphens that might result from sanitization
+    profile_name = profile_name.strip('-')
+
+    # Handle cases where sanitization results in an empty string (e.g., only invalid chars)
+    if not profile_name:
+        # Fallback name to avoid empty profile names
+        fallback_role_part = re.sub(r'[^\w\-]+', '', sanitized_role) or "role"
+        fallback_account_part = re.sub(r'[^\w\-]+', '', sanitized_account) or "account"
+        profile_name = f"profile-{fallback_account_part[:10]}-{fallback_role_part[:10]}" # Truncate long fallbacks
+
+    return profile_name
+
+
+# --- Updated main function ---
+def main():
+    parser = argparse.ArgumentParser(description="Generates AWS config snippets for SSO account/role pairs.")
+    parser.add_argument(
+        "--profile",
+        default=DEFAULT_PROFILE,
+        help=f"AWS CLI profile name to use for authentication (default: {DEFAULT_PROFILE})"
+    )
+    parser.add_argument(
+        "--sso-session",
+        default=DEFAULT_SSO_SESSION_NAME,
+        help=f"SSO session name to use in generated profiles (default: {DEFAULT_SSO_SESSION_NAME})"
+    )
+    parser.add_argument(
+        "--region",
+        default=DEFAULT_REGION,
+        help=f"Default region to use in generated profiles (default: {DEFAULT_REGION})"
+    )
+    args = parser.parse_args()
+    auth_profile_name = args.profile
+    generated_sso_session = args.sso_session
+    generated_region = args.region
+
+    # 1. Get the target SSO Start URL from config used for authentication
+    target_start_url = get_sso_start_url_from_config(auth_profile_name, AWS_CONFIG_PATH)
+    if not target_start_url:
+        sys.exit(1)
+    print(f"Authenticating using profile '{auth_profile_name}' (Start URL: {target_start_url})", file=sys.stderr)
+
+    # 2. Find a valid token in the cache
+    access_token = find_valid_sso_token_in_cache(target_start_url, SSO_CACHE_DIR)
+
+    # 3. Use the token or report failure
+    if access_token:
+        print(f"Found valid cached access token.", file=sys.stderr)
+
+        # --- List Accounts ---
+        print("Fetching accounts...", file=sys.stderr)
+        cmd_list_accounts = ["aws", "sso", "list-accounts", "--access-token", access_token, "--output", "json"]
+        try:
+            result_accounts = subprocess.run(cmd_list_accounts, capture_output=True, text=True, check=True, encoding='utf-8')
+            accounts_data = json.loads(result_accounts.stdout)
+
+            if 'accountList' not in accounts_data or not isinstance(accounts_data['accountList'], list):
+                print("Error: Unexpected JSON structure from 'list-accounts'. 'accountList' missing or not a list.", file=sys.stderr)
+                sys.exit(1)
+
+            print(f"Found {len(accounts_data['accountList'])} accounts. Fetching roles for each...", file=sys.stderr)
+            print(f"# Generated AWS config snippets on {datetime.datetime.now().isoformat()}", file=sys.stderr)
+            print(f"# Using auth profile: {auth_profile_name}", file=sys.stderr)
+            print(f"# Target SSO Session: {generated_sso_session}", file=sys.stderr)
+            print(f"# Target Region: {generated_region}\n", file=sys.stderr)
+
+
+            # --- Iterate through accounts ---
+            total_profiles_generated = 0
+            for account in accounts_data['accountList']:
+                if 'accountId' not in account or 'accountName' not in account:
+                    print(f"Warning: Skipping account entry due to missing ID or Name: {account}", file=sys.stderr)
+                    continue
+
+                account_id = account['accountId']
+                account_name = account['accountName']
+                # print(f"--- Processing Account: {account_id} ({account_name}) ---", file=sys.stderr) # Less verbose
+
+                # --- Fetch roles for this account ---
+                cmd_list_roles = ["aws", "sso", "list-account-roles", "--account-id", account_id, "--access-token", access_token, "--output", "json"]
+                try:
+                    result_roles = subprocess.run(cmd_list_roles, capture_output=True, text=True, check=True, encoding='utf-8')
+                    roles_data = json.loads(result_roles.stdout)
+
+                    if 'roleList' not in roles_data or not isinstance(roles_data['roleList'], list):
+                        print(f"Warning: Unexpected JSON structure from 'list-account-roles' for account {account_id}. Skipping.", file=sys.stderr)
+                        continue
+
+                    if not roles_data['roleList']:
+                         # print(f"Info: No roles found for account {account_id}.", file=sys.stderr) # Optional info
+                         continue
+
+                    # --- Iterate through roles for this account ---
+                    for role in roles_data['roleList']:
+                        if 'roleName' not in role:
+                             print(f"Warning: Skipping role entry due to missing Role Name for account {account_id}: {role}", file=sys.stderr)
+                             continue
+                        role_name = role['roleName']
+
+                        # --- Construct and sanitize profile name ---
+                        profile_name = sanitize_profile_name(account_name, role_name)
+
+                        # --- Print the config block to standard output ---
+                        print(f"[profile {profile_name}]")
+                        print(f"sso_session = {generated_sso_session}")
+                        print(f"sso_account_id = {account_id}")
+                        print(f"sso_role_name = {role_name}")
+                        print(f"region = {generated_region}")
+                        print() # Add a blank line between profiles
+                        total_profiles_generated += 1
+
+                except subprocess.CalledProcessError as e_roles:
+                    print(f"Error listing roles for account {account_id} ({account_name}): {e_roles.stderr.strip()}", file=sys.stderr)
+                    # Continue to the next account
+                except json.JSONDecodeError as e_json_roles:
+                    print(f"Error parsing roles JSON for account {account_id} ({account_name}): {e_json_roles}", file=sys.stderr)
+                    # Continue to the next account
+                except Exception as e_roles_other:
+                     print(f"An unexpected error occurred while processing roles for account {account_id} ({account_name}): {e_roles_other}", file=sys.stderr)
+                     # Continue to the next account
+
+            print(f"\n--- Generation Complete ---", file=sys.stderr)
+            print(f"Successfully generated {total_profiles_generated} profile snippets.", file=sys.stderr)
+
+
+        except subprocess.CalledProcessError as e_accounts:
+            print(f"\nError: 'aws sso list-accounts' command failed with exit code {e_accounts.returncode}", file=sys.stderr)
+            print(f"stderr:\n{e_accounts.stderr}", file=sys.stderr)
+            sys.exit(1)
+        except json.JSONDecodeError as e_json_accounts:
+             print(f"\nError: Failed to parse JSON output from 'aws sso list-accounts': {e_json_accounts}", file=sys.stderr)
+             print(f"Raw output:\n{result_accounts.stdout}", file=sys.stderr) # Use result_accounts here
+             sys.exit(1)
+        except FileNotFoundError:
+             print("\nError: 'aws' command not found. Is the AWS CLI installed and in your PATH?", file=sys.stderr)
+             sys.exit(1)
+        except Exception as e:
+             print(f"\nAn unexpected error occurred: {e}", file=sys.stderr)
+             sys.exit(1)
+
+    else:
+        # --- Could not find valid token ---
+        print(f"\nError: No valid, unexpired SSO access token found in cache for Start URL: {target_start_url}", file=sys.stderr)
+        print(f"\nPlease run 'aws sso login --profile {auth_profile_name}' manually to refresh the token,", file=sys.stderr)
+        print("and then try running this script again.", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

@@ -6,6 +6,8 @@ fi
 
 egrep -RHI                       \
   --exclude *.cast               \
+  --exclude coverage*.json       \
+  --exclude meta.json            \
   --exclude yarn-error.log       \
   --exclude *.chunk.js           \
   --exclude *.css                \
@@ -31,13 +33,16 @@ egrep -RHI                       \
   --exclude *.svg                \
   --exclude *.template           \
   --exclude *.tfstate            \
+  --exclude *.tsbuildinfo        \
   --exclude *.xml                \
   --exclude *.zip                \
+  --exclude *.backup             \
   --exclude .histfile            \
   --exclude commons-[a-f0-9]*.js \
   --exclude new-relic.js         \
   --exclude newrelic.js          \
   --exclude yarn.lock            \
+  --exclude pnpm-lock.yaml       \
   --exclude-dir .3T              \
   --exclude-dir .Trash           \
   --exclude-dir .amplify         \

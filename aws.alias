@@ -1,6 +1,6 @@
 [toplevel]
 
-aliases = 
+alias = 
   !f() {
     grep "^[a-z-][a-z0-9-]* = *" ~/.aws/cli/alias | awk '{print $1}' | sort
   }; f
@@ -53,7 +53,20 @@ doit = iam list-roles --query "Roles[?ends_with(RoleName, 'lambdaRole')].Arn | j
 
 secrets = secretsmanager list-secrets --query "SecretList[].ARN"
 
-get_secret = 
+secret =
+  !f() {
+    aws secretsmanager describe-secret \
+      --secret-id ${1}
+  }; f
+
+secret_delnow =
+  !f() {
+    aws secretsmanager delete-secret \
+      --secret-id ${1} \
+      --force-delete-without-recovery
+  }; f
+
+secret_get = 
   !f() {
     aws secretsmanager get-secret-value --secret-id ${1}
   }; f
