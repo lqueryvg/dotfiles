@@ -20,4 +20,5 @@ XTerm
 .gitconfig
 .liquidpromptrc
 .terraformrc
+.tool-versions
 .bcrc
