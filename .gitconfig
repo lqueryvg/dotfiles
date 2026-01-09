@@ -14,21 +14,22 @@
 	st = status
   bd = !sh -c 'git branch -D $1' -
   bnuke = !sh -c 'git branch -D $1 || git push origin :$1' -
-  bdiff = diff master...HEAD
+  bdiff = diff main...HEAD
   bvv = branch -vv
   d = difftool
   dc = diff --cc
   diffc = diff --name-status --oneline
   gn = "!git branch -vv | grep gone"
   gr = !sh -c 'git rev-list --all | xargs git grep $1'
-  lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar) %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches # only local branches
+  lg = log --graph --abbrev-commit --decorate --date=format:'%d/%m %H:%M' --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ad) %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches # only local branches
+  lgr = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar) %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches # only local branches
   lgg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar) %C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all # all branches
   lg0 = log --oneline
   lgn = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat -- . ':doc/*html'
   logg = log --pretty=format:'%h %ce %cd - %s' --graph --stat
   lognames = log --oneline --name-only --pretty=format:'%h %ce %cd - %s' --graph --stat
   prd = !sh -c 'git co development && git pull && git co - && git rebase -i development' -
-  prm = pull --rebase=i origin master
+  prm = pull --rebase=i origin main
   rbd = rebase -i development
 #for following to work https://github.com/jwiegley/git-scripts/blob/master/git-forest needs to be installed
 #lg3 = forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse
@@ -52,3 +53,5 @@
 # 	path = 
 [pull]
   rebase = false
+[init]
+	defaultBranch = main
