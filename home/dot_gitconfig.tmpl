@@ -1,0 +1,9 @@
+[user]
+  name  = {{ .name }}
+  email = {{ .gitEmail }}
+
+[includeIf "gitdir:~/projects/"]
+  path = ~/.config/git/private.config
+
+[include]
+  path = ~/.config/git/public.config
