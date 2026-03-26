@@ -1,0 +1,9 @@
+{{- $isCI := env "CI" | not | not -}}
+
+[data]
+    name           = "John Buxton"
+    gitEmail       = "lqueryvg@gmail.com"
+    is_ci_workflow = {{ $isCI }}
+
+[add]
+    secrets = "error"
