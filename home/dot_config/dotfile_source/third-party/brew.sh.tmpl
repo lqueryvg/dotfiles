@@ -1,0 +1,3 @@
+{{- if eq .chezmoi.os "darwin" }}
+[[ -d /opt/homebrew/bin ]] && PATH="/opt/homebrew/bin:${PATH}" && export PATH
+{{- end }}

@@ -1,0 +1,5 @@
+{{- if eq .chezmoi.os "darwin" }}
+_vscode_bin="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+[[ -d "$_vscode_bin" ]] && PATH="${PATH}:${_vscode_bin}" && export PATH
+unset _vscode_bin
+{{- end }}

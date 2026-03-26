@@ -10,7 +10,7 @@ source_if_exists() {
 
 # Set terminal window title
 title() {
-  echo -ne "\033]0;${1}\007"
+  printf '\033]0;%s\007' "$1"
 }
 
 # "source it" — quick way to source a dotfile_source script by basename

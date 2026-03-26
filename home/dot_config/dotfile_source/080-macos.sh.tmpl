@@ -3,7 +3,7 @@ alias ls='ls -hF -G'  # color output (macOS ls, no --color flag)
 
 # Set iTerm2 window title to current directory
 precmd() {
-  echo -ne "\033]0;${PWD/#$HOME/~}\007"
+  printf '\033]0;%s\007' "${PWD/#$HOME/~}"
 }
 
 # iTerm2 shell integration
