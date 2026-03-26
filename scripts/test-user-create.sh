@@ -21,7 +21,7 @@ sudo createhomedir -c -u "${TEST_USER}"
 
 echo "Bootstrapping dotfiles as ${TEST_USER}..."
 sudo -u "${TEST_USER}" -i bash -c \
-    'curl -fsLS get.chezmoi.io | sh -s -- init --apply github/lqueryvg/dotfiles-new'
+    'curl -fsLS get.chezmoi.io | sh -s -- init --apply github.com/lqueryvg/dotfiles-new'
 
 echo "Done. Test user ${TEST_USER} is ready at ${TEST_HOME}"
 echo "Run scripts/test-user-destroy.sh when finished."
