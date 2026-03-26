@@ -1,0 +1,42 @@
+[tasks.bootstrap]
+description = "Set up this machine from scratch (bare metal → fully configured)"
+run = "chezmoi init --apply github/lqueryvg/dotfiles-new"
+
+[tasks.apply]
+description = "Apply local dotfile changes to the home directory"
+run = "chezmoi apply -v"
+
+[tasks.pull]
+description = "Pull latest dotfiles from git and apply them"
+run = "chezmoi update -v"
+
+[tasks.test]
+description = "Run shellcheck against all shell scripts"
+run = "shellcheck home/dot_config/dotfile_source/**/*.sh scripts/*.sh"
+
+[tasks.edit]
+description = "Open a chezmoi-managed dotfile in your editor"
+run = "chezmoi edit"
+
+[tasks.adopt]
+description = "Bring a new or modified file under chezmoi management"
+run = "chezmoi add --follow"
+
+[tasks.reset-scripts]
+description = "Force all run_once_ bootstrap scripts to re-run on next apply"
+run = """
+chezmoi state delete-bucket --bucket=scriptState
+chezmoi state delete-bucket --bucket=entryState
+"""
+
+[tasks.dev]
+description = "Watch dotfiles source and auto-apply on changes (requires watchexec)"
+run = "watchexec -w home/ -- chezmoi apply --verbose"
+
+[tasks.test-user-create]
+description = "Create a macOS test user and bootstrap dotfiles into it (requires sudo)"
+run = "bash scripts/test-user-create.sh"
+
+[tasks.test-user-destroy]
+description = "Delete the macOS test user and its home directory (requires sudo)"
+run = "bash scripts/test-user-destroy.sh"
