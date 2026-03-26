@@ -24,4 +24,4 @@ if [[ -d "${HOME}/private.d" ]]; then
 fi
 
 # Final escape hatch for anything that shouldn't be in the repo
-[[ -f "${HOME}/.dotfiles.local" ]] && source "${HOME}/.dotfiles.local"
+if [[ -f "${HOME}/.dotfiles.local" ]]; then source "${HOME}/.dotfiles.local"; fi

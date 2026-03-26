@@ -14,5 +14,14 @@ bindkey -v  # vi key bindings
 # Arrow key bindings
 bindkey "^[[C" forward-word         # right arrow → forward word
 
-# NOTE: compinit and menuselect bindings are handled by the legacy system during
-# dual-sourcing. Re-add here when ~/dotfiles/my_zshrc.sh dual-sourcing is removed.
+# Completion setup
+zmodload zsh/complist
+autoload -U compinit
+compinit
+_comp_options+=(globdots)   # include dotfiles in completion
+
+# Vim keys in tab completion menu
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history

@@ -1,11 +1,11 @@
 {{- if eq .chezmoi.os "darwin" }}
 alias ls='ls -hF -G'  # color output (macOS ls, no --color flag)
 
-# Set iTerm2 window title to current directory
-precmd() {
-  printf '\033]0;%s\007' "${PWD/#$HOME/~}"
-}
+# Set terminal window title to current directory
+precmd() { printf '\033]0;%s\007' "${PWD/#$HOME/~}"; }
 
 # iTerm2 shell integration
-[[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
+if [[ -e "${HOME}/.iterm2_shell_integration.zsh" ]]; then
+  source "${HOME}/.iterm2_shell_integration.zsh"
+fi
 {{- end }}

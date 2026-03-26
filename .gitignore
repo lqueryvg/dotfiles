@@ -1,0 +1,6 @@
+# Machine-specific shell overrides — never committed
+# Any *.sh file in ~/private.d/ is sourced after dotfile_source/ on every shell start.
+# Any *.sh file in ~/dotfiles/private.d/ is sourced by the legacy system (transitional).
+# ~/.dotfiles.local is sourced last as a final escape hatch.
+private.d/
+.dotfiles.local
