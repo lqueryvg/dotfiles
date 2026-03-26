@@ -1,5 +1,8 @@
 # ~/.zshrc — managed by chezmoi
 
+# Legacy sourcing — remove when ~/dotfiles/ is fully migrated
+[[ -f "${HOME}/dotfiles/my_zshrc.sh" ]] && source "${HOME}/dotfiles/my_zshrc.sh"
+
 # Source all scripts in ~/.config/dotfile_source/ (maxdepth 2 picks up third-party/)
 while read -r _dotfile_source_file; do
     source "${_dotfile_source_file}"
