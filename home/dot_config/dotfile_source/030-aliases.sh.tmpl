@@ -1,0 +1,34 @@
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias df='df -h'
+alias du='du -h'
+alias less='less -XR'
+alias more='less'
+alias whence='type -a'
+alias grep='grep --color'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# vim — prefer vimx if available (clipboard support)
+if command -v vimx &>/dev/null; then
+  alias vim='vimx'
+  alias view='vimx -R'
+else
+  alias view='vim -R'
+fi
+
+alias pgrep='pgrep -a'
+alias r='sudo su -'
+alias vlcdot='nohup vlc . 2>&1 > /dev/null &'
+alias ap='ansible-playbook'
+alias h='history'
+alias help='pushd ~/technotes; vim *.md; popd'
+alias k='kubectl'
+alias pu='pushd'
+alias po='popd'
+alias tn='cd ~/technotes'
+alias cdr='cd $(git rev-parse --show-toplevel)'
+alias cdt='cdr'
+alias i2cssh='RUBYOPT="-W0" i2cssh'
