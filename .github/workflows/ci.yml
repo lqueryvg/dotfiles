@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  apply:
+    name: chezmoi apply (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+
+      - name: Install zsh (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y zsh
+
+      - name: Configure chezmoi
+        run: |
+          mkdir -p "$HOME/.config/chezmoi"
+          cat > "$HOME/.config/chezmoi/chezmoi.toml" <<'EOF'
+          [data]
+            name           = "CI User"
+            gitEmail       = "ci@example.com"
+            is_ci_workflow = true
+          EOF
+
+      - name: Link repo as chezmoi source
+        run: |
+          mkdir -p "$HOME/.local/share"
+          ln -s "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
+
+      - name: Apply dotfiles
+        run: "$HOME/.local/bin/chezmoi" apply --verbose
+
+      - name: Install shellcheck (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y shellcheck
+
+      - name: Install shellcheck (macOS)
+        if: matrix.os == 'macos-latest'
+        run: brew install shellcheck
+
+      - name: Shellcheck
+        run: |
+          # third-party/ uses zsh syntax; bin/ scripts are pre-existing — exclude both
+          # test-shell.sh is a zsh script — exclude it
+          find home/dot_config/dotfile_source scripts install \
+            -name "*.sh" ! -name "*.sh.tmpl" \
+            ! -path "*/third-party/*" \
+            ! -name "test-shell.sh" \
+            | xargs shellcheck --shell=bash
+
+      - name: Assert key files exist
+        run: |
+          set -e
+          check() { test -e "$1" && echo "ok: $1" || { echo "MISSING: $1"; exit 1; }; }
+
+          check "$HOME/.zshrc"
+          check "$HOME/.bashrc"
+          check "$HOME/.gitconfig"
+          check "$HOME/.vimrc"
+          check "$HOME/.inputrc"
+          check "$HOME/.tool-versions"
+          check "$HOME/.config/dotfile_source"
