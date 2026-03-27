@@ -41,7 +41,7 @@ jobs:
           ln -s "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
 
       - name: Apply dotfiles
-        run: "$HOME/.local/bin/chezmoi" apply --verbose
+        run: $HOME/.local/bin/chezmoi apply --verbose
 
       - name: Install shellcheck (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
