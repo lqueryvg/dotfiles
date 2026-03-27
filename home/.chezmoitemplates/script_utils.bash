@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shared logging helpers — included in all .chezmoiscripts/ via:
-#   {{ template "script_utils.bash" . }}
+#   {{`{{ template "script_utils.bash" . }}`}}
 
 _tput() { tput "$@" 2>/dev/null || true; }
 

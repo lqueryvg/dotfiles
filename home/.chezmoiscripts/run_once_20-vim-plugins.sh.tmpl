@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+{{ template "script_utils.bash" . }}
+set -euo pipefail
+
+{{ if not .is_ci_workflow -}}
+VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
+
+if [[ -d "${VUNDLE_DIR}" ]]; then
+  log_info "Vundle already installed, skipping"
+else
+  log_info "Installing Vundle..."
+  git clone https://github.com/VundleVim/Vundle.vim.git "${VUNDLE_DIR}"
+fi
+
+log_info "Installing vim plugins..."
+vim +PluginInstall +qall
+log_success "Vim plugins installed"
+{{ else -}}
+log_info "Skipping vim plugins (CI)"
+{{ end -}}
