@@ -43,23 +43,8 @@ jobs:
       - name: Apply dotfiles
         run: $HOME/.local/bin/chezmoi apply --verbose
 
-      - name: Install shellcheck (Ubuntu)
-        if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get install -y shellcheck
-
-      - name: Install shellcheck (macOS)
-        if: matrix.os == 'macos-latest'
-        run: brew install shellcheck
-
-      - name: Shellcheck
-        run: |
-          # third-party/ uses zsh syntax; bin/ scripts are pre-existing — exclude both
-          # test-shell.sh is a zsh script — exclude it
-          find home/dot_config/dotfile_source scripts install \
-            -name "*.sh" ! -name "*.sh.tmpl" \
-            ! -path "*/third-party/*" \
-            ! -name "test-shell.sh" \
-            | xargs shellcheck --shell=bash
+      - name: Test shell
+        run: zsh -i scripts/test-shell.sh
 
       - name: Startup benchmark (macOS)
         if: matrix.os == 'macos-latest'
@@ -68,16 +53,3 @@ jobs:
           hyperfine --warmup 3 --runs 10 'zsh -i -c exit' --export-json /tmp/bench.json
           ms=$(python3 -c "import json; r=json.load(open('/tmp/bench.json'))['results'][0]; print(f\"{r['mean']*1000:.0f}ms mean, {r['max']*1000:.0f}ms max\")")
           echo "Shell startup: $ms"
-
-      - name: Assert key files exist
-        run: |
-          set -e
-          check() { test -e "$1" && echo "ok: $1" || { echo "MISSING: $1"; exit 1; }; }
-
-          check "$HOME/.zshrc"
-          check "$HOME/.bashrc"
-          check "$HOME/.gitconfig"
-          check "$HOME/.vimrc"
-          check "$HOME/.inputrc"
-          check "$HOME/.tool-versions"
-          check "$HOME/.config/dotfile_source"

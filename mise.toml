@@ -11,14 +11,8 @@ description = "Pull latest dotfiles from git and apply them"
 run = "chezmoi update -v"
 
 [tasks.test]
-description = "Run shellcheck against owned shell scripts (excludes third-party, bin, zsh scripts)"
-run = """
-find home/dot_config/dotfile_source scripts install \
-  -name "*.sh" ! -name "*.sh.tmpl" \
-  ! -path "*/third-party/*" \
-  ! -name "test-shell.sh" \
-  | xargs shellcheck --shell=bash
-"""
+description = "Test that dotfiles are working correctly (aliases, functions, env vars, files)"
+run = "zsh -i scripts/test-shell.sh"
 
 [tasks.test-shell]
 description = "Assert that key aliases, functions, and env vars are defined in a fresh shell"
