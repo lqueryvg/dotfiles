@@ -44,3 +44,26 @@ run = "bash scripts/test-user-create.sh"
 [tasks.test-user-destroy]
 description = "Delete the macOS test user and its home directory (requires sudo)"
 run = "bash scripts/test-user-destroy.sh"
+
+[tasks.demo]
+description = "Full end-to-end demo: create test user, run shell + git checks, destroy"
+run = """
+set -euo pipefail
+TEST_USER=dottest
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+bash "${SCRIPT_DIR}/scripts/test-user-create.sh"
+
+echo ""
+echo "==> Running test-shell as ${TEST_USER}"
+sudo -u "${TEST_USER}" -i zsh -i "${SCRIPT_DIR}/scripts/test-shell.sh"
+
+echo ""
+echo "==> Checking git identity as ${TEST_USER}"
+sudo -u "${TEST_USER}" -i git config user.email
+sudo -u "${TEST_USER}" -i git config alias.lg0
+
+echo ""
+bash "${SCRIPT_DIR}/scripts/test-user-destroy.sh"
+echo "==> Demo complete"
+"""
