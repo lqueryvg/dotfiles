@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [[ $# -gt 0 ]]
+then
+  ${HOME}/dotfiles/bin/callvim ~/technotes/*$1*
+else
+  ${HOME}/dotfiles/bin/callvim ~/technotes/
+fi

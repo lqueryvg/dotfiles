@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+#
+# Move mouse 1 pixel right and left periodically.
+# To keep an application/window alive.
+
+interval_seconds=60
+
+hash xdotool 2>/dev/null || { echo "ERROR: xdotool not found"; exit 1; }
+
+while true
+do
+  xdotool mousemove_relative 1 0
+  xdotool mousemove_relative -- -1 0
+  sleep $interval_seconds
+done

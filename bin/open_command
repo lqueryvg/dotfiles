@@ -1,0 +1,2 @@
+# helper for web-search zsh plugin
+open "$@"

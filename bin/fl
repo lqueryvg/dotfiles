@@ -1,0 +1,13 @@
+echo "
+Try:
+fluentd -c in.conf
+
+Then from host:
+curl -i -X POST -d 'json={"action":"login","user":2,"message":"blah blah /api blah"}' http://localhost:8888/test.cycle
+"
+
+docker run -p 8888:8888 -v $HOME:/mnt -it quay.io/fluent/fluentd-kubernetes-daemonset sh -c "
+cd /mnt/tmp
+sh
+"
+

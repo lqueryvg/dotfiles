@@ -1,0 +1,9 @@
+# Sleep Mac to disk
+#
+if [[ $(uname) == "Darwin" ]]
+then
+  sudo pmset -a hibernatemode 25
+  sudo pmset sleepnow
+else
+  echo "Mac only!"
+fi

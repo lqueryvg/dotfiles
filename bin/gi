@@ -1,0 +1,3 @@
+git init .
+
+git commit --allow-empty -m 'initial empty commit'

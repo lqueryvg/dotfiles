@@ -1,0 +1,1 @@
+[[ $(uname) = Darwin ]] && nohup "/Applications/PyCharm CE.app/Contents/MacOS/pycharm" > /tmp/pycharm.out &

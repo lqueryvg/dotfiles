@@ -1,0 +1,68 @@
+# The TABLET device is for the pen and it's buttons.
+#
+# The TOUCHPAD is for when you use your finger on the tablet, or press the
+# tablet's buttons.
+
+tablet_mouse() {
+}
+tablet_event() {
+}
+touchpad_mouse() {
+}
+touchpad_event() {
+    check_device_exists "Wacom Intuos PT S Finger pad" || return 1
+
+    # Map top left button on pad to middle mouse button (paste)
+    xsetwacom set "Wacom Intuos PT S Finger pad" Button +3 +2
+}
+
+check_device_exists() {
+    xsetwacom list | grep "$1" 2>&1 > /dev/null
+    if [[ $? != 0 ]]
+    then
+        echo "Wacom device "$1" not found"
+        return 1
+    fi
+    return 0
+}
+
+
+if [[ $CALLED_BY_UDEV == yes]]
+then
+    # Called by udev, so work out exactly which device has been plugged
+    # in a called only the appropriate customisation function.
+    if [[ $ID_INPUT_TOUCHPAD == 1 ]]
+      if [[ $DEVNAME =~ /dev/input/event ]]
+      then
+        touchpad_event
+        exit
+      fi
+      if [[ $DEVNAME =~ /dev/input/mouse ]]
+      then
+        touchpad_mouse
+        exit
+      fi
+    fi
+
+    if [[ $ID_INPUT_TABLET == 1 ]]
+      if [[ $DEVNAME =~ /dev/input/event ]]
+      then
+        tablet_event
+        exit
+      fi
+      if [[ $DEVNAME =~ /dev/input/mouse ]]
+      then
+        tablet_mouse
+        exit
+      fi
+    fi
+
+else
+    # Probably called by X initialisation (xinitrc) or user within X,
+    # so call all of the customisation functions.
+    tablet_mouse
+    tablet_event
+    touchpad_mouse
+    touchpad_event
+fi
+

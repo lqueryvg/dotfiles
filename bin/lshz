@@ -1,0 +1,11 @@
+aws route53 list-hosted-zones                         \
+  --query 'HostedZones[*].[Name, Id]' --output text 2>/dev/null |
+while read hz id
+do
+  echo $hz $id
+  aws route53 list-resource-record-sets 2>/dev/null \
+    --hosted-zone-id $id                \
+    --query "ResourceRecordSets[*].['"$hz"', Type, Name]" --output text
+    #--query "ResourceRecordSets[?Type!='SOA'].['"$AWS_PROFILE"', '"$hz"', Type, Name]" --output text
+    #--query "ResourceRecordSets[*].[Type, Name]" --output text
+done

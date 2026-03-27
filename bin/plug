@@ -1,0 +1,10 @@
+asdf plugin add $1
+asdf install $1 latest
+version=$(asdf list $1 latest)
+if [[ -z $version ]]
+then
+  echo "ERROR: unable to get installed version from 'asdf list $1 latest'"
+  exit 1
+fi
+asdf global $1 $version
+asdf current

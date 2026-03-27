@@ -1,0 +1,20 @@
+
+gitRoot=$(git rev-parse --show-toplevel 2>/dev/null)
+
+if [[ $? != 0 ]]
+then
+  echo "not a git dir"
+  exit 1
+fi
+
+cd $gitRoot
+
+doit() {
+  mkdir -p $1
+  echo '*' > $1/.gitignore
+  echo $1/.gitignore
+}
+
+doit .claude
+doit .jspec
+
