@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # Shared logging helpers — included in all .chezmoiscripts/ via:
 #   {{`{{ template "script_utils.bash" . }}`}}
 

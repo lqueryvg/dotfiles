@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+{{ template "script_utils.bash" . }}
+# Brewfile hash: {{ include "../Brewfile" | sha256sum }}
+set -euo pipefail
+
+{{ if not .is_ci_workflow -}}
+log_info "Installing Homebrew packages..."
+"{{ .chezmoi.sourceDir }}/../install/brew.sh"
+log_success "Homebrew packages installed"
+{{ else -}}
+log_info "Skipping Homebrew packages (CI)"
+{{ end -}}

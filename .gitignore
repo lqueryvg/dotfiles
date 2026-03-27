@@ -4,3 +4,4 @@
 # ~/.dotfiles.local is sourced last as a final escape hatch.
 private.d/
 .dotfiles.local
+*.swp
