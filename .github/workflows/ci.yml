@@ -61,6 +61,14 @@ jobs:
             ! -name "test-shell.sh" \
             | xargs shellcheck --shell=bash
 
+      - name: Startup benchmark (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install hyperfine
+          hyperfine --warmup 3 --runs 10 'zsh -i -c exit' --export-json /tmp/bench.json
+          ms=$(python3 -c "import json; r=json.load(open('/tmp/bench.json'))['results'][0]; print(f\"{r['mean']*1000:.0f}ms mean, {r['max']*1000:.0f}ms max\")")
+          echo "Shell startup: $ms"
+
       - name: Assert key files exist
         run: |
           set -e
