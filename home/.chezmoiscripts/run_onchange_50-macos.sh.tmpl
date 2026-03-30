@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+{{ template "script_utils.bash" . }}
+# macos-defaults hash: {{ include "../install/macos-defaults.sh" | sha256sum }}
+set -euo pipefail
+
+{{ if and (not .is_ci_workflow) (eq .chezmoi.os "darwin") -}}
+log_info "Applying macOS defaults..."
+"{{ .chezmoi.sourceDir }}/../install/macos-defaults.sh"
+log_success "macOS defaults applied"
+{{ else -}}
+log_info "Skipping macOS defaults (CI or non-macOS)"
+{{ end -}}

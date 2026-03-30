@@ -178,15 +178,15 @@
 - [x] 13.1 Identified: `settings.json`, `CLAUDE.md`, `commands/jspec.md`; `settings.local.json` excluded (machine-specific)
 - [x] 13.2 Added to `home/private_dot_claude/` (mode 0700); `.chezmoiignore` excludes `settings.local.json`
 - [x] 13.3 Adopted via `chezmoi add`
-- [x] 13.4 **Demo**: repo moved to `~/dotfiles`; `sourceDir` set in chezmoi config; `~/dotfiles/bin` restored in PATH; apply on test user pending
+- [x] 13.4 **Demo**: repo moved to `~/dotfiles`; `sourceDir` set in chezmoi config; `~/dotfiles/bin` restored in PATH; Claude Code settings deployed correctly on test user bootstrap
 
 ---
 
 ## Stage 14: macOS settings & app configs (near future)
 
 
-- [ ] 14.1 Write `install/macos-defaults.sh` — `defaults write` commands for system preferences (dock, keyboard, trackpad, UI); structured by domain with comments
-- [ ] 14.2 Add `home/.chezmoiscripts/run_onchange_50-macos.sh.tmpl` — wraps `install/macos-defaults.sh`; hash comment triggers re-run when the script changes; macOS only
+- [x] 14.1 Write `install/macos-defaults.sh` — dock (left, auto-hide, size 40, no recents), keyboard (KeyRepeat=2, InitialKeyRepeat=15), Finder (show hidden files, show all extensions), screenshots to ~/Desktop/screenshots/
+- [x] 14.2 Add `home/.chezmoiscripts/run_onchange_50-macos.sh.tmpl` — wraps `install/macos-defaults.sh`; hash comment triggers re-run when the script changes; gated on macOS + not CI
 - [ ] 14.3 Export iTerm2 profile to JSON; add to `home/Library/Application Support/iTerm2/DynamicProfiles/`; add `run_once_` script to set iTerm2 custom folder preference
 - [ ] 14.4 Add Firefox to Brewfile (cask); write `run_once_` script to configure default profile
 - [ ] 14.5 **Demo**: on test user, run bootstrap; confirm macOS preferences applied (`defaults read` key assertions); iTerm2 profile present; Firefox installed
