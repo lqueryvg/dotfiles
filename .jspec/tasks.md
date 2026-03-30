@@ -158,13 +158,18 @@
 
 > ⚠️ **HIGH RISK STAGE** — 12.2 removes dual-sourcing (shell breaks if anything wasn't migrated); 12.4 deletes `~/dotfiles` (irreversible locally — GitHub is the backup). Do not proceed unless CI is green and the test-user demo passes.
 
-- [ ] 12.1 Verify `~/dotfiles/home_links` is empty (all entries migrated or intentionally dropped)
-- [ ] 12.2 Remove dual-sourcing loop from `home/dot_zshrc.tmpl` (delete the `~/dotfiles/my_zshrc.sh` source block)
-- [ ] 12.3 `chezmoi apply` — confirm shell still works with only new `dotfile_source/`
-- [ ] 12.4 Archive `~/dotfiles` repo: rename to `dotfiles-legacy` on GitHub; remove `~/dotfiles` from local machine
-- [ ] 12.5 Rename `dotfiles-new` to `dotfiles` on GitHub; update chezmoi bootstrap command everywhere it's documented
-- [ ] 12.6 Run `mise run test-user-create` — full bootstrap from scratch with final repo name; verify end-to-end
-- [ ] 12.7 **Demo**: fresh test user runs `curl -fsLS get.chezmoi.io | sh -s -- init --apply github.com/lqueryvg/dotfiles`; gets a fully working shell; all tools present; git identity correct; tear down test user; commit final state
+**Phase A: Validate on second machine (before touching this machine)**
+- [ ] 12.1 On second machine: create test user and bootstrap — `curl -fsLS get.chezmoi.io | sh -s -- init --apply github.com/lqueryvg/dotfiles-new`; run `mise run test` as test user; confirm all checks pass; tear down test user
+- [ ] 12.2 On second machine: full bootstrap on main user — run bootstrap command; confirm dual-sourcing works alongside existing legacy dotfiles; shell opens cleanly; git identity correct; mise tools installed
+
+**Phase B: Cutover on this machine**
+- [ ] 12.3 Verify `~/dotfiles/home_links` is empty (all entries migrated or intentionally dropped)
+- [ ] 12.4 Remove dual-sourcing loop from `home/dot_zshrc.tmpl` (delete the `~/dotfiles/my_zshrc.sh` source block)
+- [ ] 12.5 `chezmoi apply` — confirm shell still works with only new `dotfile_source/`
+- [ ] 12.6 Archive `~/dotfiles` repo: rename to `dotfiles-legacy` on GitHub; remove `~/dotfiles` from local machine
+- [ ] 12.7 Rename `dotfiles-new` to `dotfiles` on GitHub; update chezmoi bootstrap command in README and mise.toml
+- [ ] 12.8 Run `mise run test-user-create` — full bootstrap from scratch with final repo name; verify end-to-end
+- [ ] 12.9 **Demo**: fresh test user runs `curl -fsLS get.chezmoi.io | sh -s -- init --apply github.com/lqueryvg/dotfiles`; all checks pass; tear down test user; commit final state
 
 ---
 
