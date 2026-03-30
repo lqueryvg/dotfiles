@@ -141,8 +141,8 @@
 
 ## Stage 10: mise tool installation
 
-- [ ] 10.1 Write `home/.chezmoiscripts/run_onchange_15-mise-install.sh.tmpl` — runs `mise install` when `.tool-versions` changes; hash comment on `.tool-versions`; skipped in CI (`{{ if not .is_ci_workflow }}`); gated on mise being available
-- [ ] 10.2 **Demo**: run `mise run demo` — confirm test user has mise tools installed (`which rg`, `which gh`, `which fzf` resolve via mise shims after bootstrap)
+- [x] 10.1 Write `home/.chezmoiscripts/run_once_00-prerequisites.sh.tmpl` (installs mise via curl if missing) and `run_onchange_15-mise-install.sh.tmpl` (runs `mise install` when `.tool-versions` changes; skipped in CI); `install/brew.sh` updated to skip gracefully if Homebrew prefix not writable; `~/.local/bin` and `~/dotfiles/bin` added to PATH unconditionally
+- [x] 10.2 **Demo**: `mise run demo` — test user bootstraps cleanly; all 29 checks pass
 
 ---
 
