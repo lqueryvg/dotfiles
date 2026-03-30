@@ -78,7 +78,7 @@ mise run adopt ~/.some-config-file
 
 ### Add a bin script
 
-Drop it in `bin/` at the repo root. It is immediately on PATH for the current machine. Commit and push to make it available on other machines after `mise run pull`.
+Drop it in `bin/` at the repo root. It is immediately on PATH via `~/.local/share/chezmoi/bin/`. Commit and push to make it available on other machines after `chezmoi update`.
 
 ### Add a new shell tool to dotfile_source
 
