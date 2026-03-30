@@ -3,7 +3,7 @@
 ## Quick start
 
 ```sh
-curl -fsLS get.chezmoi.io | sh -s -- -b ~/.local/bin init --apply github.com/lqueryvg/dotfiles
+curl -fsLS get.chezmoi.io | sh -s -- -b ~/.local/bin init --apply --source ~/dotfiles github.com/lqueryvg/dotfiles
 ```
 
 ---
@@ -78,7 +78,7 @@ mise run adopt ~/.some-config-file
 
 ### Add a bin script
 
-Drop it in `bin/` at the repo root. It is immediately on PATH via `~/.local/share/chezmoi/bin/`. Commit and push to make it available on other machines after `chezmoi update`.
+Drop it in `bin/` at the repo root. It is immediately on PATH via `~/dotfiles/bin/`. Commit and push to make it available on other machines after `chezmoi update`.
 
 ### Add a new shell tool to dotfile_source
 

@@ -1,5 +1,7 @@
 {{- $isCI := env "CI" | not | not -}}
 
+sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
+
 [data]
     name           = "John Buxton"
     gitEmail       = "lqueryvg@gmail.com"
