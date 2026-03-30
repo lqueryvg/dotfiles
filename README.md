@@ -29,7 +29,7 @@ bw-setup
 - Write the private key to `~/.ssh/lqueryvg-github` (mode 600)
 - Add it to the SSH agent
 
-After that, `bw-load` (called from your shell) will add the key to the agent on each new shell session.
+After a machine restart, run `bw-load` to re-add the key to the agent. The SSH agent is shared across all terminal sessions for your user, so one call per boot is enough.
 
 ### 1Password (API tokens)
 
@@ -38,7 +38,7 @@ After that, `bw-load` (called from your shell) will add the key to the agent on 
 op-load
 ```
 
-`op-load` fetches `GITHUB_PACKAGES_TOKEN`, `JIRA_API_TOKEN`, and `CONFLUENCE_API_TOKEN` from the Employee vault.
+Fetches API tokens from the 1Password Employee vault and exports them as env vars. Env vars are scoped to the current shell process — run `op-load` in each terminal that needs them. Re-runs are skipped automatically once loaded; call again if any token failed (e.g. session expired).
 
 ---
 
@@ -52,6 +52,14 @@ op-load
 
 ## Runbook
 
+### Test that dotfiles are working
+
+```sh
+mise run test
+```
+
+Checks deployed files, aliases, functions, env vars, and PATH.
+
 ### Adopt a new dotfile
 
 ```sh
@@ -60,11 +68,11 @@ mise run adopt ~/.some-config-file
 
 ### Add a bin script
 
-Drop it in `bin/` at the repo root. It will be on PATH as `~/dotfiles/bin/<script>` after bootstrap.
+Drop it in `bin/` at the repo root. It is immediately on PATH for the current machine. Commit and push to make it available on other machines after `mise run pull`.
 
 ### Add a new shell tool to dotfile_source
 
-Create `home/dot_config/dotfile_source/third-party/<tool>.sh` and adopt it:
+Create `home/dot_config/dotfile_source/third-party/<tool>.sh`, then adopt it:
 
 ```sh
 mise run adopt ~/.config/dotfile_source/third-party/<tool>.sh

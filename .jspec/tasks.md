@@ -148,11 +148,8 @@
 
 ## Stage 11: README
 
-- [ ] 11.1 Finish `README.md` (skeleton written in Stage 9) — verify and expand:
-  - **Quick start**: single bootstrap command + post-bootstrap manual steps (bw-setup, op-load)
-  - **Philosophy**: mise first, Homebrew as last resort; what goes where and why
-  - **Runbook**: adopt a dotfile, add a bin script, add a shell tool to `dotfile_source/`
-- [ ] 11.2 **Demo**: read through the README as a new user; confirm quick start command is correct and runbook steps work
+- [x] 11.1 Finish `README.md` — quick start, post-bootstrap manual steps (bw-setup, op-load), philosophy, runbook (adopt, bin, new tool); runbook kept intentionally lean — grows organically as the solution is used
+- [x] 11.2 **Demo**: read through README as a new user; `mise run test` passes
 
 ---
 
