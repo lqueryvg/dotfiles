@@ -159,17 +159,17 @@
 > ⚠️ **HIGH RISK STAGE** — 12.2 removes dual-sourcing (shell breaks if anything wasn't migrated); 12.4 deletes `~/dotfiles` (irreversible locally — GitHub is the backup). Do not proceed unless CI is green and the test-user demo passes.
 
 **Phase A: Validate on second machine (before touching this machine)**
-- [ ] 12.1 On second machine: create test user and bootstrap — `curl -fsLS get.chezmoi.io | sh -s -- init --apply github.com/lqueryvg/dotfiles-new`; run `mise run test` as test user; confirm all checks pass; tear down test user
-- [ ] 12.2 On second machine: full bootstrap on main user — run bootstrap command; confirm dual-sourcing works alongside existing legacy dotfiles; shell opens cleanly; git identity correct; mise tools installed
+- [x] 12.1 On second machine: test user bootstrap + `mise run test`; fixed: mise activation order (005-mise.sh), zoxide/fzf guards, Node version (macOS 12 gets Node 22 LTS via template), chezmoi install path forced to `~/.local/bin`, `~/bin` added to PATH
+- [x] 12.2 On second machine: full bootstrap on main user; dual-sourcing removed; `~/dotfiles` archived locally; shell clean
 
 **Phase B: Cutover on this machine**
-- [ ] 12.3 Verify `~/dotfiles/home_links` is empty (all entries migrated or intentionally dropped)
-- [ ] 12.4 Remove dual-sourcing loop from `home/dot_zshrc.tmpl` (delete the `~/dotfiles/my_zshrc.sh` source block)
-- [ ] 12.5 `chezmoi apply` — confirm shell still works with only new `dotfile_source/`
-- [ ] 12.6 Archive `~/dotfiles` repo: rename to `dotfiles-legacy` on GitHub; remove `~/dotfiles` from local machine
-- [ ] 12.7 Rename `dotfiles-new` to `dotfiles` on GitHub; update chezmoi bootstrap command in README and mise.toml
-- [ ] 12.8 Run `mise run test-user-create` — full bootstrap from scratch with final repo name; verify end-to-end
-- [ ] 12.9 **Demo**: fresh test user runs `curl -fsLS get.chezmoi.io | sh -s -- init --apply github.com/lqueryvg/dotfiles`; all checks pass; tear down test user; commit final state
+- [x] 12.3 Verified `~/dotfiles/home_links` — Linux/X11/Haskell only, nothing to migrate
+- [x] 12.4 Removed dual-sourcing loop from `home/dot_zshrc.tmpl`
+- [x] 12.5 `chezmoi apply` — shell works with only new `dotfile_source/`
+- [x] 12.6 `~/dotfiles` archived locally; `dotfiles` repo renamed to `dotfiles-legacy` on GitHub
+- [x] 12.7 `dotfiles-new` renamed to `dotfiles` on GitHub; README and mise.toml updated
+- [x] 12.8 `mise run demo` — full bootstrap with final repo name; all checks pass
+- [x] 12.9 **Demo**: complete
 
 ---
 
