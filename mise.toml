@@ -1,6 +1,6 @@
 [tasks.bootstrap]
 description = "Set up this machine from scratch (bare metal → fully configured)"
-run = "chezmoi init --apply github/lqueryvg/dotfiles-new"
+run = "chezmoi init --apply github/lqueryvg/dotfiles"
 
 [tasks.apply]
 description = "Apply local dotfile changes to the home directory"

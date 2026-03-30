@@ -3,7 +3,7 @@
 ## Quick start
 
 ```sh
-curl -fsLS get.chezmoi.io | sh -s -- -b ~/.local/bin init --apply github.com/lqueryvg/dotfiles-new
+curl -fsLS get.chezmoi.io | sh -s -- -b ~/.local/bin init --apply github.com/lqueryvg/dotfiles
 ```
 
 ---
