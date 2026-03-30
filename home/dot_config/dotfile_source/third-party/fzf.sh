@@ -7,5 +7,5 @@ _fzf_compgen_dir()  { eval command ${_base_fzf_command} -t d "$1" }
 
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
-bindkey '^g' fzf-cd-widget
-bindkey '^f' fzf-file-widget
+(( ${+widgets[fzf-cd-widget]} )) && bindkey '^g' fzf-cd-widget
+(( ${+widgets[fzf-file-widget]} )) && bindkey '^f' fzf-file-widget
