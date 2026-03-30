@@ -1,7 +1,11 @@
 # This file is managed by chezmoi. Edit with: chezmoi edit ~/.tool-versions
 awscli 2.31.22
 fzf 0.66.0
+{{- if and (eq .chezmoi.os "darwin") (semverCompare "<13" (output "sw_vers" "-productVersion" | trim)) }}
+nodejs 22.14.0
+{{- else }}
 nodejs 25.4.0
+{{- end }}
 pnpm 10.28.1
 rust 1.90.0
 github-cli 2.82.1
