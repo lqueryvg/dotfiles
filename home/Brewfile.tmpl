@@ -28,5 +28,7 @@ brew "jira-cli"         # Jira CLI
 cask "1password-cli"    # op CLI for secret access
 cask "claude-code"      # Claude Code CLI
 cask "finicky"          # Browser router
+{{ if ge .macos_major 13 -}}
+cask "ghostty"          # Terminal emulator (requires macOS 13+)
+{{ end -}}
 cask "isindir/git-get/git-get"  # Clone multiple repos via Gitfile
-

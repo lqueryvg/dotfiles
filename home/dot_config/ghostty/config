@@ -1,0 +1,5 @@
+# Ghostty config
+# Full reference: https://ghostty.org/docs/config/reference
+# Browse themes: ghostty +list-themes
+
+shell-integration = detect

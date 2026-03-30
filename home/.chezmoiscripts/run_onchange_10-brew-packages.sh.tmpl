@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 {{ template "script_utils.bash" . }}
-# Brewfile hash: {{ include "../Brewfile" | sha256sum }}
+# Brewfile hash: {{ include "Brewfile.tmpl" | sha256sum }}
 set -euo pipefail
 
 {{ if not .is_ci_workflow -}}

@@ -1,4 +1,8 @@
 {{- $isCI := env "CI" | not | not -}}
+{{- $macosMajor := 0 -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $macosMajor = output "sw_vers" "-productVersion" | splitList "." | first | int -}}
+{{- end -}}
 
 sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
 
@@ -6,6 +10,7 @@ sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
     name           = "John Buxton"
     gitEmail       = "lqueryvg@gmail.com"
     is_ci_workflow = {{ $isCI }}
+    macos_major    = {{ $macosMajor }}
 
 [add]
     secrets = "error"

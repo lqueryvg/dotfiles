@@ -24,4 +24,4 @@ fi
 # Prevent Homebrew from managing tools that mise owns
 export HOMEBREW_FORBIDDEN_FORMULAE="node npm python3 pnpm yarn"
 
-brew bundle install --file="${REPO_ROOT}/Brewfile"
+brew bundle install --file="${HOME}/Brewfile"

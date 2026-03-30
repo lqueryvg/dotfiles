@@ -187,6 +187,6 @@
 
 - [x] 14.1 Write `install/macos-defaults.sh` — dock (left, auto-hide, size 40, no recents), keyboard (KeyRepeat=2, InitialKeyRepeat=15), Finder (show hidden files, show all extensions), screenshots to ~/Desktop/screenshots/
 - [x] 14.2 Add `home/.chezmoiscripts/run_onchange_50-macos.sh.tmpl` — wraps `install/macos-defaults.sh`; hash comment triggers re-run when the script changes; gated on macOS + not CI
-- [ ] 14.3 Export iTerm2 profile to JSON; add to `home/Library/Application Support/iTerm2/DynamicProfiles/`; add `run_once_` script to set iTerm2 custom folder preference
+- [x] 14.3 Add `ghostty` cask to Brewfile; move Brewfile into chezmoi as `home/Brewfile.tmpl` (deploys to `~/Brewfile`); gate ghostty on `macos_major >= 13`; add `macos_major` to chezmoi data; create `home/dot_config/ghostty/config`
 - [ ] 14.4 Add Firefox to Brewfile (cask); write `run_once_` script to configure default profile
-- [ ] 14.5 **Demo**: on test user, run bootstrap; confirm macOS preferences applied (`defaults read` key assertions); iTerm2 profile present; Firefox installed
+- [ ] 14.5 **Demo**: on test user, run bootstrap; confirm macOS preferences applied (`defaults read` key assertions); Ghostty config present at `~/.config/ghostty/config`; Firefox installed

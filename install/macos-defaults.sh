@@ -33,8 +33,8 @@ mkdir -p "${HOME}/Desktop/screenshots"
 defaults write com.apple.screencapture location   -string "${HOME}/Desktop/screenshots"
 
 # ---------------------------------------------------------------------------
-# Restart affected services
+# Restart affected services (excluding Dock — restarting it disrupts dynamic
+# app registrations such as Firefox profile dock entries)
 # ---------------------------------------------------------------------------
-killall Dock
 killall Finder
 killall SystemUIServer
