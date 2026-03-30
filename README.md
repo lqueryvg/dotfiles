@@ -56,6 +56,8 @@ Fetches API tokens from the 1Password Employee vault and exports them as env var
 
 ```sh
 mise run test
+# or directly:
+zsh -i ~/.local/share/chezmoi/scripts/test-shell.sh
 ```
 
 Checks deployed files, aliases, functions, env vars, and PATH.
