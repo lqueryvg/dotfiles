@@ -14,6 +14,13 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Skip if Homebrew prefix is not writable (e.g. test user on a shared machine)
+BREW_PREFIX="$(brew --prefix)"
+if [[ ! -w "${BREW_PREFIX}" ]]; then
+  echo "Homebrew prefix ${BREW_PREFIX} is not writable, skipping brew bundle install"
+  exit 0
+fi
+
 # Prevent Homebrew from managing tools that mise owns
 export HOMEBREW_FORBIDDEN_FORMULAE="node npm python3 pnpm yarn"
 

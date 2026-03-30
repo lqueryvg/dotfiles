@@ -101,7 +101,7 @@
 ## Stage 7: Migrate tools from Homebrew to mise
 
 
-- [ ] 7.1 Audit the Brewfile; for each entry, determine if mise can manage it (check `mise registry`)
+- [x] 7.1 Audit the Brewfile; for each entry, determine if mise can manage it (check `mise registry`)
 - [x] 7.2 Migrate clear-win tools to mise: `ripgrep`, `zoxide`, `openjdk@21`, `maven`; remove from Brewfile
 - [ ] 7.2a Deferred: investigate migrating `colima`, `docker`, `cookiecutter`, `postgresql@14` — leave in Brewfile until each has a verified mise path
 - [x] 7.3 Investigate why mise shims don't take precedence over Homebrew for `rg`, `java`, `mvn` — fix PATH/shim ordering so mise wins (was a session issue; resolves correctly in fresh zsh)
@@ -139,23 +139,20 @@
 
 ---
 
-## Stage 10: Claude Code settings
+## Stage 10: mise tool installation
 
-
-- [ ] 10.1 Identify Claude config files to manage: `~/.claude/settings.json`, any CLAUDE.md files, skills, hooks
-- [ ] 10.2 Add to `home/private_dot_config/claude/` — use `private_` prefix (mode 0700) since config may contain sensitive values
-- [ ] 10.3 `mise run adopt` the Claude config files
-- [ ] 10.4 **Demo**: apply on test user; confirm `~/.claude/settings.json` exists with correct content
+- [ ] 10.1 Write `home/.chezmoiscripts/run_onchange_15-mise-install.sh.tmpl` — runs `mise install` when `.tool-versions` changes; hash comment on `.tool-versions`; skipped in CI (`{{ if not .is_ci_workflow }}`); gated on mise being available
+- [ ] 10.2 **Demo**: run `mise run demo` — confirm test user has mise tools installed (`which rg`, `which gh`, `which fzf` resolve via mise shims after bootstrap)
 
 ---
 
 ## Stage 11: README
 
-- [ ] 11.1 Write `README.md` with:
-  - **Quick start**: single bootstrap command for a new user / machine
+- [ ] 11.1 Finish `README.md` (skeleton written in Stage 9) — verify and expand:
+  - **Quick start**: single bootstrap command + post-bootstrap manual steps (bw-setup, op-load)
   - **Philosophy**: mise first, Homebrew as last resort; what goes where and why
-  - **Runbook**: how to adopt a new dotfile (`mise run adopt`), how to add a bin script, how to add a new shell tool to `dotfile_source/`
-- [ ] 11.2 **Demo**: read through the README as if you're a new user; confirm the quick start command is correct and the runbook steps work
+  - **Runbook**: adopt a dotfile, add a bin script, add a shell tool to `dotfile_source/`
+- [ ] 11.2 **Demo**: read through the README as a new user; confirm quick start command is correct and runbook steps work
 
 ---
 
@@ -165,20 +162,29 @@
 > ⚠️ **HIGH RISK STAGE** — 12.2 removes dual-sourcing (shell breaks if anything wasn't migrated); 12.4 deletes `~/dotfiles` (irreversible locally — GitHub is the backup). Do not proceed unless CI is green and the test-user demo passes.
 
 - [ ] 12.1 Verify `~/dotfiles/home_links` is empty (all entries migrated or intentionally dropped)
-- [ ] 12.2 Remove dual-sourcing loop from `home/dot_zshrc.tmpl` (delete the `~/dotfiles/public.d/` source block)
+- [ ] 12.2 Remove dual-sourcing loop from `home/dot_zshrc.tmpl` (delete the `~/dotfiles/my_zshrc.sh` source block)
 - [ ] 12.3 `chezmoi apply` — confirm shell still works with only new `dotfile_source/`
 - [ ] 12.4 Archive `~/dotfiles` repo: rename to `dotfiles-legacy` on GitHub; remove `~/dotfiles` from local machine
 - [ ] 12.5 Rename `dotfiles-new` to `dotfiles` on GitHub; update chezmoi bootstrap command everywhere it's documented
 - [ ] 12.6 Run `mise run test-user-create` — full bootstrap from scratch with final repo name; verify end-to-end
-- [ ] 12.7 **Demo**: fresh test user runs `curl -fsLS get.chezmoi.io | sh -s -- init --apply --source ~/dotfiles github/lqueryvg`; gets a fully working shell; all tools present; git identity correct; tear down test user; commit final state
+- [ ] 12.7 **Demo**: fresh test user runs `curl -fsLS get.chezmoi.io | sh -s -- init --apply github.com/lqueryvg/dotfiles`; gets a fully working shell; all tools present; git identity correct; tear down test user; commit final state
 
 ---
 
-## Stage 13: macOS settings & app configs (near future)
+## Stage 13: Claude Code settings
+
+- [ ] 13.1 Identify Claude config files to manage: `~/.claude/settings.json`, `~/.claude/CLAUDE.md`, `~/.claude/commands/`
+- [ ] 13.2 Add to `home/private_dot_config/private_claude/` — use `private_` prefix (mode 0700); exclude `settings.local.json` (machine-specific permissions, never committed)
+- [ ] 13.3 `mise run adopt` the Claude config files
+- [ ] 13.4 **Demo**: apply on test user; confirm `~/.claude/settings.json` and `~/.claude/CLAUDE.md` exist with correct content
+
+---
+
+## Stage 14: macOS settings & app configs (near future)
 
 
-- [ ] 13.1 Write `install/macos-defaults.sh` — `defaults write` commands for system preferences (dock, keyboard, trackpad, UI); structured by domain with comments
-- [ ] 13.2 Add `home/.chezmoiscripts/run_onchange_50-macos.sh.tmpl` — wraps `install/macos-defaults.sh`; hash comment triggers re-run when the script changes; macOS only
-- [ ] 13.3 Export iTerm2 profile to JSON; add to `home/Library/Application Support/iTerm2/DynamicProfiles/`; add `run_once_` script to set iTerm2 custom folder preference
-- [ ] 13.4 Add Firefox to Brewfile (cask); write `run_once_` script to configure default profile
-- [ ] 13.5 **Demo**: on test user, run bootstrap; confirm macOS preferences applied (`defaults read` key assertions); iTerm2 profile present; Firefox installed
+- [ ] 14.1 Write `install/macos-defaults.sh` — `defaults write` commands for system preferences (dock, keyboard, trackpad, UI); structured by domain with comments
+- [ ] 14.2 Add `home/.chezmoiscripts/run_onchange_50-macos.sh.tmpl` — wraps `install/macos-defaults.sh`; hash comment triggers re-run when the script changes; macOS only
+- [ ] 14.3 Export iTerm2 profile to JSON; add to `home/Library/Application Support/iTerm2/DynamicProfiles/`; add `run_once_` script to set iTerm2 custom folder preference
+- [ ] 14.4 Add Firefox to Brewfile (cask); write `run_once_` script to configure default profile
+- [ ] 14.5 **Demo**: on test user, run bootstrap; confirm macOS preferences applied (`defaults read` key assertions); iTerm2 profile present; Firefox installed

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+{{ template "script_utils.bash" . }}
+set -euo pipefail
+
+# Install mise if missing
+if ! command -v mise &>/dev/null && [[ ! -x "$HOME/.local/bin/mise" ]]; then
+  log_info "Installing mise..."
+  curl -fsSL https://mise.run | sh
+  log_success "mise installed"
+else
+  log_info "mise already installed, skipping"
+fi
