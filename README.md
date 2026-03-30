@@ -60,6 +60,14 @@ mise run test
 
 Checks deployed files, aliases, functions, env vars, and PATH.
 
+### Pull latest dotfiles on an existing machine
+
+```sh
+chezmoi update
+```
+
+Pulls from GitHub and applies changes. Equivalent to `git pull` + `chezmoi apply`.
+
 ### Adopt a new dotfile
 
 ```sh
