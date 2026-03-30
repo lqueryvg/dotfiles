@@ -175,10 +175,10 @@
 
 ## Stage 13: Claude Code settings
 
-- [ ] 13.1 Identify Claude config files to manage: `~/.claude/settings.json`, `~/.claude/CLAUDE.md`, `~/.claude/commands/`
-- [ ] 13.2 Add to `home/private_dot_config/private_claude/` — use `private_` prefix (mode 0700); exclude `settings.local.json` (machine-specific permissions, never committed)
-- [ ] 13.3 `mise run adopt` the Claude config files
-- [ ] 13.4 **Demo**: apply on test user; confirm `~/.claude/settings.json` and `~/.claude/CLAUDE.md` exist with correct content
+- [x] 13.1 Identified: `settings.json`, `CLAUDE.md`, `commands/jspec.md`; `settings.local.json` excluded (machine-specific)
+- [x] 13.2 Added to `home/private_dot_claude/` (mode 0700); `.chezmoiignore` excludes `settings.local.json`
+- [x] 13.3 Adopted via `chezmoi add`
+- [x] 13.4 **Demo**: repo moved to `~/dotfiles`; `sourceDir` set in chezmoi config; `~/dotfiles/bin` restored in PATH; apply on test user pending
 
 ---
 
