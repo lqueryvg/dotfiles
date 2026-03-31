@@ -190,3 +190,11 @@
 - [x] 14.3 Add `ghostty` cask to Brewfile; move Brewfile into chezmoi as `home/Brewfile.tmpl` (deploys to `~/Brewfile`); gate ghostty on `macos_major >= 13`; add `macos_major` to chezmoi data; create `home/dot_config/ghostty/config`
 - [ ] 14.4 Add Firefox to Brewfile (cask); write `run_once_` script to configure default profile
 - [ ] 14.5 **Demo**: on test user, run bootstrap; confirm macOS preferences applied (`defaults read` key assertions); Ghostty config present at `~/.config/ghostty/config`; Firefox installed
+
+---
+
+## Stage 15: Terminal evaluation
+
+- [~] 15.1 Add `kitty`, `wezterm`, `alacritty` casks to Brewfile; install locally; create chezmoi-managed configs for each with: copy-on-select to system clipboard; word selection so that double-clicking `fred` in `./tmp/fred` selects only `fred`
+- [ ] 15.2 Export current iTerm2 profile to a Dynamic Profile JSON file; adopt into chezmoi; user reviews JSON for manageability; replicate same selection and clipboard settings; eliminate clickops dependency
+- [ ] 15.3 **Demo**: open each terminal; double-click `fred` in `./tmp/fred` — confirm only `fred` is selected; confirm selection is copied to system clipboard

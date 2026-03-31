@@ -26,9 +26,12 @@ brew "jira-cli"         # Jira CLI
 
 # --- Casks ---
 cask "1password-cli"    # op CLI for secret access
+cask "alacritty"        # Terminal emulator — GPU-accelerated, TOML config
 cask "claude-code"      # Claude Code CLI
 cask "finicky"          # Browser router
 {{ if ge .macos_major 13 -}}
 cask "ghostty"          # Terminal emulator (requires macOS 13+)
 {{ end -}}
 cask "isindir/git-get/git-get"  # Clone multiple repos via Gitfile
+cask "kitty"            # Terminal emulator — xterm-like plain-text config
+cask "wezterm"          # Terminal emulator — Lua config, highly configurable

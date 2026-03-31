@@ -1,2 +1,8 @@
 PATH="${HOME}/dotfiles/bin:${HOME}/.local/bin:${HOME}/bin:${PATH}"
+
+# Ghostty CLI (macOS only)
+{{ if eq .chezmoi.os "darwin" -}}
+PATH="/Applications/Ghostty.app/Contents/MacOS:${PATH}"
+{{- end }}
+
 export PATH

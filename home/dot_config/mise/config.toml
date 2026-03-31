@@ -1,3 +1,6 @@
+[settings]
+trusted_config_paths = ["~/projects"]
+
 [tools]
 # Use aqua backend for neovim — vfox backend is broken on x86_64 macOS
 "aqua:neovim/neovim" = "0.11.7"

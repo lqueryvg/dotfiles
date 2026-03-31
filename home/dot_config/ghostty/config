@@ -3,3 +3,8 @@
 # Browse themes: ghostty +list-themes
 
 shell-integration = detect
+font-family = MesloLGS NF
+font-size = 12
+link-url = false
+copy-on-select = clipboard
+selection-word-chars = " \t'\"│`|:;,()[]{}<>$/."

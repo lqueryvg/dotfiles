@@ -1,0 +1,15 @@
+# Alacritty config
+# Full reference: https://alacritty.org/config-alacritty.html
+
+[font]
+normal = { family = "MesloLGS NF", style = "Regular" }
+bold   = { family = "MesloLGS NF", style = "Bold" }
+italic = { family = "MesloLGS NF", style = "Italic" }
+size   = 12.0
+
+[selection]
+# Copy selection to system clipboard automatically
+save_to_clipboard = true
+# Word boundary characters — double-click selects up to these.
+# Includes / and . so that double-clicking "fred" in "./tmp/fred" selects only "fred".
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t/."
