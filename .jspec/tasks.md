@@ -195,6 +195,6 @@
 
 ## Stage 15: Terminal evaluation
 
-- [~] 15.1 Add `kitty`, `wezterm`, `alacritty` casks to Brewfile; install locally; create chezmoi-managed configs for each with: copy-on-select to system clipboard; word selection so that double-clicking `fred` in `./tmp/fred` selects only `fred`
+- [~] 15.1 Add `kitty`, `wezterm`, `alacritty` casks to Brewfile; install locally; create chezmoi-managed configs for each with: MesloLGS NF font, copy-on-select to system clipboard, word selection so that double-clicking `fred` in `./tmp/fred` selects only `fred`; themes set (top 3: Material Darker, Monokai Remastered, Dracula): kitty=Dracula, Ghostty=Material Darker, WezTerm=Monokai Remastered; Ghostty word/copy-on-select tuned but double-click on `./path` still selects whole path (likely Ghostty bug); Alacritty deprecated in Homebrew (Gatekeeper issue, disabled 2026-09-01); next: iTerm2 Dynamic Profiles
 - [ ] 15.2 Export current iTerm2 profile to a Dynamic Profile JSON file; adopt into chezmoi; user reviews JSON for manageability; replicate same selection and clipboard settings; eliminate clickops dependency
 - [ ] 15.3 **Demo**: open each terminal; double-click `fred` in `./tmp/fred` — confirm only `fred` is selected; confirm selection is copied to system clipboard

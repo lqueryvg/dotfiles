@@ -8,8 +8,9 @@ local config = wezterm.config_builder()
 config.font = wezterm.font('MesloLGS NF')
 config.font_size = 12.0
 
--- Theme — alternatives: "Nord", "Gruvbox Dark", "Solarized Dark (Gogh)"
-config.color_scheme = 'Catppuccin Mocha'
+-- Top 3: "Material Darker (base16)", "Monokai Remastered", "Dracula"
+-- config.color_scheme = 'Material Darker (base16)'
+config.color_scheme = 'Monokai Remastered'
 
 config.mouse_bindings = {
   {

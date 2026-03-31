@@ -3,6 +3,8 @@
 # Browse themes: ghostty +list-themes
 
 shell-integration = detect
+# Top 3: "Material Darker", "Monokai Remastered", "Dracula"
+theme = Material Darker
 font-family = MesloLGS NF
 font-size = 12
 link-url = false
