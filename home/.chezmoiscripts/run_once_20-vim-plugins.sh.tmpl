@@ -3,7 +3,10 @@
 set -euo pipefail
 
 {{ if not .is_ci_workflow -}}
-export GIT_TERMINAL_PROMPT=0  # fail fast rather than prompting for credentials
+export GIT_TERMINAL_PROMPT=0   # fail fast rather than prompting for credentials
+export GIT_CONFIG_COUNT=1
+export GIT_CONFIG_KEY_0="credential.helper"
+export GIT_CONFIG_VALUE_0=""   # disable credential helper for all git calls in this script
 VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
 
 if [[ -f "${VUNDLE_DIR}/autoload/vundle.vim" ]]; then
