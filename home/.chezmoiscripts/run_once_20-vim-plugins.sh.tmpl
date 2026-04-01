@@ -3,6 +3,7 @@
 set -euo pipefail
 
 {{ if not .is_ci_workflow -}}
+export GIT_TERMINAL_PROMPT=0  # fail fast rather than prompting for credentials
 VUNDLE_DIR="${HOME}/.vim/bundle/Vundle.vim"
 
 if [[ -f "${VUNDLE_DIR}/autoload/vundle.vim" ]]; then
