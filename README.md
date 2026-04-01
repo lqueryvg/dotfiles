@@ -42,6 +42,20 @@ Fetches API tokens from the 1Password Employee vault and exports them as env var
 
 ---
 
+## Heavyweight apps
+
+Some large applications are noted in the Brewfile but commented out — they are not installed automatically on bootstrap. Install manually when needed:
+
+| App | Cask | Notes |
+|-----|------|-------|
+| IntelliJ IDEA Ultimate | `intellij-idea` | JetBrains Java/Kotlin IDE |
+
+```sh
+brew install --cask intellij-idea
+```
+
+---
+
 ## Philosophy
 
 - **mise first**: all tools managed by mise where possible

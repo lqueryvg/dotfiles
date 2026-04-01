@@ -3,6 +3,11 @@ command_exists op || return 0
 op-load() {
   [[ -n "${OP_SESSION_LOADED:-}" ]] && return 0
 
+  if [[ ! -d "/Applications/1Password.app" ]]; then
+    echo "op-load: 1Password app not installed — skipping secret load" >&2
+    return 0
+  fi
+
   local vault="Employee"
   local token secret
   local -a tokens=(

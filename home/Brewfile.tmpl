@@ -13,7 +13,6 @@ brew "gnupg"            # GPG
 # --- Containers ---
 brew "colima"           # Container runtime for macOS
 brew "docker"           # Docker CLI
-brew "docker-buildx"    # Extended build capabilities
 brew "docker-credential-helper"  # Keychain credential storage for Docker
 
 # --- Data / PDF ---
@@ -25,6 +24,7 @@ brew "cookiecutter"     # Project scaffolding from templates
 brew "jira-cli"         # Jira CLI
 
 # --- Casks ---
+cask "1password"        # password manager — desktop app acts as op CLI agent
 cask "1password-cli"    # op CLI for secret access
 cask "alacritty"        # Terminal emulator — GPU-accelerated, TOML config
 cask "claude-code"      # Claude Code CLI
@@ -35,3 +35,6 @@ cask "ghostty"          # Terminal emulator (requires macOS 13+)
 cask "isindir/git-get/git-get"  # Clone multiple repos via Gitfile
 cask "kitty"            # Terminal emulator — xterm-like plain-text config
 cask "wezterm"          # Terminal emulator — Lua config, highly configurable
+
+# --- Heavyweight apps (not installed by default) ---
+# cask "intellij-idea"    # IntelliJ IDEA Ultimate — install manually if needed
