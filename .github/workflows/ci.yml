@@ -33,6 +33,7 @@ jobs:
             name           = "CI User"
             gitEmail       = "ci@example.com"
             is_ci_workflow = true
+            macos_major    = 0
           EOF
 
       - name: Link repo as chezmoi source
