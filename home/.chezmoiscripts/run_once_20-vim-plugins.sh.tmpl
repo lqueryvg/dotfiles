@@ -15,7 +15,7 @@ else
 fi
 
 log_info "Installing vim plugins..."
-vim -T dumb --not-a-term +PluginInstall +qall
+vim -T dumb --not-a-term +PluginInstall +qall >/dev/null 2>&1; echo
 log_success "Vim plugins installed"
 {{ else -}}
 log_info "Skipping vim plugins (CI)"
