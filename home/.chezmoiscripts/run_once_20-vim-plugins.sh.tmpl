@@ -10,6 +10,7 @@ if [[ -f "${VUNDLE_DIR}/autoload/vundle.vim" ]]; then
 else
   log_info "Installing Vundle..."
   rm -rf "${VUNDLE_DIR}"
+  [[ -L "${HOME}/.vim" ]] && mv "${HOME}/.vim" "${HOME}/.vim.bak-$(date +%Y%m%d%H%M%S)"
   mkdir -p "$(dirname "${VUNDLE_DIR}")"
   git clone https://github.com/VundleVim/Vundle.vim.git "${VUNDLE_DIR}"
 fi
