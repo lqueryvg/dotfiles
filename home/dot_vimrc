@@ -99,7 +99,6 @@ if filereadable(expand('~/.vim/bundle/Vundle.vim/autoload/vundle.vim'))
 
     Plugin 'tpope/vim-repeat'
 
-    Plugin 'koreyconway/ranger.vim'
     set t_Co=256              " enable 256-color mode.
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'ConradIrwin/vim-bracketed-paste'

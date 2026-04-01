@@ -36,5 +36,5 @@ defaults write com.apple.screencapture location   -string "${HOME}/Desktop/scree
 # Restart affected services (excluding Dock — restarting it disrupts dynamic
 # app registrations such as Firefox profile dock entries)
 # ---------------------------------------------------------------------------
-killall Finder
-killall SystemUIServer
+killall Finder 2>/dev/null || true
+killall SystemUIServer 2>/dev/null || true

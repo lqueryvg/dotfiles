@@ -10,11 +10,12 @@ if [[ -f "${VUNDLE_DIR}/autoload/vundle.vim" ]]; then
 else
   log_info "Installing Vundle..."
   rm -rf "${VUNDLE_DIR}"
+  mkdir -p "$(dirname "${VUNDLE_DIR}")"
   git clone https://github.com/VundleVim/Vundle.vim.git "${VUNDLE_DIR}"
 fi
 
 log_info "Installing vim plugins..."
-vim -T dumb +PluginInstall +qall
+vim -T dumb --not-a-term +PluginInstall +qall
 log_success "Vim plugins installed"
 {{ else -}}
 log_info "Skipping vim plugins (CI)"
