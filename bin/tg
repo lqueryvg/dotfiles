@@ -1,2 +1,215 @@
-cd ~/technotes/
-grep -i $* *
+#!/usr/bin/env python3
+import sys
+import os
+import re
+import subprocess
+import shutil
+import termios
+import tty
+import select
+from pathlib import Path
+
+NOTES_DIR = os.path.expanduser("~/technotes")
+
+def copy_to_clipboard(text):
+    # Strip \r\n, then remove leading Markdown heading hashes/spaces so shells don't treat it as a comment
+    clean_text = re.sub(r'^#+\s+', '', text.strip())
+    
+    if sys.platform == 'darwin':
+        subprocess.run(['pbcopy'], input=clean_text.encode('utf-8'))
+    elif sys.platform == 'win32':
+        subprocess.run(['clip'], input=clean_text.encode('utf-8'))
+    else:
+        if shutil.which('wl-copy'):
+            subprocess.run(['wl-copy'], input=clean_text.encode('utf-8'))
+        elif shutil.which('xclip'):
+            subprocess.run(['xclip', '-selection', 'clipboard'], input=clean_text.encode('utf-8'))
+        elif shutil.which('xsel'):
+            subprocess.run(['xsel', '--clipboard', '--input'], input=clean_text.encode('utf-8'))
+
+def build_results(terms):
+    results = []
+    patterns = []
+    
+    for term in terms:
+        try:
+            patterns.append(re.compile(term, re.IGNORECASE))
+        except re.error as e:
+            print(f"Invalid regex '{term}': {e}")
+            sys.exit(1)
+
+    for path in Path(NOTES_DIR).rglob("*.md"):
+        try:
+            content = path.read_text(encoding='utf-8')
+            lines = content.splitlines()
+        except Exception:
+            continue
+
+        filename = path.name
+
+        if not all((p.search(filename) or p.search(content)) for p in patterns):
+            continue
+
+        score = 0
+        best_line = 1
+        full_line = str(path)
+        snippet = "(Matched filename only)"
+        snippet_priority = 0 
+
+        for pattern in patterns:
+            if pattern.search(filename):
+                score += 100
+            
+            for i, line in enumerate(lines):
+                if pattern.search(line):
+                    is_heading = bool(re.match(r'^#{1,6}\s', line))
+                    
+                    if is_heading:
+                        score += 50
+                        if snippet_priority < 2:
+                            best_line = i + 1
+                            full_line = line
+                            snippet = line.strip()
+                            snippet_priority = 2
+                    else:
+                        score += 10
+                        if snippet_priority < 1:
+                            best_line = i + 1
+                            full_line = line
+                            snippet = line.strip()
+                            snippet_priority = 1
+
+        results.append({
+            'path': path,
+            'score': score,
+            'line': best_line,
+            'full_line': full_line,
+            'snippet': snippet[:80] + ('...' if len(snippet) > 80 else '')
+        })
+
+    results.sort(key=lambda x: x['score'], reverse=True)
+    return results
+
+def run_inline_tui(results):
+    display_count = min(len(results), 15)
+    current_row = 0
+    offset = 0
+    total_lines = display_count + 1 
+
+    # Hide cursor
+    sys.stdout.write("\033[?25l")
+    
+    # Pre-allocate blank lines using standard print before entering raw mode
+    sys.stdout.write("\n" * total_lines)
+    sys.stdout.flush()
+
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+
+    try:
+        # Enter raw mode ONCE. This entirely disables the OS from sending SIGINT.
+        tty.setraw(fd)
+        
+        while True:
+            # Move cursor to top of our UI
+            sys.stdout.write(f"\033[{total_lines}A\r")
+            
+            # Draw Header
+            sys.stdout.write("\033[K")
+            header = f" tn | {len(results)} matches | ↑/↓: Scroll | ENTER: Copy | v: Vim | ESC/q/Ctrl-C: Quit "
+            sys.stdout.write(f"\033[90m{header}\033[0m\r\n")
+
+            # Draw Results
+            for i in range(display_count):
+                sys.stdout.write("\033[K") 
+                idx = offset + i
+                
+                if idx >= len(results):
+                    sys.stdout.write("\r\n")
+                    continue
+                
+                res = results[idx]
+                is_selected = (idx == current_row)
+                
+                prefix = "\033[1;33m ❯ \033[0m" if is_selected else "   "
+                fname = f"\033[94m{res['path'].name}\033[0m" 
+                lnum = f"\033[92m{res['line']}\033[0m"       
+                snip = f"\033[90m{res['snippet']}\033[0m"    
+                
+                line_str = f"{prefix}{fname}:{lnum}  {snip}"
+                sys.stdout.write(line_str + "\r\n")
+
+            sys.stdout.flush()
+            
+            # Read single keystroke blockingly
+            ch_bytes = os.read(fd, 1)
+            if not ch_bytes:
+                continue
+                
+            ch = ch_bytes.decode('utf-8', 'ignore')
+            
+            # Check for multi-byte escape sequences (like arrow keys)
+            if ch == '\x1b':
+                if select.select([fd], [], [], 0.05)[0]:
+                    ch += os.read(fd, 8).decode('utf-8', 'ignore')
+
+            # Actions
+            if ch in ['\x1b[A', '\x1bOA', 'k']: # Up
+                if current_row > 0:
+                    current_row -= 1
+                    if current_row < offset:
+                        offset -= 1
+            elif ch in ['\x1b[B', '\x1bOB', 'j']: # Down
+                if current_row < len(results) - 1:
+                    current_row += 1
+                    if current_row >= offset + display_count:
+                        offset += 1
+            elif ch in ['\r', '\n']: # Enter
+                return "copy", results[current_row], total_lines
+            elif ch in ['v', 'V']: # Vim
+                return "vim", results[current_row], total_lines
+            elif ch == '\x1b' or ch in ['q', 'Q', '\x03', '\x04']: # ESC, q, Ctrl-C, Ctrl-D
+                return "quit", None, total_lines
+
+    finally:
+        # Restore normal terminal behavior immediately upon exiting the loop
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
+def cleanup_ui(lines):
+    # Restore cursor visibility BEFORE cleaning up
+    sys.stdout.write("\033[?25h")
+    
+    sys.stdout.write(f"\033[{lines}A\r")
+    for _ in range(lines):
+        sys.stdout.write("\033[K\n")
+    sys.stdout.write(f"\033[{lines}A\r")
+    sys.stdout.flush()
+
+if __name__ == "__main__":
+    try:
+        terms = sys.argv[1:]
+        if not terms:
+            print("\033[90mUsage: tn <regex terms...>\033[0m")
+            sys.exit(1)
+
+        results = build_results(terms)
+        
+        if not results:
+            print("\033[90mNo matches found.\033[0m")
+            sys.exit(0)
+
+        action, selected, drawn_lines = run_inline_tui(results)
+        cleanup_ui(drawn_lines)
+
+        if action == "copy":
+            copy_to_clipboard(selected['full_line'])
+            print(f"Copied: \033[94m{selected['path'].name}\033[0m:\033[92m{selected['line']}\033[0m \033[90m{selected['snippet']}\033[0m")
+        elif action == "vim":
+            subprocess.run(["vim", f"+{selected['line']}", str(selected['path'])])
+            
+    except KeyboardInterrupt:
+        # Guarantee cursor is restored even if killed during scan
+        sys.stdout.write("\033[?25h")
+        sys.stdout.flush()
+        print("\n\033[90mCanceled.\033[0m")
+        sys.exit(0)
