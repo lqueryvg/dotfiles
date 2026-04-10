@@ -11,8 +11,10 @@ from pathlib import Path
 
 NOTES_DIR = os.path.expanduser("~/technotes")
 
+FILE_TAG_RE = re.compile(r'^\s*tags?:\s*(.+)', re.IGNORECASE)
+LINE_TAG_RE = re.compile(r'\btags?:\s*(.+)', re.IGNORECASE)
+
 def copy_to_clipboard(text):
-    # Strip \r\n, then remove leading Markdown heading hashes/spaces so shells don't treat it as a comment
     clean_text = re.sub(r'^#+\s+', '', text.strip())
     
     if sys.platform == 'darwin':
@@ -26,6 +28,12 @@ def copy_to_clipboard(text):
             subprocess.run(['xclip', '-selection', 'clipboard'], input=clean_text.encode('utf-8'))
         elif shutil.which('xsel'):
             subprocess.run(['xsel', '--clipboard', '--input'], input=clean_text.encode('utf-8'))
+
+def add_breakdown(bd_list, msg):
+    if len(bd_list) < 14:
+        bd_list.append(msg)
+    elif len(bd_list) == 14:
+        bd_list.append("  ... (further matches omitted)")
 
 def build_results(terms):
     results = []
@@ -47,45 +55,109 @@ def build_results(terms):
 
         filename = path.name
 
+        # INVISIBLE LOGIC: The file's universe must still contain ALL terms
         if not all((p.search(filename) or p.search(content)) for p in patterns):
             continue
 
-        score = 0
-        best_line = 1
-        full_line = str(path)
-        snippet = "(Matched filename only)"
-        snippet_priority = 0 
+        # 1. Parse Tags
+        file_tags = set()
+        line_tags = {}
+        for i, line in enumerate(lines):
+            m_file = FILE_TAG_RE.match(line)
+            if m_file:
+                tags_str = m_file.group(1)
+                file_tags.update([t.strip().lower() for t in tags_str.split(',') if t.strip()])
+            else:
+                m_line = LINE_TAG_RE.search(line)
+                if m_line:
+                    tags_str = m_line.group(1)
+                    line_tags[i] = {t.strip().lower() for t in tags_str.split(',') if t.strip()}
 
-        for pattern in patterns:
-            if pattern.search(filename):
-                score += 100
+        # 2. Base Document Scores (Applies to all matched lines in this file)
+        file_base_score = 0
+        file_base_breakdown = []
+        
+        for pattern_idx, pattern in enumerate(patterns):
+            term_str = terms[pattern_idx]
             
-            for i, line in enumerate(lines):
-                if pattern.search(line):
-                    is_heading = bool(re.match(r'^#{1,6}\s', line))
-                    
-                    if is_heading:
-                        score += 50
-                        if snippet_priority < 2:
-                            best_line = i + 1
-                            full_line = line
-                            snippet = line.strip()
-                            snippet_priority = 2
-                    else:
-                        score += 10
-                        if snippet_priority < 1:
-                            best_line = i + 1
-                            full_line = line
-                            snippet = line.strip()
-                            snippet_priority = 1
+            # Filename Check
+            if pattern.search(filename):
+                file_base_score += 100
+                add_breakdown(file_base_breakdown, f"✓ '{term_str}' matched filename (+100)")
+            
+            # File Tag Check
+            for tag in file_tags:
+                if pattern.search(tag):
+                    file_base_score += 80
+                    add_breakdown(file_base_breakdown, f"✓ '{term_str}' matched file tag '{tag}' (+80)")
+                    break
 
-        results.append({
-            'path': path,
-            'score': score,
-            'line': best_line,
-            'full_line': full_line,
-            'snippet': snippet[:80] + ('...' if len(snippet) > 80 else '')
-        })
+        lines_yielded = 0
+
+        # 3. Line-by-Line Evaluation
+        for i, line in enumerate(lines):
+            line_score = 0
+            line_breakdown = list(file_base_breakdown) # Inherit the file's base score math
+            matched_any = False
+
+            for pattern_idx, pattern in enumerate(patterns):
+                term_str = terms[pattern_idx]
+                
+                # Find all occurrences of the pattern in the line
+                matches = list(pattern.finditer(line))
+                if matches:
+                    matched_any = True
+                    matched_tag = False
+                    
+                    if i in line_tags:
+                        for tag in line_tags[i]:
+                            if pattern.search(tag):
+                                line_score += 30
+                                add_breakdown(line_breakdown, f"✓ '{term_str}' matched line tag '{tag}' on L{i+1} (+30)")
+                                matched_tag = True
+                                break
+                    
+                    if not matched_tag:
+                        # Check if ANY match in this line behaves as a whole word
+                        has_whole_word = False
+                        for m in matches:
+                            start, end = m.span()
+                            # A match is a whole word if it's bounded by non-alphanumeric chars or string ends
+                            left_ok = (start == 0) or not re.match(r'\w', line[start-1])
+                            right_ok = (end == len(line)) or not re.match(r'\w', line[end])
+                            
+                            if left_ok and right_ok:
+                                has_whole_word = True
+                                break
+                        
+                        if has_whole_word:
+                            line_score += 20
+                            add_breakdown(line_breakdown, f"✓ '{term_str}' matched whole word on L{i+1} (+20)")
+                        else:
+                            line_score += 10
+                            add_breakdown(line_breakdown, f"✓ '{term_str}' matched partial word on L{i+1} (+10)")
+
+            if matched_any:
+                results.append({
+                    'path': path,
+                    'score': file_base_score + line_score,
+                    'breakdown': line_breakdown,
+                    'line': i + 1,
+                    'full_line': line,
+                    'snippet': line.strip()[:80] + ('...' if len(line.strip()) > 80 else '')
+                })
+                lines_yielded += 1
+
+        # 4. Fallback if the file matched all terms via filename/file-tags, but NO lines matched
+        if lines_yielded == 0:
+            results.append({
+                'path': path,
+                'score': file_base_score,
+                'breakdown': file_base_breakdown,
+                'line': 1,
+                'full_line': str(path),
+                'snippet': "(Matched filename or file tag only)"
+            })
 
     results.sort(key=lambda x: x['score'], reverse=True)
     return results
@@ -95,11 +167,9 @@ def run_inline_tui(results):
     current_row = 0
     offset = 0
     total_lines = display_count + 1 
+    showing_info = False
 
-    # Hide cursor
     sys.stdout.write("\033[?25l")
-    
-    # Pre-allocate blank lines using standard print before entering raw mode
     sys.stdout.write("\n" * total_lines)
     sys.stdout.flush()
 
@@ -107,78 +177,93 @@ def run_inline_tui(results):
     old_settings = termios.tcgetattr(fd)
 
     try:
-        # Enter raw mode ONCE. This entirely disables the OS from sending SIGINT.
         tty.setraw(fd)
         
         while True:
-            # Move cursor to top of our UI
             sys.stdout.write(f"\033[{total_lines}A\r")
             
-            # Draw Header
-            sys.stdout.write("\033[K")
-            header = f" tn | {len(results)} matches | ↑/↓: Scroll | ENTER: Copy | v: Vim | ESC/q/Ctrl-C: Quit "
-            sys.stdout.write(f"\033[90m{header}\033[0m\r\n")
+            if showing_info:
+                # --- INFO OVERLAY ---
+                res = results[current_row]
+                sys.stdout.write("\033[K")
+                header = f" Score Info: {res['path'].name}:{res['line']} | Total: {res['score']} | Press Any Key To Return "
+                sys.stdout.write(f"\033[7m {header} \033[0m\r\n")
 
-            # Draw Results
-            for i in range(display_count):
-                sys.stdout.write("\033[K") 
-                idx = offset + i
+                bd = res['breakdown']
+                for i in range(display_count):
+                    sys.stdout.write("\033[K")
+                    if i < len(bd):
+                        sys.stdout.write(f"  \033[90m{bd[i]}\033[0m\r\n")
+                    else:
+                        sys.stdout.write("\r\n")
                 
-                if idx >= len(results):
-                    sys.stdout.write("\r\n")
-                    continue
+                sys.stdout.flush()
                 
-                res = results[idx]
-                is_selected = (idx == current_row)
-                
-                prefix = "\033[1;33m ❯ \033[0m" if is_selected else "   "
-                fname = f"\033[94m{res['path'].name}\033[0m" 
-                lnum = f"\033[92m{res['line']}\033[0m"       
-                snip = f"\033[90m{res['snippet']}\033[0m"    
-                
-                line_str = f"{prefix}{fname}:{lnum}  {snip}"
-                sys.stdout.write(line_str + "\r\n")
-
-            sys.stdout.flush()
-            
-            # Read single keystroke blockingly
-            ch_bytes = os.read(fd, 1)
-            if not ch_bytes:
+                os.read(fd, 1)
+                showing_info = False
                 continue
-                
-            ch = ch_bytes.decode('utf-8', 'ignore')
-            
-            # Check for multi-byte escape sequences (like arrow keys)
-            if ch == '\x1b':
-                if select.select([fd], [], [], 0.05)[0]:
-                    ch += os.read(fd, 8).decode('utf-8', 'ignore')
 
-            # Actions
-            if ch in ['\x1b[A', '\x1bOA', 'k']: # Up
-                if current_row > 0:
-                    current_row -= 1
-                    if current_row < offset:
-                        offset -= 1
-            elif ch in ['\x1b[B', '\x1bOB', 'j']: # Down
-                if current_row < len(results) - 1:
-                    current_row += 1
-                    if current_row >= offset + display_count:
-                        offset += 1
-            elif ch in ['\r', '\n']: # Enter
-                return "copy", results[current_row], total_lines
-            elif ch in ['v', 'V']: # Vim
-                return "vim", results[current_row], total_lines
-            elif ch == '\x1b' or ch in ['q', 'Q', '\x03', '\x04']: # ESC, q, Ctrl-C, Ctrl-D
-                return "quit", None, total_lines
+            else:
+                # --- STANDARD TUI ---
+                sys.stdout.write("\033[K")
+                header = f" tn | {len(results)} matches | ↑/↓: Scroll | ENTER: Vim | c: Copy | i: Info | ESC/q/Ctrl-C: Quit "
+                sys.stdout.write(f"\033[90m{header}\033[0m\r\n")
+
+                for i in range(display_count):
+                    sys.stdout.write("\033[K") 
+                    idx = offset + i
+                    
+                    if idx >= len(results):
+                        sys.stdout.write("\r\n")
+                        continue
+                    
+                    res = results[idx]
+                    is_selected = (idx == current_row)
+                    
+                    prefix = "\033[1;33m ❯ \033[0m" if is_selected else "   "
+                    fname = f"\033[94m{res['path'].name}\033[0m" 
+                    lnum = f"\033[92m{res['line']}\033[0m"       
+                    snip = f"\033[90m{res['snippet']}\033[0m"    
+                    
+                    line_str = f"{prefix}{fname}:{lnum}  {snip}"
+                    sys.stdout.write(line_str + "\r\n")
+
+                sys.stdout.flush()
+                
+                ch_bytes = os.read(fd, 1)
+                if not ch_bytes:
+                    continue
+                    
+                ch = ch_bytes.decode('utf-8', 'ignore')
+                
+                if ch == '\x1b':
+                    if select.select([fd], [], [], 0.05)[0]:
+                        ch += os.read(fd, 8).decode('utf-8', 'ignore')
+
+                if ch in ['\x1b[A', '\x1bOA', 'k']: 
+                    if current_row > 0:
+                        current_row -= 1
+                        if current_row < offset:
+                            offset -= 1
+                elif ch in ['\x1b[B', '\x1bOB', 'j']: 
+                    if current_row < len(results) - 1:
+                        current_row += 1
+                        if current_row >= offset + display_count:
+                            offset += 1
+                elif ch in ['i', 'I']:
+                    showing_info = True
+                elif ch in ['\r', '\n']: 
+                    return "vim", results[current_row], total_lines
+                elif ch in ['c', 'C']: 
+                    return "copy", results[current_row], total_lines
+                elif ch == '\x1b' or ch in ['q', 'Q', '\x03', '\x04']: 
+                    return "quit", None, total_lines
 
     finally:
-        # Restore normal terminal behavior immediately upon exiting the loop
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
 def cleanup_ui(lines):
-    # Restore cursor visibility BEFORE cleaning up
     sys.stdout.write("\033[?25h")
-    
     sys.stdout.write(f"\033[{lines}A\r")
     for _ in range(lines):
         sys.stdout.write("\033[K\n")
@@ -208,7 +293,6 @@ if __name__ == "__main__":
             subprocess.run(["vim", f"+{selected['line']}", str(selected['path'])])
             
     except KeyboardInterrupt:
-        # Guarantee cursor is restored even if killed during scan
         sys.stdout.write("\033[?25h")
         sys.stdout.flush()
         print("\n\033[90mCanceled.\033[0m")
